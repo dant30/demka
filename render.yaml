@@ -3,6 +3,7 @@ services:
     name: demka-redis
     plan: starter
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
 
   - type: web
     name: demka-api
@@ -27,6 +28,41 @@ services:
         sync: false
       - key: SMS_SENDER_ID
         sync: false
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: demka-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: demka-db
+          property: port
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: demka-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: demka-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: demka-db
+          property: password
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
     autoDeploy: true
     disk:
       name: demka-media
@@ -46,6 +82,41 @@ services:
         sync: false
       - key: SMS_SENDER_ID
         sync: false
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: demka-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: demka-db
+          property: port
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: demka-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: demka-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: demka-db
+          property: password
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
     autoDeploy: true
 
   - type: worker
@@ -61,6 +132,41 @@ services:
         sync: false
       - key: SMS_SENDER_ID
         sync: false
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: demka-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: demka-db
+          property: port
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: demka-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: demka-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: demka-db
+          property: password
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: demka-redis
+          property: connectionString
     autoDeploy: true
 
   - type: web
@@ -97,32 +203,6 @@ envVarGroups:
         value: "false"
       - key: DJANGO_ALLOWED_HOSTS
         value: demka-api.onrender.com
-      - key: POSTGRES_HOST
-        fromDatabase:
-          name: demka-db
-          property: host
-      - key: POSTGRES_PORT
-        fromDatabase:
-          name: demka-db
-          property: port
-      - key: POSTGRES_DB
-        fromDatabase:
-          name: demka-db
-          property: database
-      - key: POSTGRES_USER
-        fromDatabase:
-          name: demka-db
-          property: user
-      - key: POSTGRES_PASSWORD
-        fromDatabase:
-          name: demka-db
-          property: password
-      - key: REDIS_URL
-        value: ${{demka-redis.connectionString}}/2
-      - key: CELERY_BROKER_URL
-        value: ${{demka-redis.connectionString}}/0
-      - key: CELERY_RESULT_BACKEND
-        value: ${{demka-redis.connectionString}}/1
       - key: SMS_ENABLED
         value: "false"
       - key: SMS_PROVIDER
