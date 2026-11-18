@@ -26,7 +26,7 @@ class RouteServiceTests(TestCase):
         route = RouteService.create(
             {
                 "name": "Route A", "code": "ra",
-                "default_agent": self.agent1.pk,
+                "default_agent": self.agent1,
                 "schedule_days": [0, 2, 4],  # Mon, Wed, Fri
             },
             self.boss,
@@ -46,7 +46,7 @@ class RouteServiceTests(TestCase):
 
     def test_change_agent_logs_audit(self):
         route = RouteService.create(
-            {"name": "Route A", "code": "RA", "default_agent": self.agent1.pk},
+            {"name": "Route A", "code": "RA", "default_agent": self.agent1},
             self.boss,
         )
         RouteService.change_default_agent(
@@ -113,7 +113,7 @@ class RouteServiceTests(TestCase):
     def test_deactivate_refuses_with_open_runs(self):
         from core.exceptions.domain import ConflictError
         route = RouteService.create(
-            {"name": "A", "code": "RA", "default_agent": self.agent1.pk}, self.boss,
+            {"name": "A", "code": "RA", "default_agent": self.agent1}, self.boss,
         )
         from apps.inventory.models import StockLocation
         from django.utils import timezone
