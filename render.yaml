@@ -184,7 +184,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://${{demka-api.host}}/api
+        value: https://demka-api.onrender.com/api
     routes:
       - type: rewrite
         source: /*
