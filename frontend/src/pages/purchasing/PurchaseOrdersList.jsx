@@ -9,6 +9,7 @@ import Select from '@/components/ui/Select';
 import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
+import Filter from '@/components/ui/Filter';
 
 export default function PurchaseOrdersList() {
   const [page, setPage] = useState(1);
@@ -41,7 +42,7 @@ export default function PurchaseOrdersList() {
         description="Track supplier orders from draft through receipt."
         actions={<Link to="/purchasing/pos/new" className="btn-primary">+ New PO</Link>}
       />
-      <div className="card grid grid-cols-1 md:grid-cols-3 gap-3">
+      <Filter title="Purchase order filters" collapsibleOnMobile contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Input placeholder="Search PO # or supplier..." value={search} onChange={(e) => setSearch(e.target.value)} className="md:col-span-2" />
         <Select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All statuses</option>
@@ -51,7 +52,7 @@ export default function PurchaseOrdersList() {
           <option value="RECEIVED">Received</option>
           <option value="CANCELLED">Cancelled</option>
         </Select>
-      </div>
+      </Filter>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </div>

@@ -212,7 +212,7 @@ envVarGroups:
       - key: DJANGO_ALLOWED_HOSTS
         value: demka-api.onrender.com
       - key: SMS_ENABLED
-        value: "false"
+        value: "true"
       - key: SMS_PROVIDER
         value: ots
       - key: DJANGO_SEED_CATALOGUE

@@ -56,7 +56,7 @@ export default function DataTable({
             {detailColumns.length > 0 && (
               <dl className="mobile-data-fields">
                 {detailColumns.map((column) => (
-                  <div key={column.key} className="mobile-data-field">
+                  <div key={column.key} className={`mobile-data-field ${column.mobileFullWidth ? 'col-span-2' : ''}`}>
                     <dt>{column.label}</dt>
                     <dd className={column.align === 'right' ? 'text-right tabular-nums' : ''}>
                       {renderValue(column, row)}
