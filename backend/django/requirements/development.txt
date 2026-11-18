@@ -1,0 +1,9 @@
+-r base.txt
+django-debug-toolbar>=4.4
+black>=24.3
+isort>=5.13
+flake8>=7.0
+pytest>=8.1
+pytest-django>=4.8
+coverage>=7.4
+pdfplumber>=0.11,<1.0

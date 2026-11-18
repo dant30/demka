@@ -1,0 +1,22 @@
+/*
+ * DEMKA Frontend — CSS entry point
+ *
+ * Tailwind first (generates base/components/utilities), then our own files
+ * are inlined at the position of the @import statements below, so our custom
+ * rules override Tailwind's reset where intended.
+ *
+ * Import order matters:
+ *   1. variables   — CSS custom properties (colors, spacing, layout metrics)
+ *   2. global      — base element styling (html, body, forms, scrollbars)
+ *   3. components  — reusable class names (.btn, .input, .card, .table, ...)
+ *   4. animations  — keyframes and .animate-* helpers
+ */
+
+@import "./styles/variables.css";
+@import "./styles/global.css";
+@import "./styles/components.css";
+@import "./styles/animations.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,1 @@
+# sales middleware hook — extend here if per-request sale context is needed.

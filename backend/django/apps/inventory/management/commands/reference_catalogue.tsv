@@ -1,0 +1,403 @@
+category	product_type	name	compatibility_notes	oem_part_number
+Engine & Service	AUTO_PART	Oil Filter	Toyota Corolla, Vitz, Fielder, Probox, Nissan Note, Mazda Demio	
+Engine & Service	AUTO_PART	Air Filter	Toyota Corolla, Vitz, Fielder, Probox, Nissan Note, Mazda Demio	
+Engine & Service	AUTO_PART	Fuel Filter	Toyota Hilux, Hiace, Probox, Nissan Navara, Isuzu D-Max	
+Engine & Service	AUTO_PART	Cabin / AC Filter	Toyota Corolla, Axio, Fielder, Premio, Nissan Note	
+Engine & Service	AUTO_PART	Spark Plug	Toyota, Nissan, Mazda, Honda, Subaru petrol models	
+Engine & Service	AUTO_PART	Glow Plug	Toyota diesel, Nissan diesel, Isuzu, Mitsubishi diesel	
+Engine & Service	AUTO_PART	Drive Belt / Serpentine Belt	Toyota, Nissan, Mazda, Honda, Subaru	
+Engine & Service	AUTO_PART	Timing Belt Kit	Toyota, Nissan, Mitsubishi, Subaru selected engines	
+Engine & Service	AUTO_PART	Timing Chain Kit	Toyota, Nissan, Mazda, Honda selected engines	
+Engine & Service	AUTO_PART	Tensioner Pulley	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Idler Pulley	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Water Pump	Toyota, Nissan, Mazda, Honda, Subaru	
+Engine & Service	AUTO_PART	Thermostat	Toyota, Nissan, Mazda, Honda, Subaru	
+Engine & Service	AUTO_PART	Radiator Cap	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Engine Mount	Toyota Corolla, Probox, Fielder, Premio, Nissan Note	
+Engine & Service	AUTO_PART	Gearbox Mount	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Valve Cover Gasket	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Head Gasket	Toyota, Nissan, Mazda, Honda, Subaru	
+Engine & Service	AUTO_PART	Oil Pan Gasket	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Exhaust Manifold Gasket	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Intake Manifold Gasket	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Crankshaft Oil Seal	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Camshaft Oil Seal	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	PCV Valve	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	PCV Hose	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Fuel Injector	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Injector Seal / O-Ring	Toyota diesel/petrol, Nissan, Isuzu	
+Engine & Service	AUTO_PART	Throttle Body Gasket	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Throttle Body	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Mass Air Flow Sensor	Toyota, Nissan, Mazda, Subaru	
+Engine & Service	AUTO_PART	MAP Sensor	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Oxygen Sensor	Toyota, Nissan, Mazda, Honda, Subaru	
+Engine & Service	AUTO_PART	Crankshaft Position Sensor	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Camshaft Position Sensor	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Engine Coolant Temperature Sensor	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Knock Sensor	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Oil Pressure Switch	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Engine Air Intake Hose	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Radiator Upper Hose	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Radiator Lower Hose	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Radiator	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Radiator Fan Motor	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Cooling Fan Relay	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Expansion Tank	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Coolant Reservoir Cap	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Starter Motor	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Alternator	Toyota, Nissan, Mazda, Honda, Isuzu	
+Engine & Service	AUTO_PART	Alternator Belt Tensioner	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Starter Solenoid	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Ignition Coil	Toyota, Nissan, Mazda, Honda, Subaru	
+Engine & Service	AUTO_PART	Distributor Cap	Older Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Distributor Rotor	Older Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Engine Control Relay	Toyota, Nissan, Mazda, Honda	
+Engine & Service	AUTO_PART	Main Relay	Toyota, Honda, Nissan	
+Engine & Service	AUTO_PART	Battery Terminal	Universal / most 12V vehicles	
+Engine & Service	AUTO_PART	Battery Hold-Down	Universal / most 12V vehicles	
+Engine & Service	AUTO_PART	Engine Oil 5W-30	Petrol/diesel vehicles as specified by manufacturer	
+Engine & Service	AUTO_PART	Engine Oil 10W-40	Petrol/diesel vehicles as specified by manufacturer	
+Engine & Service	AUTO_PART	Engine Oil 15W-40	Diesel/commercial vehicles as specified by manufacturer	
+Engine & Service	AUTO_PART	Coolant / Antifreeze	Most passenger and commercial vehicles	
+Engine & Service	AUTO_PART	Brake Fluid DOT 3	Most vehicles requiring DOT 3	
+Engine & Service	AUTO_PART	Brake Fluid DOT 4	Most modern vehicles requiring DOT 4	
+Engine & Service	AUTO_PART	Power Steering Fluid	Toyota, Nissan, Mazda, Honda and others	
+Engine & Service	AUTO_PART	ATF Automatic Transmission Fluid	Automatic transmissions as specified	
+Engine & Service	AUTO_PART	Manual Transmission Oil	Manual transmissions as specified	
+Engine & Service	AUTO_PART	Differential Oil	RWD/4WD vehicles as specified	
+Brakes	AUTO_PART	Front Brake Pads	Toyota Corolla, Axio, Fielder, Probox, Premio	
+Brakes	AUTO_PART	Rear Brake Pads	Toyota, Nissan, Mazda, Honda selected models	
+Brakes	AUTO_PART	Front Brake Shoes	Toyota, Nissan, Mazda, Isuzu selected models	
+Brakes	AUTO_PART	Rear Brake Shoes	Toyota Probox, Hiace, Nissan, Isuzu selected models	
+Brakes	AUTO_PART	Front Brake Disc / Rotor	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Rear Brake Disc / Rotor	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Brake Drum	Toyota, Nissan, Mazda, Isuzu	
+Brakes	AUTO_PART	Brake Caliper	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Caliper Repair Kit	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Brake Master Cylinder	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Clutch Master Cylinder	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Clutch Slave Cylinder	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Clutch Kit	Toyota Corolla, Probox, Hilux, Nissan, Mazda	
+Brakes	AUTO_PART	Clutch Plate	Toyota, Nissan, Mazda, Isuzu	
+Brakes	AUTO_PART	Clutch Pressure Plate	Toyota, Nissan, Mazda, Isuzu	
+Brakes	AUTO_PART	Clutch Release Bearing	Toyota, Nissan, Mazda, Isuzu	
+Brakes	AUTO_PART	Brake Hose	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Brake Pipe	Universal / vehicle-specific	
+Brakes	AUTO_PART	ABS Wheel Speed Sensor	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	ABS Tone Ring	Toyota, Nissan, Mazda, Honda	
+Brakes	AUTO_PART	Brake Pad Wear Sensor	Selected Toyota, Nissan, Mazda, European models	
+Suspension & Steering	AUTO_PART	Front Shock Absorber	Toyota Corolla, Axio, Fielder, Probox	
+Suspension & Steering	AUTO_PART	Rear Shock Absorber	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Shock Absorber Mount	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Strut Mount Bearing	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Lower Ball Joint	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Upper Ball Joint	4WD/pickup and selected models	
+Suspension & Steering	AUTO_PART	Lower Control Arm	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Control Arm Bush	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Stabilizer Link	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Stabilizer Bush	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Tie Rod End	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Rack End	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Steering Rack Boot	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Wheel Bearing	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Hub Assembly	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	CV Joint Outer	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	CV Joint Inner	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	CV Boot	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Drive Shaft / Propeller Shaft	Toyota, Nissan, Mazda, Isuzu	
+Suspension & Steering	AUTO_PART	Leaf Spring Bush	Pickups, vans and commercial vehicles	
+Suspension & Steering	AUTO_PART	Leaf Spring	Toyota Hilux, Nissan Hardbody, Isuzu, Mazda	
+Suspension & Steering	AUTO_PART	U-Bolt	Pickups and commercial vehicles	
+Suspension & Steering	AUTO_PART	Power Steering Rack	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Power Steering Pump	Toyota, Nissan, Mazda, Honda	
+Suspension & Steering	AUTO_PART	Steering Column Joint	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	12V Car Battery	Most passenger cars	
+Electrical	AUTO_PART	12V Commercial Battery	Pickups, vans and trucks	
+Electrical	AUTO_PART	Battery Charger	12V automotive	
+Electrical	AUTO_PART	Alternator Regulator	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Alternator Brush Holder	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Alternator Bearing	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Starter Brush Set	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Starter Solenoid	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Starter Bendix Gear	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Ignition Switch	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Key Barrel / Ignition Lock	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Fuse Mini	Most modern vehicles	
+Electrical	AUTO_PART	Fuse Standard	Most vehicles	
+Electrical	AUTO_PART	Fuse Maxi	Most vehicles	
+Electrical	AUTO_PART	Blade Fuse Assortment	Universal	
+Electrical	AUTO_PART	Relay 4-Pin	Universal automotive	
+Electrical	AUTO_PART	Relay 5-Pin	Universal automotive	
+Electrical	AUTO_PART	Horn	Universal 12V	
+Electrical	AUTO_PART	Headlamp Bulb H4	Toyota, Nissan, Mazda and many vehicles	
+Electrical	AUTO_PART	Headlamp Bulb H7	Selected passenger vehicles	
+Electrical	AUTO_PART	Headlamp Bulb H11	Selected passenger vehicles	
+Electrical	AUTO_PART	Headlamp Bulb 9005 / HB3	Selected passenger vehicles	
+Electrical	AUTO_PART	Headlamp Bulb 9006 / HB4	Selected passenger vehicles	
+Electrical	AUTO_PART	Indicator Bulb	Universal / vehicle-specific	
+Electrical	AUTO_PART	Brake / Tail Bulb	Universal / vehicle-specific	
+Electrical	AUTO_PART	Number Plate Bulb	Universal / vehicle-specific	
+Electrical	AUTO_PART	LED Headlight Bulb	Selected vehicles	
+Electrical	AUTO_PART	Fog Lamp	Toyota, Nissan, Mazda, Honda and aftermarket	
+Electrical	AUTO_PART	Headlamp Assembly	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Tail Lamp Assembly	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Indicator Lamp Assembly	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Side Mirror Indicator	Selected models	
+Electrical	AUTO_PART	Parking Sensor	Selected vehicles / universal aftermarket	
+Electrical	AUTO_PART	Reverse Camera	Universal aftermarket	
+Electrical	AUTO_PART	Wiper Motor	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Wiper Linkage	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Wiper Switch	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Wiper Blade 14 inch	Universal / vehicle-specific	
+Electrical	AUTO_PART	Wiper Blade 16 inch	Universal / vehicle-specific	
+Electrical	AUTO_PART	Wiper Blade 18 inch	Universal / vehicle-specific	
+Electrical	AUTO_PART	Wiper Blade 20 inch	Universal / vehicle-specific	
+Electrical	AUTO_PART	Wiper Blade 22 inch	Universal / vehicle-specific	
+Electrical	AUTO_PART	Wiper Blade 24 inch	Universal / vehicle-specific	
+Electrical	AUTO_PART	Window Regulator	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Power Window Switch	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Door Lock Actuator	Toyota, Nissan, Mazda, Honda	
+Electrical	AUTO_PART	Central Locking Motor	Universal / vehicle-specific	
+Body & Exterior	AUTO_PART	Side Mirror Assembly	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Side Mirror Glass	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Door Handle	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Bonnet / Hood Latch	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Boot / Tailgate Lock	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Door Hinge	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Bumper Clip	Universal / vehicle-specific	
+Body & Exterior	AUTO_PART	Fender Liner	Toyota, Nissan, Mazda, Honda	
+Body & Exterior	AUTO_PART	Mud Flap	Universal / vehicle-specific	
+Body & Exterior	AUTO_PART	Number Plate Frame	Universal	
+Body & Exterior	AUTO_PART	Tow Hook / Eye	Vehicle-specific	
+Air Conditioning	AUTO_PART	AC Compressor	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC Condenser	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC Evaporator	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC Expansion Valve	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC Receiver Drier	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC Pressure Switch	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC Blower Motor	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	Cabin Filter	Toyota, Nissan, Mazda, Honda	
+Air Conditioning	AUTO_PART	AC O-Ring Kit	Automotive AC systems	
+Transmission & Drivetrain	AUTO_PART	Automatic Transmission Filter	Toyota, Nissan, Mazda, Honda	
+Transmission & Drivetrain	AUTO_PART	Automatic Transmission Gasket	Toyota, Nissan, Mazda, Honda	
+Transmission & Drivetrain	AUTO_PART	CVT Fluid	CVT vehicles as specified	
+Transmission & Drivetrain	AUTO_PART	CVT Filter	Toyota, Nissan, Honda, Subaru selected models	
+Transmission & Drivetrain	AUTO_PART	Gear Selector Cable	Toyota, Nissan, Mazda	
+Transmission & Drivetrain	AUTO_PART	Transmission Mount	Toyota, Nissan, Mazda, Honda	
+Transmission & Drivetrain	AUTO_PART	Differential Seal	Toyota, Nissan, Mazda, Isuzu	
+Transmission & Drivetrain	AUTO_PART	Axle Seal	Toyota, Nissan, Mazda, Honda	
+Commercial Vehicles	AUTO_PART	Fuel Water Separator	Diesel pickups, trucks and buses	
+Commercial Vehicles	AUTO_PART	Diesel Fuel Filter	Isuzu, Hino, Mitsubishi, Toyota, Nissan	
+Commercial Vehicles	AUTO_PART	Air Dryer Cartridge	Heavy trucks and buses	
+Commercial Vehicles	AUTO_PART	Brake Chamber	Trucks and buses	
+Commercial Vehicles	AUTO_PART	Brake Slack Adjuster	Trucks and buses	
+Commercial Vehicles	AUTO_PART	Truck Air Filter	Hino, Isuzu, Fuso, Scania and others	
+Commercial Vehicles	AUTO_PART	Truck Oil Filter	Hino, Isuzu, Fuso, Scania and others	
+Commercial Vehicles	AUTO_PART	Truck Brake Lining	Heavy commercial vehicles	
+Commercial Vehicles	AUTO_PART	Truck Clutch Kit	Hino, Isuzu, Fuso and others	
+Commercial Vehicles	AUTO_PART	Wheel Stud	Trucks and buses	
+Commercial Vehicles	AUTO_PART	Wheel Nut	Trucks and buses	
+Commercial Vehicles	AUTO_PART	U-Joint / Universal Joint	Pickups, trucks and commercial vehicles	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Engine Oil 4T	Most 4-stroke motorcycles	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Oil Filter	Bajaj Boxer, TVS, Honda, Yamaha and others	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Air Filter	Bajaj, TVS, Honda, Yamaha and others	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Spark Plug	Bajaj, TVS, Honda, Yamaha and others	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Chain Lubricant	Most motorcycles	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Brake Fluid	Most motorcycles requiring DOT fluid	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Coolant	Liquid-cooled motorcycles	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Battery	12V motorcycles	
+Motorbike Service	MOTORBIKE_PART	Chain & Sprocket Kit	Bajaj Boxer, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Drive Chain	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Front Sprocket	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Rear Sprocket	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Clutch Cable	Bajaj Boxer, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Throttle Cable	Bajaj Boxer, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Front Brake Cable	Cable-operated motorcycles	
+Motorbike Service	MOTORBIKE_PART	Speedometer Cable	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Front Brake Pads	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Rear Brake Shoes	Bajaj Boxer, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Front Brake Disc	Disc-brake motorcycles	
+Motorbike Service	MOTORBIKE_PART	Rear Brake Disc	Disc-brake motorcycles	
+Motorbike Service	MOTORBIKE_PART	Brake Caliper	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Brake Master Cylinder	Disc-brake motorcycles	
+Motorbike Service	MOTORBIKE_PART	Brake Hose	Disc-brake motorcycles	
+Motorbike Service	MOTORBIKE_PART	Wheel Bearing	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Steering Bearing Set	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Front Fork Seal	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Front Fork Oil	Motorcycle front forks	
+Motorbike Service	MOTORBIKE_PART	Rear Shock Absorber	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Swing Arm Bush	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Clutch Plate Set	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Clutch Springs	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Clutch Cable Adjuster	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Carburetor	Carbureted motorcycles	
+Motorbike Service	MOTORBIKE_PART	Carburetor Repair Kit	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Fuel Tap / Petcock	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Fuel Hose	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Fuel Filter	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Injector	Fuel-injected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Throttle Body	Fuel-injected motorcycles	
+Motorbike Service	MOTORBIKE_PART	CDI Unit	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	ECU Unit	Fuel-injected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Ignition Coil	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Rectifier / Regulator	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Starter Motor	Electric-start motorcycles	
+Motorbike Service	MOTORBIKE_PART	Starter Relay	Electric-start motorcycles	
+Motorbike Service	MOTORBIKE_PART	Horn	Universal 12V motorcycle	
+Motorbike Service	MOTORBIKE_PART	Headlamp Bulb	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Tail Lamp Bulb	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Indicator Bulb	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	LED Indicator Set	Universal / aftermarket motorcycles	
+Motorbike Service	MOTORBIKE_PART	Wiring Harness	Model-specific motorcycles	
+Motorbike Service	MOTORBIKE_PART	Ignition Switch	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Side Stand Switch	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Neutral Switch	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Speed Sensor	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Odometer / Speedometer	Model-specific motorcycles	
+Motorbike Service	MOTORBIKE_PART	Clutch Lever	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Brake Lever	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Gear Shift Lever	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Foot Rest / Foot Peg	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Kick Starter Lever	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Kick Starter Shaft	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Handlebar	Universal / model-specific	
+Motorbike Service	MOTORBIKE_PART	Handlebar Grip Set	Universal motorcycles	
+Motorbike Service	MOTORBIKE_PART	Mirror Set	Universal / model-specific	
+Motorbike Service	MOTORBIKE_PART	Mudguard / Fender	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Front Wheel Rim	Motorcycle-specific	
+Motorbike Service	MOTORBIKE_PART	Rear Wheel Rim	Motorcycle-specific	
+Motorbike Service	MOTORBIKE_PART	Tube	Tube-type motorcycle tyres	
+Motorbike Service	MOTORBIKE_PART	Tubeless Valve	Tubeless motorcycle wheels	
+Motorbike Service	MOTORBIKE_PART	Front Tyre	Motorcycle-specific sizes	
+Motorbike Service	MOTORBIKE_PART	Rear Tyre	Motorcycle-specific sizes	
+Motorbike Service	MOTORBIKE_PART	Number Plate Bracket	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Top Box Mounting Rack	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Motorcycle Top Box	Universal / motorcycle-specific	
+Motorbike Service	MOTORBIKE_PART	Crash Guard	Model-specific / universal	
+Motorbike Service	MOTORBIKE_PART	Bungee Cargo Net	Motorcycles	
+Motorbike Service	MOTORBIKE_PART	Delivery Box	Motorcycle delivery / boda applications	
+Motorbike Service	MOTORBIKE_PART	Chain Adjuster	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Chain Guide	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Air Filter Foam	Selected motorcycles	
+Motorbike Service	MOTORBIKE_PART	Gasket Set	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Cylinder Head Gasket	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Piston Ring Set	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Piston Kit	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Cylinder Block	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Connecting Rod Kit	Bajaj, TVS, Honda, Yamaha	
+Motorbike Service	MOTORBIKE_PART	Crankshaft Assembly	Bajaj, TVS, Honda, Yamaha	
+Service Accessories	ACCESSORY	Oil Drain Pan	Workshop / universal	
+Service Accessories	ACCESSORY	Oil Funnel	Workshop / universal	
+Service Accessories	ACCESSORY	Grease Gun	Workshop / universal	
+Service Accessories	ACCESSORY	Grease Cartridge	Workshop / universal	
+Service Accessories	ACCESSORY	Brake Cleaner	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Carburetor Cleaner	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Contact Cleaner	Automotive electrical	
+Service Accessories	ACCESSORY	Engine Degreaser	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Silicone Gasket Maker	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Threadlocker	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Anti-Seize Compound	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Copper Grease	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Bearing Grease	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Electrical Tape	Universal	
+Service Accessories	ACCESSORY	Heat Shrink Tubing	Automotive electrical	
+Service Accessories	ACCESSORY	Cable Ties	Universal	
+Service Accessories	ACCESSORY	Hose Clamps	Automotive / motorcycle	
+Service Accessories	ACCESSORY	O-Ring Assortment	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Gasket Paper	Automotive / motorcycle	
+Service Accessories	ACCESSORY	Workshop Rags	Workshop	
+Service Accessories	ACCESSORY	Microfiber Cloth	Automotive detailing	
+Service Accessories	ACCESSORY	Windshield Washer Fluid	Most vehicles	
+Service Accessories	ACCESSORY	Wiper Washer Nozzle	Toyota, Nissan, Mazda, Honda	
+Service Accessories	ACCESSORY	Tyre Valve Core	Universal	
+Service Accessories	ACCESSORY	Tyre Valve Cap	Universal	
+Service Accessories	ACCESSORY	Tyre Repair Kit	Cars / motorcycles	
+Service Accessories	ACCESSORY	Puncture Repair String	Tubeless tyres	
+Service Accessories	ACCESSORY	Wheel Balancing Weights	Cars / motorcycles	
+Service Accessories	ACCESSORY	Tyre Pressure Gauge	Cars / motorcycles	
+Service Accessories	ACCESSORY	Tyre Inflator	Cars / motorcycles	
+Service Accessories	ACCESSORY	Jump Starter	12V vehicles	
+Service Accessories	ACCESSORY	Jumper Cables	12V vehicles	
+Service Accessories	ACCESSORY	Battery Terminal Cleaner	12V vehicles	
+Service Accessories	ACCESSORY	Battery Distilled Water	Serviceable lead-acid batteries	
+Service Accessories	ACCESSORY	Radiator Flush	Cooling systems	
+Service Accessories	ACCESSORY	Fuel System Cleaner	Petrol/diesel engines	
+Service Accessories	ACCESSORY	Injector Cleaner	Petrol/diesel engines	
+Service Accessories	ACCESSORY	Diesel Treatment	Diesel engines	
+Service Accessories	ACCESSORY	Octane Booster	Petrol engines where appropriate	
+Service Accessories	ACCESSORY	AdBlue / DEF	Compatible diesel vehicles	
+Service Accessories	ACCESSORY	Air Freshener	Vehicle interior	
+Service Accessories	ACCESSORY	Dashboard Polish	Vehicle interior	
+Service Accessories	ACCESSORY	Car Shampoo	Vehicle exterior	
+Service Accessories	ACCESSORY	Tyre Shine	Vehicle tyres	
+Service Accessories	ACCESSORY	Glass Cleaner	Vehicle glass	
+Toyota Common	AUTO_PART	Oil Filter 90915 Series	Toyota Corolla, Fielder, Axio, Premio, Allion, Probox	
+Toyota Common	AUTO_PART	Air Filter	Toyota Corolla, Fielder, Axio, Premio, Allion	
+Toyota Common	AUTO_PART	Front Brake Pad Set	Toyota Corolla, Fielder, Axio, Premio, Allion	
+Toyota Common	AUTO_PART	Front Stabilizer Link	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Front Lower Arm Bush	Toyota Corolla, Fielder, Axio	
+Toyota Common	AUTO_PART	Front Wheel Bearing	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	CV Joint	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Engine Mount	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Ignition Coil	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Oxygen Sensor	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Radiator Hose	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Cabin Filter	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Wiper Blade	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Side Mirror	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Door Lock Actuator	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Window Regulator	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	AC Compressor	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	AC Condenser	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Transmission Mount	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Drive Shaft	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Brake Master Cylinder	Toyota Corolla, Fielder, Axio, Premio	
+Toyota Common	AUTO_PART	Clutch Kit	Toyota Corolla, Probox, Fielder manual	
+Toyota Common	AUTO_PART	Clutch Master Cylinder	Toyota Corolla, Probox, Fielder manual	
+Toyota Common	AUTO_PART	Clutch Slave Cylinder	Toyota Corolla, Probox, Fielder manual	
+Toyota Common	AUTO_PART	Thermostat	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Water Pump	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Serpentine Belt	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Tensioner	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Alternator	Toyota Corolla, Fielder, Axio, Probox	
+Toyota Common	AUTO_PART	Starter Motor	Toyota Corolla, Fielder, Axio, Probox	
+Pickup & 4WD	AUTO_PART	Front Brake Pad Set	Toyota Hilux, Fortuner, Nissan Navara, Mitsubishi L200	
+Pickup & 4WD	AUTO_PART	Rear Brake Shoe Set	Toyota Hilux, Nissan Hardbody, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Front Shock Absorber	Toyota Hilux, Fortuner, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Rear Shock Absorber	Toyota Hilux, Fortuner, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Upper Control Arm	Toyota Hilux, Fortuner, Nissan Navara	
+Pickup & 4WD	AUTO_PART	Lower Ball Joint	Toyota Hilux, Fortuner, Nissan Navara	
+Pickup & 4WD	AUTO_PART	CV Joint	Toyota Hilux, Fortuner, Nissan Navara	
+Pickup & 4WD	AUTO_PART	Wheel Hub Bearing	Toyota Hilux, Fortuner, Nissan Navara	
+Pickup & 4WD	AUTO_PART	Clutch Kit	Toyota Hilux, Nissan Navara, Mitsubishi L200	
+Pickup & 4WD	AUTO_PART	Fuel Filter	Toyota Hilux, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Air Filter	Toyota Hilux, Fortuner, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Oil Filter	Toyota Hilux, Fortuner, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Radiator	Toyota Hilux, Fortuner, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Radiator Hose	Toyota Hilux, Fortuner, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Engine Mount	Toyota Hilux, Fortuner, Nissan Navara	
+Pickup & 4WD	AUTO_PART	Leaf Spring Bush	Toyota Hilux, Nissan Hardbody, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Leaf Spring	Toyota Hilux, Nissan Hardbody, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Propeller Shaft U-Joint	Toyota Hilux, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Transfer Case Oil Seal	Toyota Hilux, Nissan Navara, Isuzu D-Max	
+Pickup & 4WD	AUTO_PART	Differential Oil Seal	Toyota Hilux, Nissan Navara, Isuzu D-Max	
+Workshop Consumables	ACCESSORY	Nitrile Mechanic Gloves	Workshop / universal	
+Workshop Consumables	ACCESSORY	Disposable Coveralls	Workshop / universal	
+Workshop Consumables	ACCESSORY	Masking Tape	Workshop / universal	
+Workshop Consumables	ACCESSORY	Electrical Wire	Automotive electrical	
+Workshop Consumables	ACCESSORY	Crimp Terminals	Automotive electrical	
+Workshop Consumables	ACCESSORY	Ring Terminals	Automotive electrical	
+Workshop Consumables	ACCESSORY	Blade Fuse Holder	Automotive electrical	
+Workshop Consumables	ACCESSORY	Inline Fuse Holder	Automotive electrical	
+Workshop Consumables	ACCESSORY	Automotive Relay Socket	Automotive electrical	
+Workshop Consumables	ACCESSORY	Vacuum Hose	Automotive / motorcycle	
+Workshop Consumables	ACCESSORY	Fuel Hose	Automotive / motorcycle	
+Workshop Consumables	ACCESSORY	Coolant Hose	Automotive / motorcycle	
+Workshop Consumables	ACCESSORY	Vacuum Hose Clips	Automotive / motorcycle	
+Workshop Consumables	ACCESSORY	Hose Clamp Assortment	Automotive / motorcycle	
+Workshop Consumables	ACCESSORY	Assorted Nuts & Bolts	Automotive / motorcycle	
+Workshop Consumables	ACCESSORY	Wheel Nuts	Vehicle-specific	
+Workshop Consumables	ACCESSORY	Wheel Studs	Vehicle-specific	
+Workshop Consumables	ACCESSORY	Body Clips Assortment	Automotive	
+Workshop Consumables	ACCESSORY	Trim Clips Assortment	Automotive	
+Workshop Consumables	ACCESSORY	Push Rivets Assortment	Automotive	

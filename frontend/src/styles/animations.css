@@ -1,0 +1,60 @@
+/* ============================================================
+   Keyframes and animation helpers
+   ============================================================ */
+
+@keyframes demka-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes demka-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes demka-slide-down {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes demka-slide-in-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes demka-scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes demka-shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+.animate-fade-in {
+  animation: demka-fade-in 180ms ease-out;
+}
+.animate-slide-up {
+  animation: demka-slide-up 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-slide-down {
+  animation: demka-slide-down 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-slide-in-left {
+  animation: demka-slide-in-left 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.animate-scale-in {
+  animation: demka-scale-in 180ms ease-out;
+}
+
+/* Respect reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-down,
+  .animate-slide-in-left,
+  .animate-scale-in {
+    animation: none;
+  }
+}

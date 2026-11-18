@@ -1,0 +1,17 @@
+Django>=5.0,<5.1
+djangorestframework>=3.15
+djangorestframework-simplejwt>=5.3
+django-cors-headers>=4.3
+django-filter>=24.2
+drf-spectacular>=0.27
+django-environ>=0.11
+django-celery-results>=2.5
+psycopg[binary]>=3.1
+celery>=5.3
+redis>=5.0
+requests>=2.31
+Pillow>=10.2
+cryptography>=42
+pyusb>=1.2        # optional, USB direct
+pyserial>=3.5     # optional, Bluetooth RFCOMM / USB-to-serial
+openpyxl>=3.1     # Excel file handling

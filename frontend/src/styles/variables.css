@@ -1,0 +1,74 @@
+/* ============================================================
+   DEMKA Design Tokens
+   CSS custom properties — referenced by global.css, components.css,
+   animations.css, and any page that needs JS-side layout math.
+   ============================================================ */
+
+:root {
+  /* ---- Brand palette (mirrors tailwind.config.js) ---- */
+  --color-brand-50:  #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-900: #1e3a8a;
+
+  /* ---- Semantic states ---- */
+  --color-success: #16a34a;
+  --color-success-soft: #dcfce7;
+  --color-warning: #d97706;
+  --color-warning-soft: #fef3c7;
+  --color-danger:  #dc2626;
+  --color-danger-soft: #fee2e2;
+
+  /* ---- Neutrals ---- */
+  --color-bg: #f5f8fa;
+  --color-bg-elevated: #ffffff;
+  --color-border: #dce5eb;
+  --color-text: #172b3a;
+  --color-text-muted: #647789;
+  --font-body: "Space Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- Layout metrics ----
+     Topbar height on mobile is slightly shorter than on desktop for
+     more content room; bottom bar is a fixed 4rem (64px) plus safe area.
+     The sidebar has both expanded and collapsed widths. */
+  --topbar-height: 3.5rem;        /* 56px (mobile) */
+  --topbar-height-md: 4rem;       /* 64px (desktop) */
+  --bottombar-height: 4rem;       /* 64px */
+  --sidebar-width: 15rem;         /* 240px */
+  --sidebar-width-collapsed: 4.5rem; /* 72px */
+
+  /* Safe-area insets for iOS notch & home indicator. */
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+
+  /* ---- Effects ---- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.5rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* ---- Z-index ladder ---- */
+  --z-topbar: 30;
+  --z-sidebar: 40;
+  --z-bottombar: 40;
+  --z-drawer: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}
+
+/* Wider screens use the taller topbar. */
+@media (min-width: 768px) {
+  :root {
+    --topbar-height: var(--topbar-height-md);
+  }
+}

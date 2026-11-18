@@ -1,0 +1,306 @@
+/* ============================================================
+   Component classes — reusable building blocks referenced throughout
+   the app. All @apply-based so they stay in sync with the Tailwind
+   theme (colors, radii, spacing).
+   ============================================================ */
+
+/* ---- Buttons ---- */
+.btn {
+  @apply inline-flex items-center justify-center gap-2
+    rounded-md px-4 py-2.5 font-medium
+         transition-colors duration-150
+         disabled:opacity-50 disabled:cursor-not-allowed
+         select-none;
+  min-height: 2.75rem;
+}
+.btn-sm {
+  @apply px-3 py-1.5 text-sm;
+  min-height: 2rem;
+}
+.btn-lg {
+  @apply px-6 py-3 text-base;
+  min-height: 3rem;
+}
+.btn-primary {
+  @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-700;
+}
+.btn-secondary {
+  @apply btn border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 active:bg-slate-100;
+}
+.btn-danger {
+  @apply btn bg-red-600 text-white hover:bg-red-700 active:bg-red-700;
+}
+.btn-ghost {
+  @apply btn text-slate-600 hover:bg-slate-100 active:bg-slate-200;
+}
+
+/* Icon-only button (must have aria-label). */
+.btn-icon {
+  @apply inline-flex items-center justify-center rounded-md
+         w-10 h-10 text-slate-600 hover:bg-slate-100
+         transition-colors;
+}
+
+/* ---- Inputs ---- */
+.input {
+  @apply w-full rounded-md border border-slate-300 bg-white
+         px-3 py-2.5 text-slate-900
+         placeholder-slate-400
+         focus:border-brand-500 focus:ring-1 focus:ring-brand-500
+         disabled:bg-slate-100 disabled:text-slate-500;
+  min-height: 2.75rem;
+  box-shadow: 0 1px 1px rgb(15 23 42 / 0.025);
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+.input:focus { background-color: #fff; }
+.input-error { @apply border-red-500 focus:border-red-500 focus:ring-red-500; }
+.field-error { @apply mt-1 text-xs font-medium text-red-700; }
+.field-hint { @apply mt-1 text-xs text-slate-500; }
+.select-menu {
+  @apply absolute left-0 right-0 z-50 mt-1 max-h-64 overflow-y-auto rounded-md border border-slate-200 bg-white p-1.5 shadow-lg;
+}
+.select-option { @apply flex min-h-10 w-full items-center justify-between gap-3 rounded px-3 py-2 text-left text-sm text-slate-700; }
+.select-option:hover,
+.select-option--active { @apply bg-slate-100; }
+.select-option:disabled { @apply cursor-not-allowed opacity-50; }
+.select-option--selected { @apply font-semibold text-slate-900; }
+.date-picker-popover {
+  @apply absolute left-0 z-50 mt-1 w-80 max-w-[calc(100vw-2rem)] rounded-md border border-slate-200 bg-white p-3 shadow-xl;
+}
+.date-picker-preset { @apply rounded px-1 py-1.5 text-[11px] font-medium text-slate-600 hover:bg-slate-100; }
+.date-picker-nav { @apply flex h-9 w-9 items-center justify-center rounded text-lg text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40; }
+.date-picker-heading { @apply rounded px-2 py-1 text-sm font-semibold text-slate-800 hover:bg-slate-100; }
+.date-picker-weekday { @apply py-1 text-xs font-medium text-slate-500; }
+.date-picker-day { @apply mx-auto flex h-9 w-9 items-center justify-center rounded text-sm text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-transparent; }
+.date-picker-day--selected { @apply bg-brand-600 font-semibold text-white hover:bg-brand-700; }
+.date-picker-day--today { @apply border border-brand-500 font-semibold text-brand-700; }
+.date-picker-period { @apply rounded px-2 py-3 text-sm text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40; }
+.date-picker-today { @apply mt-3 w-full border-t border-slate-100 pt-3 text-sm font-medium text-brand-700 hover:text-brand-900; }
+.date-picker-clear { @apply absolute right-9 top-1/2 -translate-y-1/2 rounded px-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700; }
+.checkbox-field { @apply inline-flex min-h-11 cursor-pointer items-center gap-2.5; }
+.checkbox-control { @apply h-4 w-4 shrink-0 rounded border-slate-300 text-brand-600 focus:ring-brand-500; }
+.checkbox-field--disabled,
+.switch-field--disabled { @apply cursor-not-allowed opacity-50; }
+.switch-field { @apply relative inline-flex min-h-11 cursor-pointer items-center justify-between gap-4; }
+.switch-input { @apply sr-only; }
+.switch-track { @apply relative h-6 w-11 shrink-0 rounded-full bg-slate-300 transition-colors; }
+.switch-thumb { @apply absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform; }
+.switch-input:checked + .switch-track { @apply bg-brand-600; }
+.switch-input:checked + .switch-track .switch-thumb { transform: translateX(1.25rem); }
+.switch-input:focus-visible + .switch-track { @apply ring-2 ring-brand-500 ring-offset-2; }
+.switch-input:disabled + .switch-track { @apply cursor-not-allowed opacity-50; }
+.input-sm {
+  @apply py-1.5 text-sm;
+  min-height: 2rem;
+}
+textarea.input {
+  min-height: auto;
+}
+
+.label {
+  @apply block text-sm font-semibold text-slate-700 mb-1.5;
+}
+
+.auth-glass {
+  border: 1px solid rgb(255 255 255 / 0.24);
+  background: rgb(255 255 255 / 0.1);
+  box-shadow: 0 24px 70px rgb(2 12 32 / 0.3);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.auth-glass .label { color: rgb(255 255 255 / 0.9); }
+.auth-glass .input {
+  border-color: rgb(255 255 255 / 0.28);
+  background-color: rgb(255 255 255 / 0.08);
+  color: #fff;
+}
+.auth-glass .input::placeholder { color: rgb(255 255 255 / 0.55); }
+.auth-glass .input:focus { background-color: rgb(255 255 255 / 0.14); }
+
+/* ---- Cards ---- */
+.card {
+  @apply rounded-md border border-slate-200 bg-white shadow-sm;
+  padding: 1rem;
+}
+.card-tight {
+  @apply rounded-md border border-slate-200 bg-white shadow-sm;
+  padding: 0;
+}
+.card-hover {
+  @apply card transition-all hover:border-brand-500 hover:shadow-md;
+}
+
+/* ---- Badges ---- */
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5
+         text-xs font-medium whitespace-nowrap;
+}
+.badge-success { @apply badge bg-green-100 text-green-800; }
+.badge-warning { @apply badge bg-amber-100 text-amber-800; }
+.badge-danger  { @apply badge bg-red-100 text-red-800; }
+.badge-neutral { @apply badge bg-slate-100 text-slate-700; }
+.badge-brand   { @apply badge bg-blue-100 text-blue-800; }
+
+/* ---- Tables ---- */
+.table {
+  @apply w-full text-left text-sm;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table thead th {
+  @apply bg-slate-50 px-4 py-3
+         text-[11px] font-semibold uppercase
+         text-slate-600
+         border-b border-slate-200;
+  white-space: nowrap;
+}
+.table tbody td {
+  @apply px-4 py-3 border-b border-slate-100 align-middle;
+}
+.table tbody tr:last-child td {
+  @apply border-b-0;
+}
+.table tbody tr:hover {
+  @apply bg-slate-50;
+}
+
+.mobile-data-card { @apply border-b border-slate-200 px-4 py-3 last:border-b-0; }
+.mobile-data-card--interactive { @apply cursor-pointer transition-colors hover:bg-slate-50 focus-visible:bg-slate-50; }
+.mobile-data-title { @apply break-words text-sm font-semibold text-slate-900; }
+.mobile-data-fields { @apply mt-2 grid grid-cols-2 gap-x-4 gap-y-2; }
+.mobile-data-field { @apply min-w-0; }
+.mobile-data-field dt { @apply text-[11px] font-medium text-slate-500; }
+.mobile-data-field dd { @apply mt-0.5 break-words text-sm text-slate-800; }
+.mobile-data-empty { @apply px-4 py-8 text-center text-sm text-slate-500; }
+
+.app-content { width: 100%; min-width: 0; }
+.app-content > * { min-width: 0; }
+.page-form { @apply mx-auto grid w-full gap-4; max-width: 64rem; }
+.page-title { @apply text-2xl font-bold leading-tight text-slate-900; }
+.page-header { @apply flex flex-wrap items-end justify-between gap-4; }
+.page-header-back { @apply mb-2 inline-flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-brand-700; }
+.page-header-eyebrow { @apply mb-1 text-xs font-semibold uppercase text-brand-700; }
+.page-header-description { @apply mt-1 max-w-2xl text-sm text-slate-500; }
+.page-header-actions { @apply flex w-full flex-wrap gap-2 sm:w-auto sm:justify-end; }
+.app-content h1 { text-wrap: balance; }
+.app-content .space-y-4 > .flex,
+.app-content .space-y-6 > .flex { flex-wrap: wrap; gap: 0.75rem; }
+.app-content .space-y-4 > .card.grid,
+.app-content .space-y-6 > .card.grid { align-items: end; }
+.app-content .space-y-4 > .card.flex,
+.app-content .space-y-6 > .card.flex { flex-wrap: wrap; align-items: end; }
+
+.form-section {
+  @apply rounded-md border border-slate-200 bg-white p-4 md:p-5;
+  box-shadow: var(--shadow-sm);
+}
+.form-section-header { @apply mb-4; }
+.form-section-title { @apply text-sm font-semibold text-slate-900; }
+.form-section-description { @apply mt-1 text-sm text-slate-500; }
+.form-grid { @apply grid grid-cols-1 gap-4; }
+.form-grid--two { @apply md:grid-cols-2; }
+.form-grid--three { @apply sm:grid-cols-2 lg:grid-cols-3; }
+.form-grid--one { @apply grid-cols-1; }
+.form-actions {
+  @apply flex flex-row gap-2 border-t border-slate-200 pt-4 sm:flex-row sm:justify-end;
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  margin-top: 0.25rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  background: rgb(248 250 252 / 0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -8px 24px rgb(15 23 42 / 0.06);
+}
+@media (max-width: 767px) {
+  .form-actions {
+    bottom: calc(var(--bottombar-height) + var(--safe-bottom));
+  }
+}
+.form-actions > button,
+.form-actions > a {
+  @apply w-auto flex-1 sm:flex-none sm:w-auto;
+}
+
+.chart-panel {
+  @apply min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm md:p-5;
+}
+.chart-panel-header { @apply mb-4 flex flex-wrap items-start justify-between gap-3; }
+.chart-panel-title { @apply text-sm font-semibold text-slate-900; }
+.chart-panel-description { @apply mt-1 text-sm text-slate-500; }
+.chart-panel-actions { @apply flex-shrink-0; }
+.chart-canvas { @apply min-w-0; }
+.chart-empty { @apply flex items-center justify-center rounded-md bg-slate-50 px-4 text-sm text-slate-500; }
+
+.metric-card { @apply min-w-0 rounded-md border border-slate-200 border-l-4 bg-white p-4 shadow-sm; }
+.metric-card--brand { @apply border-l-brand-600; }
+.metric-card--success { @apply border-l-green-600; }
+.metric-card--warning { @apply border-l-amber-500; }
+.metric-card--danger { @apply border-l-red-600; }
+.metric-card-label { @apply text-xs font-semibold uppercase text-slate-500; }
+.metric-card-value { @apply mt-2 break-words text-xl font-bold tabular-nums text-slate-900 sm:text-2xl; }
+.metric-card-detail { @apply mt-1 text-xs text-slate-500; }
+.panel-card { @apply min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm md:p-5; }
+.panel-card-header { @apply mb-4 flex flex-wrap items-start justify-between gap-3; }
+.panel-card-title { @apply text-sm font-semibold text-slate-900; }
+.panel-card-description { @apply mt-1 text-sm text-slate-500; }
+.panel-card-actions { @apply flex flex-wrap items-center gap-2; }
+.empty-state { @apply border-dashed bg-white; }
+
+/* ---- Divider ---- */
+.divider {
+  @apply my-4 h-px w-full bg-slate-200;
+}
+
+/* ---- Skeleton loader ---- */
+.skeleton {
+  @apply animate-pulse rounded bg-slate-200;
+}
+
+/* ---- Bottom-bar compensation (applied to <main>) ----
+   Content area reserves space for the fixed bottom bar on mobile
+   so scrolling reaches the true bottom of the page. */
+.has-bottombar {
+  padding-bottom: calc(var(--bottombar-height) + var(--safe-bottom) + 1rem);
+}
+@media (min-width: 768px) {
+  .has-bottombar {
+    padding-bottom: 0;
+  }
+}
+
+/* ---- Mobile bottom sheet backdrop ---- */
+.sheet-backdrop {
+  @apply fixed inset-0 bg-black/40;
+  z-index: var(--z-drawer);
+}
+
+/* ---- Bottom sheet panel ---- */
+.sheet-panel {
+  @apply fixed inset-x-0 bottom-0 bg-white rounded-t-2xl shadow-xl;
+  z-index: calc(var(--z-drawer) + 1);
+  max-height: 85vh;
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ---- Scroll container for the sidebar ---- */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(71 85 105 / 0.5) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105 / 0.5);
+  border-radius: 9999px;
+}
+
+@media (max-width: 639px) {
+  .page-title { font-size: 1.375rem; }
+  .card { padding: 0.875rem; }
+  .card.p-0 { padding: 0; }
+  .table { min-width: 38rem; }
+  .form-section { padding: 0.875rem; }
+  .chart-panel { padding: 0.875rem; }
+}

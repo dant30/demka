@@ -1,0 +1,1 @@
+"""DEMKA shared core package (framework-agnostic utilities)."""

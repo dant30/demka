@@ -1,0 +1,1 @@
+"""DEMKA Django apps package."""
