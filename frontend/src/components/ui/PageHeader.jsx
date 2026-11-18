@@ -11,7 +11,7 @@ export default function PageHeader({
 }) {
 	return (
 		<header className={`page-header ${className}`}>
-			<div className="min-w-0">
+			<div className="min-w-0 flex-1">
 				{backTo && (
 					<Link to={backTo} className="page-header-back">
 						<span aria-hidden="true">←</span> {backLabel}

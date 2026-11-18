@@ -8,6 +8,7 @@ import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
 import Select from '@/components/ui/Select';
+import Filter from '@/components/ui/Filter';
 
 export default function ReturnsList() {
   const [page, setPage] = useState(1);
@@ -36,14 +37,16 @@ export default function ReturnsList() {
       <PageHeader
         title="Returns"
         description="Review return requests, approvals, and refunds."
-        actions={<Select aria-label="Filter returns by status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full sm:w-48">
+      />
+      <Filter title="Return filters">
+        <Select aria-label="Filter returns by status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full sm:w-48">
           <option value="">All statuses</option>
           <option value="DRAFT">Draft</option>
           <option value="APPROVED">Approved</option>
           <option value="REJECTED">Rejected</option>
           <option value="COMPLETED">Completed</option>
-        </Select>}
-      />
+        </Select>
+      </Filter>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </div>

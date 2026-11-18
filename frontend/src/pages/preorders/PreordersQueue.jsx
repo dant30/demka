@@ -8,6 +8,7 @@ import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
 import Select from '@/components/ui/Select';
+import Filter from '@/components/ui/Filter';
 
 export default function PreordersQueue() {
   const [page, setPage] = useState(1);
@@ -34,7 +35,7 @@ export default function PreordersQueue() {
   return (
     <div className="space-y-4">
       <PageHeader title="Preorders" description="Track customer orders from submission through delivery." />
-      <div className="card">
+      <Filter title="Preorder filters">
         <Select value={status} onChange={(e) => setStatus(e.target.value)} className="max-w-xs">
           <option value="">All statuses</option>
           <option value="SUBMITTED">Submitted</option>
@@ -44,7 +45,7 @@ export default function PreordersQueue() {
           <option value="DELIVERED">Delivered</option>
           <option value="CANCELLED">Cancelled</option>
         </Select>
-      </div>
+      </Filter>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </div>

@@ -11,6 +11,7 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import DatePicker from '@/components/ui/DatePicker';
 import PageHeader from '@/components/ui/PageHeader';
+import Filter from '@/components/ui/Filter';
 import { useCreate, useList, useAction } from '@/api/queries';
 import ChartPanel from '@/components/charts/ChartPanel';
 import TrendChart from '@/components/charts/TrendChart';
@@ -87,7 +88,7 @@ export default function ExpensesList() {
         </ChartPanel>
       )}
 
-      <div className="card flex gap-3">
+      <Filter title="Expense filters" contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
           <option value="">All categories</option>
           {(categories || []).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -99,7 +100,7 @@ export default function ExpensesList() {
           <option value="quarterly">This quarter</option>
           <option value="yearly">This year</option>
         </Select>
-      </div>
+      </Filter>
 
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />

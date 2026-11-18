@@ -9,6 +9,7 @@ import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
 import Button from '@/components/ui/Button';
+import Filter from '@/components/ui/Filter';
 
 export default function CustomersList() {
   const [page, setPage] = useState(1);
@@ -47,7 +48,7 @@ export default function CustomersList() {
         actions={<Link to="/customers/new" className="btn-primary">+ New Customer</Link>}
       />
 
-      <div className="card grid grid-cols-1 md:grid-cols-3 gap-3">
+      <Filter title="Customer filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Input
           placeholder="Search name, phone, code..."
           value={search}
@@ -60,7 +61,7 @@ export default function CustomersList() {
           <option value="RESELLER">Reseller</option>
           <option value="WALK_IN">Walk-in</option>
         </Select>
-      </div>
+      </Filter>
 
       <DataTable columns={columns} rows={customers} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />

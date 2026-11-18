@@ -10,6 +10,7 @@ import DataTable from '@/components/ui/DataTable';
 import PageHeader from '@/components/ui/PageHeader';
 import Pagination from '@/components/ui/Pagination';
 import ConfirmDialong from '@/components/ui/ConfirmDialong';
+import Filter from '@/components/ui/Filter';
 
 export default function AdminUsers() {
   const qc = useQueryClient();
@@ -66,17 +67,48 @@ export default function AdminUsers() {
       label: 'Actions',
       mobileFullWidth: true,
       render: (r) => (
-        <div className="flex flex-wrap gap-2">
-          <Button size="sm" variant="secondary" onClick={() => setEditingUser(r)}>Edit</Button>
+        <div className="flex w-full gap-2">
           <Button
             size="sm"
             variant="secondary"
+            className="min-h-11 min-w-0 flex-1 px-2 md:min-h-8 md:flex-none md:px-0"
+            aria-label={`Edit ${r.username}`}
+            title="Edit user"
+            onClick={() => setEditingUser(r)}
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m14 5 5 5M4 20l4.5-1 10.8-10.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20Z" />
+            </svg>
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            className="min-h-11 min-w-0 flex-1 px-2 md:min-h-8 md:flex-none md:px-0"
+            aria-label={`${r.is_active ? 'Suspend' : 'Reactivate'} ${r.username}`}
+            title={r.is_active ? 'Suspend user' : 'Reactivate user'}
             onClick={() => confirmAccountAction(r, r.is_active ? 'suspend' : 'activate')}
           >
-            {r.is_active ? 'Suspend' : 'Reactivate'}
+            {r.is_active ? (
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 5v14M16 5v14" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m8 5 11 7-11 7V5Z" />
+              </svg>
+            )}
           </Button>
-          <Button size="sm" variant="danger" onClick={() => confirmAccountAction(r, 'delete')}>
-            Delete
+          <Button
+            size="sm"
+            variant="danger"
+            className="min-h-11 min-w-0 flex-1 px-2 md:min-h-8 md:flex-none md:px-0"
+            aria-label={`Delete ${r.username}`}
+            title="Delete user"
+            onClick={() => confirmAccountAction(r, 'delete')}
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 7h16M10 11v6M14 11v6M5 7l1 13h12l1-13M9 7V4h6v3" />
+            </svg>
           </Button>
         </div>
       ),
@@ -91,9 +123,9 @@ export default function AdminUsers() {
         actions={<Button onClick={() => setCreateOpen(true)}>+ New User</Button>}
       />
 
-      <div className="card">
+      <Filter title="User filters">
         <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      </div>
+      </Filter>
 
       <DataTable columns={columns} rows={rows} loading={isLoading} />
 

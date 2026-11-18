@@ -5,6 +5,7 @@ import { endpoints } from '@/api/endpoints';
 import DataTable from '@/components/ui/DataTable';
 import Input from '@/components/ui/Input';
 import PageHeader from '@/components/ui/PageHeader';
+import Filter from '@/components/ui/Filter';
 
 export default function RoutesList() {
   const [search, setSearch] = useState('');
@@ -30,9 +31,9 @@ export default function RoutesList() {
         description="Manage delivery routes, assigned agents, and schedules."
         actions={<Link to="/routes/new" className="btn-primary">+ New Route</Link>}
       />
-      <div className="card">
+      <Filter title="Route filters">
         <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      </div>
+      </Filter>
       <DataTable columns={columns} rows={routes} loading={isLoading} />
     </div>
   );

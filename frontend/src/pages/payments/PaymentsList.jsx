@@ -9,6 +9,7 @@ import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
 import Select from '@/components/ui/Select';
 import Input from '@/components/ui/Input';
+import Filter from '@/components/ui/Filter';
 
 export default function PaymentsList() {
   const [page, setPage] = useState(1);
@@ -40,7 +41,7 @@ export default function PaymentsList() {
         description="Review incoming payments and their reconciliation status."
         actions={<Link to="/payments/mpesa" className="btn-secondary">M-Pesa Reconcile</Link>}
       />
-      <div className="card grid grid-cols-1 md:grid-cols-3 gap-3">
+      <Filter title="Payment filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Select value={method} onChange={(e) => setMethod(e.target.value)}>
           <option value="">All methods</option>
           <option value="CASH">Cash</option>
@@ -54,7 +55,7 @@ export default function PaymentsList() {
           <option value="PENDING">Pending</option>
           <option value="REVERSED">Reversed</option>
         </Select>
-      </div>
+      </Filter>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </div>

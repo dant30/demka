@@ -7,6 +7,7 @@ import Input from '@/components/ui/Input';
 import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
+import Filter from '@/components/ui/Filter';
 
 export default function SuppliersList() {
   const [page, setPage] = useState(1);
@@ -34,9 +35,9 @@ export default function SuppliersList() {
         description="Maintain supplier contacts and product relationships."
         actions={<Link to="/suppliers/new" className="btn-primary">+ New Supplier</Link>}
       />
-      <div className="card">
+      <Filter title="Supplier filters">
         <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      </div>
+      </Filter>
       <DataTable columns={columns} rows={suppliers} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </div>

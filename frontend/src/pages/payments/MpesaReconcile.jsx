@@ -11,6 +11,7 @@ import Pagination from '@/components/ui/Pagination';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import Input from '@/components/ui/Input';
+import Filter from '@/components/ui/Filter';
 
 export default function MpesaReconcile() {
   const [page, setPage] = useState(1);
@@ -47,9 +48,11 @@ export default function MpesaReconcile() {
       <PageHeader
         title="M-Pesa Reconciliation"
         description="Match incoming M-Pesa transactions to recorded payments."
-        actions={<Switch label="Unmatched only" checked={showUnreconciled}
-          onChange={(e) => setShowUnreconciled(e.target.checked)} />}
       />
+      <Filter title="Transaction filters">
+        <Switch label="Unmatched only" checked={showUnreconciled}
+          onChange={(e) => setShowUnreconciled(e.target.checked)} />
+      </Filter>
       <DataTable columns={columns} rows={rows} loading={isLoading}
         empty="No M-Pesa transactions to reconcile." />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />

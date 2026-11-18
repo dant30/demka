@@ -3,6 +3,7 @@ import { PERIODS } from '@/utils/dates';
 import PageHeader from '@/components/ui/PageHeader';
 import DatePicker from '@/components/ui/DatePicker';
 import Select from '@/components/ui/Select';
+import Filter from '@/components/ui/Filter';
 
 export function PeriodSelector() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,18 +41,24 @@ export function PeriodSelector() {
         value={end}
         onChange={(value) => setParam('end', value)}
       />
-      <a
-        href={`?${searchParams.toString()}&format=csv`}
-        className="btn-secondary text-sm"
-      >
-        CSV
-      </a>
     </div>
   );
 }
 
-export function ReportHeader({ title, description }) {
+function ReportCsvExport() {
+  const [searchParams] = useSearchParams();
   return (
-    <PageHeader title={title} description={description} actions={<PeriodSelector />} />
+    <a href={`?${searchParams.toString()}&format=csv`} className="btn-secondary text-sm">
+      CSV
+    </a>
   );
+}
+
+export function ReportHeader({ title, description }) {
+  return <>
+    <PageHeader title={title} description={description} actions={<ReportCsvExport />} />
+    <Filter title="Report filters">
+      <PeriodSelector />
+    </Filter>
+  </>;
 }

@@ -13,6 +13,7 @@ import DatePicker from '@/components/ui/DatePicker';
 import PageHeader from '@/components/ui/PageHeader';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import Filter from '@/components/ui/Filter';
 
 export default function SalesList() {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ export default function SalesList() {
         actions={<Link to="/pos" className="btn-primary">New Sale</Link>}
       />
 
-      <div className="card grid grid-cols-1 md:grid-cols-4 gap-3">
+      <Filter title="Sales filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-4">
         <Input
           placeholder="Search sale # or customer..."
           value={filters.search}
@@ -116,7 +117,7 @@ export default function SalesList() {
             Reset
           </Button>
         </div>
-      </div>
+      </Filter>
 
       <DataTable
         columns={columns}

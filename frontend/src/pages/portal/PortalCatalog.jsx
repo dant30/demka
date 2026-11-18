@@ -6,6 +6,7 @@ import { usePortal } from '@/store/portal';
 import { formatKes } from '@/utils/money';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
+import Filter from '@/components/ui/Filter';
 
 export default function PortalCatalog() {
   const [search, setSearch] = useState('');
@@ -34,11 +35,13 @@ export default function PortalCatalog() {
       </header>
 
       <main className="max-w-4xl mx-auto p-4 space-y-4">
-        <Input
-          placeholder="Search parts by name, SKU, or compatibility..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <Filter title="Catalog filters">
+          <Input
+            placeholder="Search parts by name, SKU, or compatibility..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </Filter>
 
         {isLoading ? (
           <div>Loading...</div>
