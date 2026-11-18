@@ -14,9 +14,18 @@ import PageHeader from '@/components/ui/PageHeader';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import Filter from '@/components/ui/Filter';
+import { useAuth } from '@/hooks/useAuth';
+import { useTodayFieldRuns } from '@/hooks/useTodayFieldRuns';
 
 export default function SalesList() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isFieldAgent = user?.role === 'FIELD_AGENT';
+  const { activeRuns } = useTodayFieldRuns(user, { enabled: isFieldAgent });
+  const activeRun = activeRuns[0];
+  const newSalePath = isFieldAgent
+    ? activeRun ? `/field/sale/${activeRun.id}` : '/field'
+    : '/pos';
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({
     search: '', channel: '', status: '', sale_type: '',
@@ -59,7 +68,9 @@ export default function SalesList() {
       <PageHeader
         title="Sales"
         description="Review transactions by date, channel, and payment status."
-        actions={<Link to="/pos" className="btn-primary">New Sale</Link>}
+        actions={<Link to={newSalePath} className="btn-primary">
+          {isFieldAgent ? (activeRun ? 'New Field Sale' : 'Field Sales') : 'New Sale'}
+        </Link>}
       />
 
       <Filter title="Sales filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-4">

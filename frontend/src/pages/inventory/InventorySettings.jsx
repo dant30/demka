@@ -151,6 +151,14 @@ function LocationEditor({ location, onClose }) {
   const [name, setName] = useState(location?.name ?? '');
   const [locationType, setLocationType] = useState(location?.location_type ?? 'SHOP');
   const [isActive, setIsActive] = useState(location?.is_active ?? true);
+  const [assignedAgent, setAssignedAgent] = useState(location?.assigned_agent ? String(location.assigned_agent) : '');
+  const { data: agentsData, isLoading: agentsLoading } = useList(
+    'field-agents', endpoints.users.list,
+    { is_active: true, page_size: 200 },
+  );
+  const agents = (agentsData?.results || agentsData || []).filter(
+    (agent) => ['FIELD_AGENT', 'BOSS', 'ADMIN'].includes(agent.role),
+  );
   const create = useCreate('locations', endpoints.inventory.locations, {
     invalidate: ['locations'],
     onSuccess: onClose,
@@ -162,7 +170,12 @@ function LocationEditor({ location, onClose }) {
   const saving = create.isPending || update.isPending;
 
   const submit = async () => {
-    const payload = { name: name.trim(), location_type: locationType, is_active: isActive };
+    const payload = {
+      name: name.trim(),
+      location_type: locationType,
+      is_active: isActive,
+      assigned_agent: locationType === 'FIELD' && assignedAgent ? Number(assignedAgent) : null,
+    };
     try {
       if (location) await update.mutateAsync({ id: location.id, payload });
       else await create.mutateAsync(payload);
@@ -180,7 +193,11 @@ function LocationEditor({ location, onClose }) {
       footer={(
         <>
           <Button variant="secondary" onClick={onClose}>Cancel</Button>
-          <Button onClick={submit} loading={saving} disabled={!name.trim()}>
+          <Button
+            onClick={submit}
+            loading={saving}
+            disabled={!name.trim() || (locationType === 'FIELD' && !assignedAgent)}
+          >
             {location ? 'Save Changes' : 'Create Location'}
           </Button>
         </>
@@ -191,13 +208,33 @@ function LocationEditor({ location, onClose }) {
         <Select
           label="Location Type"
           value={locationType}
-          onChange={setLocationType}
+          onChange={(value) => {
+            setLocationType(value);
+            if (value !== 'FIELD') setAssignedAgent('');
+          }}
           options={[
             { value: 'SHOP', label: 'Shop' },
             { value: 'WAREHOUSE', label: 'Warehouse' },
             { value: 'FIELD', label: 'Field / Van' },
           ]}
         />
+        {locationType === 'FIELD' && (
+          <Select
+            label="Assigned Field Agent"
+            value={assignedAgent}
+            onChange={setAssignedAgent}
+            disabled={agentsLoading}
+            hint={agentsLoading ? 'Loading field agents...' : 'Required for automatic route-run scheduling.'}
+            options={[
+              { value: '', label: agentsLoading ? 'Loading field agents...' : 'Select an agent...' },
+              ...agents.map((agent) => ({
+                value: agent.id,
+                label: agent.full_name || agent.username,
+                sublabel: agent.username,
+              })),
+            ]}
+          />
+        )}
         <Switch label="Active" checked={isActive} onChange={(event) => setIsActive(event.target.checked)} />
       </div>
     </Modal>

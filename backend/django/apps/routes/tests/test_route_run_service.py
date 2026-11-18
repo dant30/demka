@@ -44,6 +44,18 @@ class RouteRunServiceTests(TestCase):
             code="CASH", defaults={"name": "Cash", "is_active": True},
         )
 
+    def test_materialize_range_creates_scheduled_run_once(self):
+        today = timezone.localdate()
+        self.route.schedules.create(day_of_week=today.weekday())
+
+        created = RouteRunService.materialize_range(today, today)
+        repeated = RouteRunService.materialize_range(today, today)
+
+        self.assertEqual(len(created), 1)
+        self.assertEqual(created[0].agent, self.agent)
+        self.assertEqual(created[0].stock_location, self.van)
+        self.assertEqual(repeated, [])
+
     def test_start_computes_opening_stock(self):
         run = RouteRunService.create(
             {

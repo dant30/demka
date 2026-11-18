@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/store/cart";
+import { useTodayFieldRuns } from "@/hooks/useTodayFieldRuns";
 
 const PAGE_TITLES = {
   "/": "Dashboard",
@@ -32,6 +33,15 @@ export default function Topbar() {
   const navigate = useNavigate();
   const cartCount = useCart((state) => state.itemCount());
   const [open, setOpen] = useState(false);
+  const isFieldAgent = user?.role === 'FIELD_AGENT';
+  const { activeRuns } = useTodayFieldRuns(user, { enabled: isFieldAgent });
+  const activeRun = activeRuns[0];
+  const saleDestination = isFieldAgent
+    ? activeRun ? `/field/sale/${activeRun.id}` : '/field'
+    : '/pos';
+  const cartDestination = isFieldAgent && activeRun
+    ? `${saleDestination}?cart=1`
+    : isFieldAgent ? '/field' : '/pos/cart';
 
   const handleLogout = async () => {
     await logout();
@@ -64,10 +74,10 @@ export default function Topbar() {
       {/* Right: quick action + user menu */}
       <div className="flex items-center gap-2">
         <Link
-          to="/pos/cart"
+          to={cartDestination}
           className="md:hidden relative inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100"
-          aria-label={`Cart with ${cartCount} item${cartCount === 1 ? '' : 's'}`}
-          title="Open cart"
+          aria-label={isFieldAgent ? (activeRun ? 'Open field cart' : 'Open Field Sales') : `Cart with ${cartCount} item${cartCount === 1 ? '' : 's'}`}
+          title={isFieldAgent ? 'Open field cart' : 'Open cart'}
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5">
             <path d="M3 3h2l2.4 11.2a2 2 0 001.9 1.5h7.9a2 2 0 001.9-1.4L21 7H6" />
@@ -81,10 +91,10 @@ export default function Topbar() {
           )}
         </Link>
         <Link
-          to="/pos"
+          to={saleDestination}
           className="hidden md:inline-flex btn-primary btn-sm"
         >
-          + New Sale
+          {isFieldAgent ? (activeRun ? 'Field Sale' : 'Field Sales') : '+ New Sale'}
         </Link>
 
         <div className="relative">

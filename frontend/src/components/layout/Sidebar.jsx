@@ -14,7 +14,7 @@ const NAV_GROUPS = [
     title: "Operations",
     items: [
       { to: "/",            label: "Dashboard",  icon: "📊", bossOnly: true,  end: true },
-      { to: "/pos",         label: "Shop POS",   icon: "🛒" },
+      { to: "/pos",         label: "Shop POS",   icon: "🛒", shopOnly: true },
       { to: "/field",       label: "Field Sales", icon: "🚐", fieldOnly: true },
       { to: "/sales",       label: "Sales",      icon: "🧾" },
       { to: "/preorders",   label: "Preorders",  icon: "📝" },
@@ -115,6 +115,7 @@ export default function Sidebar() {
           const visible = group.items.filter((item) => {
             if (item.bossOnly && !isBoss) return false;
             if (item.fieldOnly && !isField && !isBoss) return false;
+            if (item.shopOnly && isField) return false;
             return true;
           });
           if (visible.length === 0) return null;

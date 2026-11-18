@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import filters, viewsets
 
 from apps.inventory.models import StockLocation
@@ -21,5 +22,8 @@ class StockLocationViewSet(viewsets.ModelViewSet):
         user = self.request.user
         # Field agents can only see their assigned location(s) + shop
         if getattr(user, "role", None) == "FIELD_AGENT":
-            qs = qs.filter(assigned_agent=user)
+            qs = qs.filter(
+                Q(assigned_agent=user)
+                | Q(location_type=StockLocation.Type.SHOP)
+            )
         return qs

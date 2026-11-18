@@ -1,20 +1,22 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api, extractError } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
 import { useCart } from '@/store/cart';
 import { useCreateSale, useQueueReceipt, useProductLookup } from '@/api/queries';
-import { formatKes } from '@/utils/money';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import PaymentModal from '@/components/pos/PaymentModal';
 import ProductGrid from '@/components/pos/ProductGrid';
+import CartPanel from '@/components/pos/CartPanel';
+import Modal from '@/components/ui/Modal';
 
 export default function FieldSale() {
   const { runId } = useParams();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const cart = useCart();
   const createSale = useCreateSale();
   const queueReceipt = useQueueReceipt();
@@ -22,6 +24,7 @@ export default function FieldSale() {
   const [search, setSearch] = useState('');
   const [showPayment, setShowPayment] = useState(false);
   const [error, setError] = useState('');
+  const mobileCartOpen = searchParams.get('cart') === '1';
 
   // Load the run + its stock location
   const { data: run } = useQuery({
@@ -42,12 +45,33 @@ export default function FieldSale() {
   });
 
   const customers = customersData?.results || customersData || [];
+  const { data: walkInCustomer } = useQuery({
+    queryKey: ['walk-in-customer'],
+    queryFn: async () => (await api.get(endpoints.customers.walkIn)).data,
+    enabled: Boolean(run?.id),
+  });
 
-  // Auto-set the location + channel once the run loads
-  if (run && cart.channel !== 'FIELD') {
+  useEffect(() => {
+    if (!run) return;
     cart.setChannel('FIELD');
     cart.setLocation(run.stock_location);
-  }
+  }, [run?.id, run?.stock_location, cart.setChannel, cart.setLocation]);
+
+  const closeMobileCart = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('cart');
+    setSearchParams(next, { replace: true });
+  };
+
+  const checkout = () => {
+    if (!cart.customerId) {
+      setError('Select a customer before charging.');
+      closeMobileCart();
+      return;
+    }
+    closeMobileCart();
+    setShowPayment(true);
+  };
 
   const handleBarcode = async (e) => {
     if (e.key !== 'Enter') return;
@@ -97,72 +121,75 @@ export default function FieldSale() {
   if (!run) return <div>Loading...</div>;
 
   return (
-    <div className="w-full space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="grid min-w-0 grid-cols-1 gap-4 pb-20 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
+      <section className="min-w-0 space-y-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold">Field Sale</h1>
           <p className="text-sm text-slate-500">{run.route_name} · {run.stock_location_name}</p>
         </div>
-        <button onClick={() => navigate('/field')} className="text-sm text-slate-500 hover:underline">
-          ← Back
-        </button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => navigate('/field')}>
+          Back to Runs
+        </Button>
       </div>
 
-      <Select
-        searchable
-        label="Customer"
-        value={cart.customerId || ''}
-        onChange={(value) => cart.setCustomer(value ? Number(value) : null)}
-        options={[
-          { value: '', label: 'Select customer...' },
-          ...customers.map((customer) => ({
-            value: customer.id,
-            label: customer.name,
-            sublabel: customer.code,
-          })),
-        ]}
-      />
+      <div className="grid min-w-0 grid-cols-2 items-end gap-3">
+        <Select
+          searchable
+          label="Customer"
+          value={cart.customerId || ''}
+          onChange={(value) => cart.setCustomer(value ? Number(value) : null)}
+          options={[
+            { value: '', label: 'Select customer...' },
+            ...(walkInCustomer ? [{
+              value: walkInCustomer.id,
+              label: walkInCustomer.name,
+              sublabel: walkInCustomer.code,
+            }] : []),
+            ...customers.map((customer) => ({
+              value: customer.id,
+              label: customer.name,
+              sublabel: customer.code,
+            })),
+          ]}
+        />
+        <Input
+          placeholder="Scan barcode or type SKU + Enter"
+          onKeyDown={handleBarcode}
+          aria-label="Scan barcode or enter SKU"
+        />
+        <Input
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="col-span-2"
+        />
+      </div>
 
-      <Input
-        placeholder="Scan barcode or type SKU + Enter"
-        onKeyDown={handleBarcode}
-        autoFocus
-      />
-      <Input
-        placeholder="Search products..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      {!customers.length && (
+        <p className="text-sm text-slate-500">No customers are assigned to this route yet. Choose Walk-in for an unregistered customer.</p>
+      )}
 
       {error && <div className="rounded-lg bg-red-50 text-red-700 px-3 py-2 text-sm">{error}</div>}
 
       <ProductGrid onAdd={(p) => cart.addItem(p, 1)} search={search} />
+      </section>
 
-      {cart.items.length > 0 && (
-        <div className="card sticky bottom-4">
-          <div className="space-y-2 mb-3 max-h-64 overflow-y-auto">
-            {cart.items.map((it) => (
-              <div key={it.product.id} className="flex justify-between text-sm border-b border-slate-100 pb-1">
-                <div>
-                  {it.product.name} × {it.quantity}
-                </div>
-                <div>{formatKes(it.lineTotal)}</div>
-              </div>
-            ))}
+      <aside className="hidden min-w-0 lg:sticky lg:top-4 lg:block lg:min-h-[20rem] lg:h-[calc(100dvh-var(--topbar-height)-2rem)]">
+        <CartPanel
+          onCheckout={checkout}
+          disabled={createSale.isPending}
+          className="rounded-md border border-slate-200 lg:border-l"
+        />
+      </aside>
+
+      <div className="lg:hidden">
+        <Modal open={mobileCartOpen} onClose={closeMobileCart} title="Field Cart" size="lg">
+          <div className="h-[62dvh] min-h-64">
+            <CartPanel onCheckout={checkout} disabled={createSale.isPending} />
           </div>
-          <div className="flex justify-between items-center text-lg font-semibold pt-2 border-t">
-            <span>Total</span>
-            <span>{formatKes(cart.subtotal())}</span>
-          </div>
-          <button
-            onClick={() => cart.customerId ? setShowPayment(true) : setError('Select a customer.')}
-            className="btn-primary w-full mt-3"
-            disabled={createSale.isPending}
-          >
-            Charge
-          </button>
-        </div>
-      )}
+        </Modal>
+      </div>
 
       <PaymentModal
         open={showPayment}

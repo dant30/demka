@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { useCart } from '@/store/cart';
 import { useList, useCreateSale, useSalePreview, useQueueReceipt, useProductLookup } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
-import { extractError } from '@/api/client';
+import { api, extractError } from '@/api/client';
 import { formatKes } from '@/utils/money';
 import ProductGrid from '@/components/pos/ProductGrid';
 import CartPanel from '@/components/pos/CartPanel';
@@ -24,12 +25,15 @@ export default function POS() {
   const [categoryId, setCategoryId] = useState('');
   const [showPayment, setShowPayment] = useState(false);
   const [error, setError] = useState('');
-  const [customers] = useState([]); // loaded via a select below
 
   // Load customers, categories, and locations on mount
   const { data: customersData } = useList('customers', endpoints.customers.list, { page_size: 200 });
   const { data: locationsData } = useList('locations', endpoints.inventory.locations);
   const { data: categoriesData } = useList('categories', endpoints.inventory.categories, { page_size: 200 });
+  const { data: walkInCustomer } = useQuery({
+    queryKey: ['walk-in-customer'],
+    queryFn: async () => (await api.get(endpoints.customers.walkIn)).data,
+  });
 
   const customerOptions = customersData?.results || customersData || [];
   const categoryOptions = categoriesData?.results || categoriesData || [];
@@ -150,7 +154,7 @@ export default function POS() {
                 ]}
               />
             </div>
-            <div className="grid grid-cols-2 gap-2 md:gap-3 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 md:gap-3 lg:grid-cols-2">
               <Select
                 searchable
                 label="Customer"
@@ -158,11 +162,18 @@ export default function POS() {
                 onChange={(value) => cart.setCustomer(value ? Number(value) : null)}
                 options={[
                   { value: '', label: 'Select customer...' },
-                  ...customerOptions.map((customer) => ({
-                    value: customer.id,
-                    label: customer.name,
-                    sublabel: customer.code,
-                  })),
+                  ...(walkInCustomer ? [{
+                    value: walkInCustomer.id,
+                    label: walkInCustomer.name,
+                    sublabel: walkInCustomer.code,
+                  }] : []),
+                  ...customerOptions
+                    .filter((customer) => customer.customer_type !== 'WALK_IN' && customer.id !== walkInCustomer?.id)
+                    .map((customer) => ({
+                      value: customer.id,
+                      label: customer.name,
+                      sublabel: customer.code,
+                    })),
                 ]}
               />
               <Select

@@ -2,6 +2,8 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useDetail } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
 import { useBluetoothPrinter } from '@/hooks/useBluetoothPrinter';
+import { useAuth } from '@/hooks/useAuth';
+import { useTodayFieldRuns } from '@/hooks/useTodayFieldRuns';
 import { formatKes } from '@/utils/money';
 import Button from '@/components/ui/Button';
 
@@ -10,6 +12,9 @@ export default function FieldSaleReceipt() {
   const [searchParams] = useSearchParams();
   const jobId = searchParams.get('receiptJob');
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { activeRuns } = useTodayFieldRuns(user, { enabled: user?.role === 'FIELD_AGENT' });
+  const activeRun = activeRuns[0];
   const { data: sale } = useDetail('sale', endpoints.sales.detail(saleId), saleId);
   const bt = useBluetoothPrinter();
 
@@ -51,7 +56,7 @@ export default function FieldSaleReceipt() {
       {bt.error && <div className="text-sm text-red-600">{bt.error}</div>}
 
       <div className="grid grid-cols-2 gap-2">
-        <Button variant="secondary" onClick={() => navigate('/field/sale/' + sale?.route)}>
+        <Button variant="secondary" onClick={() => navigate(activeRun ? `/field/sale/${activeRun.id}` : '/field')}>
           New Sale
         </Button>
         <Button variant="secondary" onClick={() => navigate('/field')}>

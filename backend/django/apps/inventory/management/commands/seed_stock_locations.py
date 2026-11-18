@@ -6,6 +6,7 @@ from apps.inventory.models import StockLocation
 SEEDS = (
     ("Main Shop", "SHOP"),
     ("Main Warehouse", "WAREHOUSE"),
+    ("Van", "FIELD"),
 )
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCreate, useDetail, useUpdate } from '@/api/queries';
+import { useAction, useCreate, useDetail, useList, useUpdate } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
 import { useAuth } from '@/hooks/useAuth';
 import { extractError } from '@/api/client';
@@ -18,6 +18,7 @@ export default function CustomerForm() {
   const isEdit = Boolean(id);
   const { isBoss } = useAuth();
   const [error, setError] = useState('');
+  const [routeId, setRouteId] = useState('');
   const [form, setForm] = useState({
     name: '', phone: '', email: '', customer_type: 'RETAIL',
     business_name: '', kra_pin: '', physical_address: '',
@@ -26,6 +27,12 @@ export default function CustomerForm() {
   const { data: existing, isLoading } = useDetail(
     'customer', endpoints.customers.detail(id), id,
   );
+  const { data: routesData, isLoading: routesLoading } = useList(
+    'customer-route-options', endpoints.routes.list,
+    { is_active: true, page_size: 100 },
+  );
+  const routes = routesData?.results || routesData || [];
+  const currentRoute = existing?.current_route;
 
   useEffect(() => {
     if (!existing) return;
@@ -40,14 +47,15 @@ export default function CustomerForm() {
       credit_limit: existing.credit_limit ?? 0,
       payment_terms_days: existing.payment_terms_days ?? 0,
     });
-  }, [existing]);
+    setRouteId(currentRoute?.route_id ? String(currentRoute.route_id) : '');
+  }, [existing, currentRoute]);
 
-  const create = useCreate('customers', endpoints.customers.list, {
-    onSuccess: (data) => navigate(`/customers/${data.id}`),
-  });
+  const create = useCreate('customers', endpoints.customers.list, { invalidate: ['customers'] });
   const update = useUpdate('customer', endpoints.customers.detail, {
     invalidate: ['customer'],
-    onSuccess: () => navigate(`/customers/${id}`),
+  });
+  const assignRoute = useAction('assign-customer-route', endpoints.customers.assignRoute, {
+    invalidate: ['customer', 'route-assignments'],
   });
 
   const submit = async (e) => {
@@ -55,15 +63,44 @@ export default function CustomerForm() {
     setError('');
     const payload = { ...form };
     if (isEdit && !isBoss) delete payload.credit_limit;
+    let customer;
     try {
-      if (isEdit) await update.mutateAsync({ id, payload });
-      else await create.mutateAsync(payload);
+      customer = isEdit
+        ? await update.mutateAsync({ id, payload })
+        : await create.mutateAsync(payload);
     } catch (err) {
       setError(extractError(err, 'Could not save customer.'));
+      return;
     }
+
+    const savedCustomerId = isEdit ? id : customer?.id;
+    if (!savedCustomerId) {
+      setError('Customer saved, but its ID was not returned. Reopen the customer and assign the route from its detail page.');
+      return;
+    }
+
+    const previousRouteId = existing?.current_route?.route_id;
+    if (routeId && Number(routeId) !== previousRouteId) {
+      try {
+        await assignRoute.mutateAsync({
+          id: savedCustomerId,
+          route: Number(routeId),
+          reason: 'Assigned from customer form',
+        });
+      } catch (err) {
+        navigate(`/customers/${savedCustomerId}`, {
+          state: { routeAssignmentError: extractError(err, 'Route assignment failed.') },
+        });
+        return;
+      }
+    }
+    navigate(`/customers/${savedCustomerId}`);
   };
 
-  const set = (k, v) => setForm({ ...form, [k]: v });
+  const set = (k, v) => {
+    setForm({ ...form, [k]: v });
+    if (k === 'customer_type' && v === 'WALK_IN') setRouteId('');
+  };
 
   if (isEdit && isLoading) return <div>Loading customer...</div>;
 
@@ -86,6 +123,25 @@ export default function CustomerForm() {
         <Input label="KRA PIN" value={form.kra_pin} onChange={(e) => set('kra_pin', e.target.value)} />
         {(!isEdit || isBoss) && <Input label="Credit Limit" type="number" value={form.credit_limit} onChange={(e) => set('credit_limit', e.target.value)} />}
         <Input label="Payment Terms (days)" type="number" value={form.payment_terms_days} onChange={(e) => set('payment_terms_days', e.target.value)} />
+        {form.customer_type !== 'WALK_IN' && (
+          <Select
+            label="Delivery Route (optional)"
+            value={routeId}
+            onChange={setRouteId}
+            disabled={routesLoading}
+            hint={routesLoading ? 'Loading routes...' : 'Choose the active route that serves this customer.'}
+            options={[
+              { value: '', label: isEdit ? 'No route change' : 'No route assignment' },
+              ...(currentRoute && !routes.some((route) => route.id === currentRoute.route_id)
+                ? [{ value: currentRoute.route_id, label: `${currentRoute.route_code} — ${currentRoute.route_name}` }]
+                : []),
+              ...routes.map((route) => ({
+                value: route.id,
+                label: `${route.code} — ${route.name}`,
+              })),
+            ]}
+          />
+        )}
       </FormSection>
       <FormSection title="Address" columns={1}>
         <TextareaField label="Physical Address" rows={3} value={form.physical_address} onChange={(e) => set('physical_address', e.target.value)} />
@@ -93,7 +149,7 @@ export default function CustomerForm() {
       {error && <div role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
       <FormActions>
         <Button variant="secondary" type="button" onClick={() => navigate(-1)}>Cancel</Button>
-        <Button type="submit" loading={create.isPending || update.isPending}>
+        <Button type="submit" loading={create.isPending || update.isPending || assignRoute.isPending}>
           {isEdit ? 'Save Changes' : 'Create Customer'}
         </Button>
       </FormActions>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAction, useDetail, useList } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
 import { extractError } from '@/api/client';
@@ -15,6 +15,7 @@ const TABS = ['Overview', 'Sales', 'Credit Ledger', 'Route History'];
 export default function CustomerDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [tab, setTab] = useState('Overview');
   const [showAssignRoute, setShowAssignRoute] = useState(false);
   const { data: customer, isLoading } = useDetail(
@@ -38,6 +39,12 @@ export default function CustomerDetail() {
           <Button variant="secondary" onClick={() => setShowAssignRoute(true)}>Assign Route</Button>
         </div>
       </div>
+
+      {location.state?.routeAssignmentError && (
+        <div role="alert" className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          Customer saved, but route assignment failed: {location.state.routeAssignmentError}
+        </div>
+      )}
 
       <div className="card">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

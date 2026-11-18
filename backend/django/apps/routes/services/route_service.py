@@ -51,6 +51,9 @@ class RouteService:
         if "is_active" in data:
             route.is_active = bool(data["is_active"])
 
+        if "default_agent" in data:
+            route.default_agent = data["default_agent"]
+
         if "schedule_days" in data:
             RouteService.set_schedule(route, data["schedule_days"] or [])
 

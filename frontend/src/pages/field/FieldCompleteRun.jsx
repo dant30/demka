@@ -36,7 +36,7 @@ export default function FieldCompleteRun() {
   if (!run) return <div>Loading...</div>;
 
   return (
-    <div className="w-full max-w-2xl space-y-4">
+    <div className="w-full min-w-0 space-y-4">
       <h1 className="text-2xl font-bold">Complete Run</h1>
 
       <div className="card">

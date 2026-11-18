@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCreate, useList } from '@/api/queries';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCreate, useDetail, useList, useUpdate } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
 import { extractError } from '@/api/client';
 import Button from '@/components/ui/Button';
@@ -24,6 +24,7 @@ const DAYS = [
 
 export default function RouteForm() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [form, setForm] = useState({
     code: '',
     name: '',
@@ -32,16 +33,39 @@ export default function RouteForm() {
     schedule_days: [],
     is_active: true,
   });
+  const { data: existingRoute, isLoading: routeLoading } = useDetail(
+    'route',
+    id ? endpoints.routes.detail(id) : null,
+    id,
+  );
   const { data: agentData, isLoading: agentsLoading } = useList(
     'route-agents',
     endpoints.users.list,
-    { role: 'FIELD_AGENT', is_active: true, page_size: 200 },
+    { is_active: true, page_size: 200 },
   );
-  const agents = agentData?.results || agentData || [];
+  const agents = (agentData?.results || agentData || []).filter(
+    (agent) => ['FIELD_AGENT', 'BOSS', 'ADMIN'].includes(agent.role),
+  );
   const create = useCreate('routes', endpoints.routes.list, {
     invalidate: ['routes'],
     onSuccess: (route) => navigate(`/routes/${route.id}`),
   });
+  const update = useUpdate('routes', endpoints.routes.detail, {
+    invalidate: ['routes'],
+    onSuccess: (route) => navigate(`/routes/${route.id}`),
+  });
+
+  useEffect(() => {
+    if (!existingRoute) return;
+    setForm({
+      code: existingRoute.code || '',
+      name: existingRoute.name || '',
+      description: existingRoute.description || '',
+      default_agent: existingRoute.default_agent ? String(existingRoute.default_agent) : '',
+      schedule_days: existingRoute.schedule_days || [],
+      is_active: existingRoute.is_active,
+    });
+  }, [existingRoute]);
 
   const setField = (field, value) => setForm((current) => ({ ...current, [field]: value }));
   const toggleDay = (day) => {
@@ -56,22 +80,29 @@ export default function RouteForm() {
   const submit = async (event) => {
     event.preventDefault();
     try {
-      await create.mutateAsync({
+      const payload = {
         ...form,
         code: form.code.trim().toUpperCase(),
         default_agent: form.default_agent || null,
-      });
+      };
+      if (id) await update.mutateAsync({ id, payload });
+      else await create.mutateAsync(payload);
     } catch {
       // The mutation error is rendered below.
     }
   };
 
+  if (id && routeLoading) return <p className="text-slate-500">Loading route...</p>;
+
+  const mutationError = id ? update.error : create.error;
+  const isPending = id ? update.isPending : create.isPending;
+
   return (
     <form onSubmit={submit} className="page-form">
       <PageHeader
-        title="New Route"
-        description="Set up a route, its default field agent, and weekly schedule."
-        backTo="/routes"
+        title={id ? 'Edit Route' : 'New Route'}
+        description={id ? 'Update route details, its default field agent, and weekly schedule.' : 'Set up a route, its default field agent, and weekly schedule.'}
+        backTo={id ? `/routes/${id}` : '/routes'}
         backLabel="Routes"
       />
 
@@ -140,18 +171,18 @@ export default function RouteForm() {
         />
       </FormSection>
 
-      {create.error && (
+      {mutationError && (
         <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
-          {extractError(create.error, 'Could not create route.')}
+          {extractError(mutationError, id ? 'Could not update route.' : 'Could not create route.')}
         </div>
       )}
 
       <FormActions>
-        <Button type="button" variant="secondary" onClick={() => navigate('/routes')}>
+        <Button type="button" variant="secondary" onClick={() => navigate(id ? `/routes/${id}` : '/routes')}>
           Cancel
         </Button>
-        <Button type="submit" loading={create.isPending}>
-          Create Route
+        <Button type="submit" loading={isPending}>
+          {id ? 'Save Changes' : 'Create Route'}
         </Button>
       </FormActions>
     </form>

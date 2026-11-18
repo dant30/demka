@@ -1,7 +1,7 @@
 import { useCart } from '@/store/cart';
 import { formatKes } from '@/utils/money';
 
-export default function CartPanel({ onCheckout, disabled }) {
+export default function CartPanel({ onCheckout, disabled, className = '' }) {
   const {
     items, updateQuantity, removeItem, subtotal, itemCount, clear,
   } = useCart();
@@ -10,7 +10,7 @@ export default function CartPanel({ onCheckout, disabled }) {
   const tax = 0; // computed server-side at preview
 
   return (
-    <div className="flex flex-col h-full bg-white border-l border-slate-200">
+    <div className={`flex h-full min-h-0 flex-col bg-white border-l border-slate-200 ${className}`.trim()}>
       <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <div className="font-semibold">Cart</div>

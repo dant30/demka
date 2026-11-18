@@ -14,7 +14,7 @@ export default function RouteRunDetail() {
   if (!run) return <div>Loading...</div>;
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="w-full min-w-0 space-y-6">
       <div className="flex justify-between">
         <div>
           <h1 className="text-2xl font-bold">{run.route_name}</h1>

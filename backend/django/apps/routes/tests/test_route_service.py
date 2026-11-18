@@ -44,6 +44,17 @@ class RouteServiceTests(TestCase):
         )
         self.assertEqual(route.default_agent, self.agent1)
 
+    def test_update_changes_default_agent(self):
+        route = RouteService.create(
+            {"name": "Route C", "code": "RC", "default_agent": self.agent1},
+            self.boss,
+        )
+
+        RouteService.update(route.pk, {"default_agent": self.agent2}, self.boss)
+        route.refresh_from_db()
+
+        self.assertEqual(route.default_agent_id, self.agent2.pk)
+
     def test_change_agent_logs_audit(self):
         route = RouteService.create(
             {"name": "Route A", "code": "RA", "default_agent": self.agent1},

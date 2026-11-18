@@ -1,4 +1,5 @@
-import { Children, forwardRef, isValidElement, useEffect, useId, useRef, useState } from 'react';
+import { Children, forwardRef, isValidElement, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const Select = forwardRef(function Select(
   {
@@ -26,11 +27,14 @@ const Select = forwardRef(function Select(
   const fieldId = id || generatedId;
   const listboxId = `${fieldId}-options`;
   const containerRef = useRef(null);
+  const triggerRef = useRef(null);
+  const listboxRef = useRef(null);
   const searchRef = useRef(null);
   const optionRefs = useRef([]);
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [internalValue, setInternalValue] = useState(defaultValue);
+  const [menuPosition, setMenuPosition] = useState(null);
   const selectedValue = value === undefined ? internalValue : value;
 
   const normalizedOptions = options
@@ -59,7 +63,10 @@ const Select = forwardRef(function Select(
   useEffect(() => {
     if (!open) return undefined;
     const closeOnOutsideClick = (event) => {
-      if (!containerRef.current?.contains(event.target)) setOpen(false);
+      if (
+        !containerRef.current?.contains(event.target)
+        && !listboxRef.current?.contains(event.target)
+      ) setOpen(false);
     };
     const closeOnEscape = (event) => {
       if (event.key === 'Escape') {
@@ -75,6 +82,43 @@ const Select = forwardRef(function Select(
       document.removeEventListener('keydown', closeOnEscape);
     };
   }, [open, searchable]);
+
+  useLayoutEffect(() => {
+    if (!open || disabled) return undefined;
+
+    const positionMenu = () => {
+      const trigger = triggerRef.current;
+      if (!trigger) return;
+
+      const rect = trigger.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom - 8;
+      const spaceAbove = rect.top - 8;
+      const openAbove = spaceBelow < 180 && spaceAbove > spaceBelow;
+      const availableHeight = openAbove ? spaceAbove : spaceBelow;
+      const maxHeight = Math.max(80, Math.min(256, availableHeight - 8));
+      const width = Math.min(rect.width, window.innerWidth - 16);
+      const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8));
+
+      setMenuPosition({
+        position: 'fixed',
+        top: openAbove ? Math.max(8, rect.top - maxHeight - 4) : rect.bottom + 4,
+        left,
+        right: 'auto',
+        width,
+        maxHeight,
+        marginTop: 0,
+        zIndex: 1100,
+      });
+    };
+
+    positionMenu();
+    window.addEventListener('resize', positionMenu);
+    window.addEventListener('scroll', positionMenu, true);
+    return () => {
+      window.removeEventListener('resize', positionMenu);
+      window.removeEventListener('scroll', positionMenu, true);
+    };
+  }, [open, disabled]);
 
   useEffect(() => {
     if (selectedIndex >= 0) setHighlightedIndex(selectedIndex);
@@ -162,7 +206,11 @@ const Select = forwardRef(function Select(
       {label && <label className="label" htmlFor={fieldId}>{label}{required && <span className="ml-1 text-red-600">*</span>}</label>}
       <button
         {...buttonProps}
-        ref={ref}
+        ref={(node) => {
+          triggerRef.current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) ref.current = node;
+        }}
         id={fieldId}
         type="button"
         role="combobox"
@@ -186,8 +234,15 @@ const Select = forwardRef(function Select(
         </span>
       </button>
       {name && <input type="hidden" name={name} value={selectedValue ?? ''} disabled={disabled} />}
-      {open && !disabled && (
-        <div id={listboxId} role="listbox" aria-label={label || 'Options'} className="select-menu">
+      {open && !disabled && createPortal(
+        <div
+          ref={listboxRef}
+          id={listboxId}
+          role="listbox"
+          aria-label={label || 'Options'}
+          className="select-menu"
+          style={menuPosition || { position: 'fixed', left: 8, top: 8, zIndex: 1100 }}
+        >
           {searchable && (
             <input
               ref={searchRef}
@@ -220,7 +275,8 @@ const Select = forwardRef(function Select(
               {String(option.value) === String(selectedValue) && <span aria-hidden="true" className="text-brand-600">✓</span>}
             </button>
           )) : <p className="px-3 py-2 text-sm text-slate-500">No options found.</p>}
-        </div>
+        </div>,
+        document.body,
       )}
       {error && <p id={`${fieldId}-error`} className="field-error">{error}</p>}
       {(hint || helperText) && !error && <p id={`${fieldId}-hint`} className="field-hint">{hint || helperText}</p>}

@@ -11,7 +11,7 @@ export default function Filter({
 	const [expanded, setExpanded] = useState(defaultExpanded);
 
 	return (
-		<section className={`overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm ${className}`.trim()}>
+		<section className={`overflow-visible rounded-lg border border-slate-200 bg-white shadow-sm ${className}`.trim()}>
 			<div className="flex min-h-11 items-center justify-between px-3 py-2">
 				<h2 className="text-sm font-semibold text-slate-800">{title}</h2>
 				<button

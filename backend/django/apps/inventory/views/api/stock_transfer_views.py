@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django_filters import rest_framework as django_filters
 from rest_framework import filters, status, viewsets
 from rest_framework.decorators import action
@@ -62,6 +63,22 @@ class StockTransferViewSet(AuditedViewSetMixin, viewsets.ModelViewSet):
                 {"detail": "Source or destination location not found."},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+        if getattr(request.user, "role", None) == "FIELD_AGENT":
+            allowed_ids = set(
+                StockLocation.objects.filter(
+                    pk__in=(from_loc.pk, to_loc.pk),
+                    is_active=True,
+                ).filter(
+                    Q(assigned_agent=request.user)
+                    | Q(location_type=StockLocation.Type.SHOP)
+                ).values_list("pk", flat=True)
+            )
+            if allowed_ids != {from_loc.pk, to_loc.pk}:
+                return Response(
+                    {"detail": "Field agents can transfer only between their assigned location and a shop."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
 
         transfer = TransferService.create(
             from_location=from_loc,

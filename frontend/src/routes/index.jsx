@@ -98,8 +98,8 @@ export default function AppRoutes() {
       {/* App */}
       <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
         <Route path="/" element={<HomeRoute />} />
-        <Route path="/pos" element={<POS />} />
-        <Route path="/pos/cart" element={<POSCart />} />
+        <Route path="/pos" element={<ProtectedRoute shopOnly><POS /></ProtectedRoute>} />
+        <Route path="/pos/cart" element={<ProtectedRoute shopOnly><POSCart /></ProtectedRoute>} />
 
         {/* Field */}
         <Route path="/field" element={<FieldHome />} />
@@ -145,7 +145,8 @@ export default function AppRoutes() {
 
         {/* Routes */}
         <Route path="/routes" element={<RoutesList />} />
-        <Route path="/routes/new" element={<RouteForm />} />
+        <Route path="/routes/new" element={<ProtectedRoute bossOnly><RouteForm /></ProtectedRoute>} />
+        <Route path="/routes/:id/edit" element={<ProtectedRoute bossOnly><RouteForm /></ProtectedRoute>} />
         <Route path="/routes/:id" element={<RouteDetail />} />
         <Route path="/routes/runs/:id" element={<RouteRunDetail />} />
 

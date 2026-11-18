@@ -6,8 +6,10 @@ import DataTable from '@/components/ui/DataTable';
 import Input from '@/components/ui/Input';
 import PageHeader from '@/components/ui/PageHeader';
 import Filter from '@/components/ui/Filter';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function RoutesList() {
+  const { isBoss } = useAuth();
   const [search, setSearch] = useState('');
   const { data, isLoading } = useList('routes', endpoints.routes.list, { search: search || undefined });
 
@@ -29,7 +31,7 @@ export default function RoutesList() {
       <PageHeader
         title="Routes"
         description="Manage delivery routes, assigned agents, and schedules."
-        actions={<Link to="/routes/new" className="btn-primary">+ New Route</Link>}
+        actions={isBoss && <Link to="/routes/new" className="btn-primary">+ New Route</Link>}
       />
       <Filter title="Route filters">
         <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
