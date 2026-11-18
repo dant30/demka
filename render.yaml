@@ -106,9 +106,13 @@ envVarGroups:
 				value: ${{demka-redis.connectionString}}/0
 			- key: CELERY_RESULT_BACKEND
 				value: ${{demka-redis.connectionString}}/1
-			- key: SMS_API_KEY
+			- key: SMS_ENABLED
+				value: "false"
+			- key: SMS_PROVIDER
+				value: ots
+			- key: SMS_API_TOKEN
 				sync: false
-			- key: SMS_USERNAME
+			- key: SMS_SENDER_ID
 				sync: false
 			- key: DJANGO_SEED_CATALOGUE
 				value: "false"

@@ -248,17 +248,18 @@ MPESA = {
     "CALLBACK_URL":    env("MPESA_CALLBACK_URL",    default=""),
 }
 
-SMS = {
-    "PROVIDER":  env("SMS_PROVIDER",  default="africastalking"),
-    "API_KEY":   env("SMS_API_KEY",   default=""),
-    "USERNAME":  env("SMS_USERNAME",  default=""),
-    "SENDER_ID": env("SMS_SENDER_ID", default="DEMKA"),
-}
+SMS_ENABLED = env.bool("SMS_ENABLED", default=False)
+SMS_PROVIDER = env("SMS_PROVIDER", default="ots")
+SMS_API_BASE_URL = env("SMS_API_BASE_URL", default="https://sms.ots.co.ke/api/v3/")
+SMS_API_SEND_PATH = env("SMS_API_SEND_PATH", default="sms/send")
+SMS_API_TOKEN = env("SMS_API_TOKEN", default="")
+SMS_SENDER_ID = env("SMS_SENDER_ID", default="")
+SMS_API_TIMEOUT_SECONDS = env.int("SMS_API_TIMEOUT_SECONDS", default=10)
 
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@demka.local")
 
 if DEBUG:
-    SMS["PROVIDER"] = env("SMS_PROVIDER", default="console")
+    SMS_PROVIDER = env("SMS_PROVIDER", default="console")
 
 REST_FRAMEWORK["DEFAULT_PAGINATION_CLASS"] = "core.utils.pagination.StandardPagination"
 REST_FRAMEWORK["PAGE_SIZE"] = 25
