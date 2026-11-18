@@ -9,14 +9,16 @@ services:
 		runtime: python
 		plan: starter
 		rootDir: backend
-		buildCommand: bash build.sh
+		buildCommand: bash ./build.sh
 		startCommand: cd django && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
 		releaseCommand: >-
-			cd django && python manage.py migrate --noinput && python manage.py
-			seed_payment_methods && python manage.py seed_expense_categories &&
-			python manage.py seed_stock_locations && (if [ "$DJANGO_SEED_CATALOGUE"
-			= "true" ]; then python manage.py generate_catalogue_seed --built-in
-			--seed; fi)
+			cd django && python manage.py migrate --noinput &&
+			python manage.py seed_payment_methods &&
+			python manage.py seed_expense_categories &&
+			python manage.py seed_stock_locations &&
+			if [ "$DJANGO_SEED_CATALOGUE" = "true" ]; then
+			python manage.py generate_catalogue_seed --built-in --seed; fi
+		healthCheckPath: /api/health/
 		envVarGroups:
 			- demka-runtime
 		envVars:
@@ -35,7 +37,7 @@ services:
 		runtime: python
 		plan: starter
 		rootDir: backend
-		buildCommand: bash build.sh
+		buildCommand: bash ./build.sh
 		startCommand: cd django && celery -A config worker --loglevel=info
 		envVarGroups:
 			- demka-runtime
@@ -46,7 +48,7 @@ services:
 		runtime: python
 		plan: starter
 		rootDir: backend
-		buildCommand: bash build.sh
+		buildCommand: bash ./build.sh
 		startCommand: cd django && celery -A config beat --loglevel=info
 		envVarGroups:
 			- demka-runtime
