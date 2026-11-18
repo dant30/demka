@@ -1,29 +1,31 @@
 services:
   - type: keyvalue
     name: demka-redis
-    plan: starter
+    plan: free
+    region: ohio
     maxmemoryPolicy: allkeys-lru
     ipAllowList: []
 
   - type: web
     name: demka-api
     runtime: python
-    plan: starter
+    plan: free
+    region: ohio
     rootDir: backend
     buildCommand: bash ./build.sh
-    startCommand: cd django && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
-    preDeployCommand: >-
+    startCommand: >-
       cd django && python manage.py migrate --noinput &&
       python manage.py seed_payment_methods &&
       python manage.py seed_expense_categories &&
       python manage.py seed_stock_locations &&
       (if [ "$DJANGO_SEED_CATALOGUE" = "true" ]; then
-      python manage.py generate_catalogue_seed --built-in --seed; fi)
+      python manage.py generate_catalogue_seed --built-in --seed; fi) &&
+      gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60
     healthCheckPath: /api/health/
     envVars:
       - fromGroup: demka-runtime
       - key: CORS_ALLOWED_ORIGINS
-        value: https://${{demka-frontend.host}}
+        value: https://demka-frontend.onrender.com
       - key: SMS_API_TOKEN
         sync: false
       - key: SMS_SENDER_ID
@@ -64,15 +66,12 @@ services:
           name: demka-redis
           property: connectionString
     autoDeploy: true
-    disk:
-      name: demka-media
-      mountPath: /opt/render/project/src/backend/django/media
-      sizeGB: 1
 
   - type: worker
     name: demka-worker
     runtime: python
-    plan: starter
+    plan: free
+    region: ohio
     rootDir: backend
     buildCommand: bash ./build.sh
     startCommand: cd django && celery -A config worker --loglevel=info
@@ -122,7 +121,8 @@ services:
   - type: worker
     name: demka-beat
     runtime: python
-    plan: starter
+    plan: free
+    region: ohio
     rootDir: backend
     buildCommand: bash ./build.sh
     startCommand: cd django && celery -A config beat --loglevel=info
@@ -188,7 +188,8 @@ databases:
   - name: demka-db
     databaseName: demka
     user: demka
-    plan: basic-256mb
+    plan: free
+    region: ohio
 
 envVarGroups:
   - name: demka-runtime
