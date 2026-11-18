@@ -54,8 +54,9 @@ services:
       - demka-runtime
     autoDeploy: true
 
-  - type: static_site
+  - type: web
     name: demka-frontend
+    runtime: static
     rootDir: frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
