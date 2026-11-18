@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AppShell from '@/components/layout/AppShell';
+import StaticErrorRedirect from '@/components/StaticErrorRedirect';
 import ProtectedRoute from './ProtectedRoute';
 import PortalProtectedRoute from './PortalProtectedRoute';
 
@@ -178,7 +179,7 @@ export default function AppRoutes() {
         <Route path="/admin/users" element={<AdminUsers />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<StaticErrorRedirect path="/not_found.html" />} />
     </Routes>
   );
 }

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="theme-color" content="#f4f8fa">
+	<meta name="robots" content="noindex, nofollow">
+	<title>Access restricted | DEMKA</title>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+	<link rel="stylesheet" href="/error-pages.css">
+</head>
+<body>
+	<header class="site-header page-shell">
+		<a class="brand" href="/" aria-label="DEMKA home">
+			<img class="brand-mark" src="/app-icon.svg" alt="">
+			<span><span class="brand-name">DEMKA</span><span class="brand-caption">OPERATIONS</span></span>
+		</a>
+		<span class="system-label">Access control</span>
+	</header>
+	<main class="error-layout error-layout--unauthorized">
+		<div class="state-visual" aria-hidden="true">
+			<div class="visual-frame">
+				<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M32 7 51 15v14c0 13-8 22-19 28C21 51 13 42 13 29V15l19-8Z"/>
+					<path d="M25 25a7 7 0 1 1 12 5c-2 2-5 3-5 7M32 44h.01"/>
+				</svg>
+			</div>
+			<span class="visual-code">ACCESS / 403</span>
+		</div>
+		<section class="error-copy" aria-labelledby="page-title">
+			<p class="system-label">Restricted area</p>
+			<p class="error-code">ACCESS STATUS / 403</p>
+			<h1 id="page-title">You don't have access.</h1>
+			<p class="description">This section requires a different account role or permission. Sign in with an authorized account, or return to the workspace sections available to you.</p>
+			<ul class="detail-list">
+				<li>Your current account may not have permission for this action.</li>
+				<li>Contact a DEMKA administrator if you believe access is incorrect.</li>
+			</ul>
+			<div class="action-row">
+				<a class="button" href="/login">Sign in</a>
+				<a class="button button-secondary" href="/">Return to dashboard</a>
+			</div>
+			<p class="state-message">Signing in with another account may change the sections available to you.</p>
+		</section>
+	</main>
+	<footer class="site-footer page-shell"><span>DEMKA - Operational workspace</span><span>ACCESS RESTRICTED</span></footer>
+</body>
+</html>

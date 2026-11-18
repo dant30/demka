@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="theme-color" content="#f4f8fa">
+	<meta name="robots" content="noindex, nofollow">
+	<title>Offline | DEMKA</title>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+	<link rel="stylesheet" href="/error-pages.css">
+</head>
+<body>
+	<header class="site-header page-shell">
+		<a class="brand" href="/" aria-label="DEMKA home">
+			<img class="brand-mark" src="/app-icon.svg" alt="">
+			<span><span class="brand-name">DEMKA</span><span class="brand-caption">OPERATIONS</span></span>
+		</a>
+		<span class="system-label">Connection</span>
+	</header>
+	<main class="error-layout error-layout--offline">
+		<div class="state-visual" aria-hidden="true">
+			<div class="visual-frame">
+				<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M12 24a30 30 0 0 1 40 0M20 33a18 18 0 0 1 24 0M28 42a7 7 0 0 1 8 0"/>
+					<path d="m11 10 42 44M32 51h.01"/>
+				</svg>
+			</div>
+			<span class="visual-code">NET / 01</span>
+		</div>
+		<section class="error-copy" aria-labelledby="page-title">
+			<p class="system-label">Network unavailable</p>
+			<p class="error-code">CONNECTION STATUS / OFFLINE</p>
+			<h1 id="page-title">You're offline.</h1>
+			<p class="description">DEMKA can't reach the service right now. Check your connection, then retry. Any information that hasn't synced may not be available until you reconnect.</p>
+			<ul class="detail-list">
+				<li>Check Wi-Fi or mobile data.</li>
+				<li>When connected, retry to return to the app.</li>
+			</ul>
+			<div class="action-row">
+				<button class="button" id="retry" type="button">
+					<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 9a6.5 6.5 0 0 0-11.2-3L3.5 8M3.5 8V4.5M3.5 8H7M3.5 11a6.5 6.5 0 0 0 11.2 3l1.8-2M16.5 12v3.5M16.5 12H13"/></svg>
+					Retry connection
+				</button>
+				<a class="button button-secondary" href="/">Open DEMKA</a>
+			</div>
+			<p class="state-message" id="network-state" role="status" aria-live="polite">Checking connection status...</p>
+		</section>
+	</main>
+	<footer class="site-footer page-shell"><span>DEMKA - Operational workspace</span><span>OFFLINE MODE</span></footer>
+	<script>
+		const state = document.getElementById('network-state');
+		const updateConnection = () => {
+			state.textContent = navigator.onLine
+				? 'Your connection is available. Retry to reload DEMKA.'
+				: 'Your device is currently offline.';
+		};
+		document.getElementById('retry').addEventListener('click', () => window.location.reload());
+		window.addEventListener('online', updateConnection);
+		window.addEventListener('offline', updateConnection);
+		updateConnection();
+	</script>
+</body>
+</html>

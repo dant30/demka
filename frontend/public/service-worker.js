@@ -1,6 +1,16 @@
 const CACHE_PREFIX = 'demka-app-shell-';
-const CACHE_NAME = `${CACHE_PREFIX}v1`;
-const APP_SHELL = ['/', '/index.html', '/manifest.json', '/favicon.svg', '/app-icon.svg'];
+const CACHE_NAME = `${CACHE_PREFIX}v2`;
+const APP_SHELL = [
+	'/',
+	'/index.html',
+	'/offline.html',
+	'/not_found.html',
+	'/unauthorized.html',
+	'/error-pages.css',
+	'/manifest.json',
+	'/favicon.svg',
+	'/app-icon.svg',
+];
 
 self.addEventListener('install', (event) => {
 	event.waitUntil((async () => {
@@ -33,9 +43,18 @@ self.addEventListener('fetch', (event) => {
 
 	if (request.mode === 'navigate') {
 		event.respondWith(
-			fetch(request).catch(async () => {
-				const cachedShell = await caches.match('/index.html');
-				return cachedShell || Response.error();
+			fetch(request).then(async (response) => {
+				if (response.status === 404) {
+					return (await caches.match('/not_found.html')) || response;
+				}
+				return response;
+			}).catch(async () => {
+				if (url.pathname === '/' || url.pathname === '/index.html') {
+					const cachedShell = await caches.match('/index.html');
+					if (cachedShell) return cachedShell;
+				}
+				const offlinePage = await caches.match('/offline.html');
+				return offlinePage || Response.error();
 			}),
 		);
 		return;

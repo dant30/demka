@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="theme-color" content="#f4f8fa">
+	<meta name="robots" content="noindex, nofollow">
+	<title>Page not found | DEMKA</title>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+	<link rel="stylesheet" href="/error-pages.css">
+</head>
+<body>
+	<header class="site-header page-shell">
+		<a class="brand" href="/" aria-label="DEMKA home">
+			<img class="brand-mark" src="/app-icon.svg" alt="">
+			<span><span class="brand-name">DEMKA</span><span class="brand-caption">OPERATIONS</span></span>
+		</a>
+		<span class="system-label">Page status</span>
+	</header>
+	<main class="error-layout error-layout--not-found">
+		<div class="state-visual" aria-hidden="true">
+			<div class="visual-frame">
+				<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="28" cy="28" r="16"/>
+					<path d="m40 40 12 12M22 28h12M28 22v12"/>
+				</svg>
+			</div>
+			<span class="visual-code">HTTP / 404</span>
+		</div>
+		<section class="error-copy" aria-labelledby="page-title">
+			<p class="system-label">Page unavailable</p>
+			<p class="error-code">REQUEST STATUS / 404</p>
+			<h1 id="page-title">This page isn't here.</h1>
+			<p class="description">The address may be outdated, mistyped, or the page may have moved. Check the URL or return to the DEMKA workspace.</p>
+			<ul class="detail-list">
+				<li>Check the address for typing errors.</li>
+				<li>Use the dashboard to continue to a known section.</li>
+			</ul>
+			<div class="action-row">
+				<a class="button" href="/">Go to dashboard</a>
+				<button class="button button-secondary" id="go-back" type="button">Go back</button>
+			</div>
+			<p class="state-message">If you followed a saved link, it may need to be updated.</p>
+		</section>
+	</main>
+	<footer class="site-footer page-shell"><span>DEMKA - Operational workspace</span><span>PAGE NOT FOUND</span></footer>
+	<script>
+		document.getElementById('go-back').addEventListener('click', () => {
+			if (window.history.length > 1) window.history.back();
+			else window.location.assign('/');
+		});
+	</script>
+</body>
+</html>
