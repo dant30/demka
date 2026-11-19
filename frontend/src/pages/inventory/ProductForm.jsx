@@ -6,6 +6,7 @@ import { endpoints } from '@/api/endpoints';
 import { api } from '@/api/client';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
+import Switch from '@/components/ui/Switch';
 import Button from '@/components/ui/Button';
 import FormSection from '@/components/forms/FormSection';
 import FormActions from '@/components/forms/FormActions';
@@ -147,6 +148,7 @@ export default function ProductForm() {
         <Input label="Reorder Level" type="number" value={form.reorder_level} onChange={(e) => setField('reorder_level', e.target.value)} />
         <Input label="Reorder Qty" type="number" value={form.reorder_qty} onChange={(e) => setField('reorder_qty', e.target.value)} />
         <Input label="eTIMS Classification Code" value={form.etims_item_cls_cd} onChange={(e) => setField('etims_item_cls_cd', e.target.value)} className="md:col-span-2" hint="Required for KRA submission" />
+        <Switch label="Active" description="Inactive products cannot be used in stock adjustments or sales." checked={form.is_active} onChange={(e) => setField('is_active', e.target.checked)} />
       </FormSection>
 
       <FormSection title="Product notes" columns={2}>
