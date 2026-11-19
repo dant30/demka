@@ -18,6 +18,10 @@ export default function CashReport() {
     queryKey: ['payment-methods-report', params],
     queryFn: async () => (await api.get(endpoints.reporting.paymentMethods, { params })).data,
   });
+  const variance = useQuery({
+    queryKey: ['cash-variance-report', params],
+    queryFn: async () => (await api.get(endpoints.reporting.cashVariance, { params })).data,
+  });
 
   return (
     <div className="space-y-4">
@@ -51,6 +55,22 @@ export default function CashReport() {
           caption="Daily cash reconciliation"
         />
       )}
+
+      <DataTable
+        title="Field Run Cash Variance"
+        columns={[
+          { key: 'run_date', label: 'Date', render: (row) => <span><span className="font-medium">{row.run_date}</span><span className="block text-xs text-slate-500">{row.route.code} · {row.route.name}</span></span> },
+          { key: 'agent', label: 'Agent', render: (row) => row.agent.name },
+          { key: 'cash_expected', label: 'Expected', align: 'right', render: (row) => formatKes(row.cash_expected) },
+          { key: 'cash_handed_in', label: 'Handed In', align: 'right', render: (row) => formatKes(row.cash_handed_in) },
+          { key: 'variance', label: 'Variance', align: 'right', render: (row) => <span className={Number(row.variance) === 0 ? '' : 'font-semibold text-red-600'}>{formatKes(row.variance)}</span> },
+        ]}
+        rows={variance.data || []}
+        keyField="run_id"
+        loading={variance.isLoading}
+        empty={variance.isError ? 'Could not load this report.' : 'No cash variances in this period.'}
+        caption="Field run cash variance"
+      />
     </div>
   );
 }

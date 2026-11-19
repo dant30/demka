@@ -31,7 +31,12 @@ export default function RoutesList() {
       <PageHeader
         title="Routes"
         description="Manage delivery routes, assigned agents, and schedules."
-        actions={isBoss && <Link to="/routes/new" className="btn-primary">+ New Route</Link>}
+        actions={isBoss && (
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <Link to="/routes/operations" className="btn-secondary text-center">Schedules & activity</Link>
+            <Link to="/routes/new" className="btn-primary text-center">+ New Route</Link>
+          </div>
+        )}
       />
       <Filter title="Route filters">
         <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />

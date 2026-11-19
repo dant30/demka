@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useList } from '@/api/queries';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { api, extractError } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
+import { useList } from '@/api/queries';
 import { formatKes } from '@/utils/money';
 import { formatDateTime } from '@/utils/dates';
 import DataTable from '@/components/ui/DataTable';
@@ -10,13 +12,34 @@ import PageHeader from '@/components/ui/PageHeader';
 import Select from '@/components/ui/Select';
 import Input from '@/components/ui/Input';
 import Filter from '@/components/ui/Filter';
+import Button from '@/components/ui/Button';
+import Modal from '@/components/ui/Modal';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function PaymentsList() {
+  const { isBoss } = useAuth();
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [method, setMethod] = useState('');
   const [status, setStatus] = useState('');
+  const [paymentToReverse, setPaymentToReverse] = useState(null);
+  const [reason, setReason] = useState('');
+  const [reverseError, setReverseError] = useState('');
   const { data, isLoading } = useList('payments', endpoints.payments.list, {
     page, method: method || undefined, status: status || undefined,
+  });
+  const reversePayment = useMutation({
+    mutationFn: async () => (await api.post(
+      endpoints.payments.reverse(paymentToReverse.id),
+      { reason: reason.trim() },
+    )).data,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['payments'] });
+      setPaymentToReverse(null);
+      setReason('');
+      setReverseError('');
+    },
+    onError: (error) => setReverseError(extractError(error)),
   });
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
@@ -32,6 +55,25 @@ export default function PaymentsList() {
     { key: 'reference', label: 'Reference', render: (r) => r.reference || '—' },
     { key: 'status_display', label: 'Status' },
     { key: 'sale_number', label: 'Sale', render: (r) => r.sale_number || '—' },
+    {
+      key: 'actions',
+      label: 'Actions',
+      mobileFullWidth: true,
+      render: (payment) => isBoss && payment.status === 'CONFIRMED' && (
+        <Button
+          size="sm"
+          variant="danger"
+          className="min-h-11 w-full sm:min-h-8 sm:w-auto"
+          onClick={() => {
+            setPaymentToReverse(payment);
+            setReason('');
+            setReverseError('');
+          }}
+        >
+          Reverse payment
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -58,6 +100,47 @@ export default function PaymentsList() {
       </Filter>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+
+      <Modal
+        open={Boolean(paymentToReverse)}
+        onClose={() => !reversePayment.isPending && setPaymentToReverse(null)}
+        title="Reverse payment"
+        size="sm"
+        footer={(
+          <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button
+              variant="secondary"
+              className="w-full sm:w-auto"
+              onClick={() => setPaymentToReverse(null)}
+              disabled={reversePayment.isPending}
+            >
+              Keep payment
+            </Button>
+            <Button
+              variant="danger"
+              className="w-full sm:w-auto"
+              onClick={() => reversePayment.mutate()}
+              loading={reversePayment.isPending}
+            >
+              Confirm reversal
+            </Button>
+          </div>
+        )}
+      >
+        <div className="space-y-3">
+          <p className="text-sm leading-6 text-slate-600">
+            Reverse {paymentToReverse?.payment_number} for {formatKes(paymentToReverse?.amount)}?
+            This restores the customer balance and updates any linked sale.
+          </p>
+          <Input
+            label="Reason (optional)"
+            value={reason}
+            onChange={(event) => setReason(event.target.value)}
+            maxLength={240}
+          />
+          {reverseError && <p role="alert" className="text-sm text-red-700">{reverseError}</p>}
+        </div>
+      </Modal>
     </div>
   );
 }

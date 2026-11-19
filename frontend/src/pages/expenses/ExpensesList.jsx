@@ -38,6 +38,12 @@ export default function ExpensesList() {
       params: { period },
     })).data,
   });
+  const { data: locationBreakdown, isLoading: locationsLoading, isError: locationsError } = useQuery({
+    queryKey: ['expenses-by-location', period],
+    queryFn: async () => (await api.get(endpoints.reporting.expenseByLocation, {
+      params: { period },
+    })).data,
+  });
 
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
@@ -87,6 +93,19 @@ export default function ExpensesList() {
           />
         </ChartPanel>
       )}
+
+      <DataTable
+        title="Spending by Location"
+        columns={[
+          { key: 'location', label: 'Location' },
+          { key: 'count', label: 'Expenses', align: 'right' },
+          { key: 'total', label: 'Total', align: 'right', render: (row) => formatKes(row.total) },
+        ]}
+        rows={locationBreakdown || []}
+        loading={locationsLoading}
+        empty={locationsError ? 'Could not load this breakdown.' : 'No expenses in this period.'}
+        caption="Expenses by location"
+      />
 
       <Filter title="Expense filters" contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>

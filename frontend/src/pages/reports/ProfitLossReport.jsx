@@ -4,6 +4,7 @@ import { api } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
 import { formatKes } from '@/utils/money';
 import { ReportHeader } from './ReportLayout';
+import DataTable from '@/components/ui/DataTable';
 
 export default function ProfitLossReport() {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,14 @@ export default function ProfitLossReport() {
   const { data, isLoading } = useQuery({
     queryKey: ['report-pl', params],
     queryFn: async () => (await api.get(endpoints.reporting.profitLoss, { params })).data,
+  });
+  const channelReport = useQuery({
+    queryKey: ['profit-by-channel', params],
+    queryFn: async () => (await api.get(endpoints.reporting.profitByChannel, { params })).data,
+  });
+  const productTypeReport = useQuery({
+    queryKey: ['profit-by-product-type', params],
+    queryFn: async () => (await api.get(endpoints.reporting.profitByProductType, { params })).data,
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -53,6 +62,36 @@ export default function ProfitLossReport() {
           </div>
         </div>
       )}
+
+      <DataTable
+        title="Profit by Sales Channel"
+        columns={[
+          { key: 'channel', label: 'Channel' },
+          { key: 'revenue', label: 'Revenue', align: 'right', render: (row) => formatKes(row.revenue) },
+          { key: 'cogs', label: 'Cost of Goods', align: 'right', render: (row) => formatKes(row.cogs) },
+          { key: 'gross_profit', label: 'Gross Profit', align: 'right', render: (row) => formatKes(row.gross_profit) },
+          { key: 'margin_pct', label: 'Margin %', align: 'right', render: (row) => `${row.margin_pct}%` },
+        ]}
+        rows={channelReport.data || []}
+        loading={channelReport.isLoading}
+        empty={channelReport.isError ? 'Could not load this report.' : 'No sales in this period.'}
+        caption="Profit by sales channel"
+      />
+
+      <DataTable
+        title="Profit by Product Type"
+        columns={[
+          { key: 'product_type', label: 'Product Type' },
+          { key: 'revenue', label: 'Revenue', align: 'right', render: (row) => formatKes(row.revenue) },
+          { key: 'cogs', label: 'Cost of Goods', align: 'right', render: (row) => formatKes(row.cogs) },
+          { key: 'gross_profit', label: 'Gross Profit', align: 'right', render: (row) => formatKes(row.gross_profit) },
+          { key: 'margin_pct', label: 'Margin %', align: 'right', render: (row) => `${row.margin_pct}%` },
+        ]}
+        rows={productTypeReport.data || []}
+        loading={productTypeReport.isLoading}
+        empty={productTypeReport.isError ? 'Could not load this report.' : 'No product sales in this period.'}
+        caption="Profit by product type"
+      />
     </div>
   );
 }

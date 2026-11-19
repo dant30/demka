@@ -45,7 +45,11 @@ const NAV_GROUPS = [
     items: [
       { to: "/admin/etims",    label: "eTIMS",    icon: "🏛️", bossOnly: true },
       { to: "/admin/printers", label: "Printers", icon: "🖨️", bossOnly: true },
+      { to: "/admin/print-jobs", label: "Print Jobs", icon: "🧾", bossOnly: true },
       { to: "/admin/users",    label: "Users",    icon: "🔧", bossOnly: true },
+      { to: "/admin/locations", label: "Locations", icon: "📍", bossOnly: true },
+      { to: "/admin/audit", label: "Audit Log", icon: "📋", bossOnly: true },
+      { to: "/admin/business", label: "Business Details", icon: "🏢", bossOnly: true },
     ],
   },
 ];

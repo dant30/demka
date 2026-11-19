@@ -1,10 +1,11 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import AppShell from '@/components/layout/AppShell';
 import StaticErrorRedirect from '@/components/StaticErrorRedirect';
 import ProtectedRoute from './ProtectedRoute';
 import PortalProtectedRoute from './PortalProtectedRoute';
 
 import Login from '@/pages/auth/Login';
+import PasswordReset from '@/pages/auth/PasswordReset';
 import HomeRoute from '@/pages/HomeRoute';
 import POS from '@/pages/shop/POS';
 import POSCart from '@/pages/shop/POSCart';
@@ -20,6 +21,7 @@ import FieldSaleReceipt from '@/pages/field/FieldSaleReceipt';
 import SalesList from '@/pages/sales/SalesList';
 import SaleDetail from '@/pages/sales/SaleDetail';
 import ReturnsList from '@/pages/sales/ReturnsList';
+import SpecialOrdersList from '@/pages/sales/SpecialOrdersList';
 
 // Inventory
 import InventoryHome from '@/pages/inventory/InventoryHome';
@@ -51,6 +53,7 @@ import RoutesList from '@/pages/routes/RoutesList';
 import RouteForm from '@/pages/routes/RouteForm';
 import RouteDetail from '@/pages/routes/RouteDetail';
 import RouteRunDetail from '@/pages/routes/RouteRunDetail';
+import RouteOperations from '@/pages/routes/RouteOperations';
 
 // Payments
 import PaymentsList from '@/pages/payments/PaymentsList';
@@ -73,11 +76,17 @@ import StockReport from '@/pages/reports/StockReport';
 import CustomerReport from '@/pages/reports/CustomerReport';
 import SupplierReport from '@/pages/reports/SupplierReport';
 import EtimsReport from '@/pages/reports/EtimsReport';
+import RoutePerformanceReport from '@/pages/reports/RoutePerformanceReport';
+import ExpenseReport from '@/pages/reports/ExpenseReport';
 
 // Admin
 import AdminEtims from '@/pages/admin/AdminEtims';
 import AdminPrinters from '@/pages/admin/AdminPrinters';
 import AdminUsers from '@/pages/admin/AdminUsers';
+import AdminLocations from '@/pages/admin/AdminLocations';
+import AdminAuditLogs from '@/pages/admin/AdminAuditLogs';
+import AdminBusiness from '@/pages/admin/AdminBusiness';
+import PrintJobs from '@/pages/admin/PrintJobs';
 
 // Portal
 import PortalLogin from '@/pages/portal/PortalLogin';
@@ -89,6 +98,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/password-reset" element={<PasswordReset />} />
 
       {/* Portal */}
       <Route path="/portal/login" element={<PortalLogin />} />
@@ -111,6 +121,7 @@ export default function AppRoutes() {
 
         {/* Sales */}
         <Route path="/sales" element={<SalesList />} />
+        <Route path="/sales/special-orders" element={<SpecialOrdersList />} />
         <Route path="/sales/:id" element={<SaleDetail />} />
         <Route path="/sales/returns" element={<ReturnsList />} />
 
@@ -136,6 +147,7 @@ export default function AppRoutes() {
         {/* Suppliers */}
         <Route path="/suppliers" element={<SuppliersList />} />
         <Route path="/suppliers/new" element={<SupplierForm />} />
+        <Route path="/suppliers/:id/edit" element={<SupplierForm />} />
         <Route path="/suppliers/:id" element={<SupplierDetail />} />
 
         {/* Purchasing */}
@@ -146,6 +158,7 @@ export default function AppRoutes() {
 
         {/* Routes */}
         <Route path="/routes" element={<RoutesList />} />
+        <Route path="/routes/operations" element={<ProtectedRoute bossOnly><RouteOperations /></ProtectedRoute>} />
         <Route path="/routes/new" element={<ProtectedRoute bossOnly><RouteForm /></ProtectedRoute>} />
         <Route path="/routes/:id/edit" element={<ProtectedRoute bossOnly><RouteForm /></ProtectedRoute>} />
         <Route path="/routes/:id" element={<RouteDetail />} />
@@ -163,20 +176,26 @@ export default function AppRoutes() {
         <Route path="/preorders/:id" element={<PreorderDetail />} />
 
         {/* Reports */}
-        <Route path="/reports" element={<ReportsHome />} />
-        <Route path="/reports/profit-loss" element={<ProfitLossReport />} />
-        <Route path="/reports/sales" element={<SalesReport />} />
-        <Route path="/reports/cash" element={<CashReport />} />
-        <Route path="/reports/vat" element={<VatReport />} />
-        <Route path="/reports/stock" element={<StockReport />} />
-        <Route path="/reports/customers" element={<CustomerReport />} />
-        <Route path="/reports/suppliers" element={<SupplierReport />} />
-        <Route path="/reports/etims" element={<EtimsReport />} />
+        <Route path="/reports" element={<ProtectedRoute bossOnly><ReportsHome /></ProtectedRoute>} />
+        <Route path="/reports/profit-loss" element={<ProtectedRoute bossOnly><ProfitLossReport /></ProtectedRoute>} />
+        <Route path="/reports/sales" element={<ProtectedRoute bossOnly><SalesReport /></ProtectedRoute>} />
+        <Route path="/reports/cash" element={<ProtectedRoute bossOnly><CashReport /></ProtectedRoute>} />
+        <Route path="/reports/vat" element={<ProtectedRoute bossOnly><VatReport /></ProtectedRoute>} />
+        <Route path="/reports/stock" element={<ProtectedRoute bossOnly><StockReport /></ProtectedRoute>} />
+        <Route path="/reports/customers" element={<ProtectedRoute bossOnly><CustomerReport /></ProtectedRoute>} />
+        <Route path="/reports/suppliers" element={<ProtectedRoute bossOnly><SupplierReport /></ProtectedRoute>} />
+        <Route path="/reports/etims" element={<ProtectedRoute bossOnly><EtimsReport /></ProtectedRoute>} />
+        <Route path="/reports/route-performance" element={<ProtectedRoute bossOnly><RoutePerformanceReport /></ProtectedRoute>} />
+        <Route path="/reports/expenses" element={<ProtectedRoute bossOnly><ExpenseReport /></ProtectedRoute>} />
 
         {/* Admin */}
-        <Route path="/admin/etims" element={<AdminEtims />} />
-        <Route path="/admin/printers" element={<AdminPrinters />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/etims" element={<ProtectedRoute bossOnly><AdminEtims /></ProtectedRoute>} />
+        <Route path="/admin/printers" element={<ProtectedRoute bossOnly><AdminPrinters /></ProtectedRoute>} />
+        <Route path="/admin/print-jobs" element={<ProtectedRoute bossOnly><PrintJobs /></ProtectedRoute>} />
+        <Route path="/admin/users" element={<ProtectedRoute bossOnly><AdminUsers /></ProtectedRoute>} />
+        <Route path="/admin/locations" element={<ProtectedRoute bossOnly><AdminLocations /></ProtectedRoute>} />
+        <Route path="/admin/audit" element={<ProtectedRoute bossOnly><AdminAuditLogs /></ProtectedRoute>} />
+        <Route path="/admin/business" element={<ProtectedRoute bossOnly><AdminBusiness /></ProtectedRoute>} />
       </Route>
 
       <Route path="*" element={<StaticErrorRedirect path="/not_found.html" />} />

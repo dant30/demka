@@ -312,6 +312,11 @@ textarea.input {
   .card { padding: 0.875rem; }
   .card.p-0 { padding: 0; }
   .table { min-width: 38rem; }
+  .card:has(> .table) {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
   .form-section { padding: 0.875rem; }
   .chart-panel { padding: 0.875rem; }
 }

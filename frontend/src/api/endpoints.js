@@ -7,12 +7,28 @@ export const endpoints = {
     logout:           '/accounts/auth/logout/',
     me:               '/accounts/auth/me/',
     changePassword:   '/accounts/auth/change-password/',
+    passwordResetRequest: '/accounts/auth/password-reset/request/',
+    passwordResetConfirm: '/accounts/auth/password-reset/confirm/',
   },
 
   // ---- accounts ----
   users: {
     list:  '/accounts/users/',
     detail: (id) => `/accounts/users/${id}/`,
+  },
+  userLocations: {
+    list: '/accounts/location-assignments/',
+    detail: (id) => `/accounts/location-assignments/${id}/`,
+  },
+  auditLogs: {
+    list: '/accounts/audit-logs/',
+    detail: (id) => `/accounts/audit-logs/${id}/`,
+  },
+
+  // ---- shared business data ----
+  common: {
+    config:   '/common/config/',
+    taxRates: '/common/tax-rates/',
   },
 
   // ---- customers ----
@@ -80,6 +96,7 @@ export const endpoints = {
     specialOrderDetail: (id) => `/sales/special-orders/${id}/`,
     soMarkArrived:   (id) => `/sales/special-orders/${id}/mark-arrived/`,
     soMarkDelivered: (id) => `/sales/special-orders/${id}/mark-delivered/`,
+    soCancel:        (id) => `/sales/special-orders/${id}/cancel/`,
   },
 
   // ---- payments ----
@@ -117,6 +134,7 @@ export const endpoints = {
     profitability:(id) => `/routes/${id}/profitability/`,
     routeRuns:    (id) => `/routes/${id}/runs/`,
     schedules:    '/routes/schedules/',
+    scheduleDetail: (id) => `/routes/schedules/${id}/`,
     runs:         '/routes/runs/',
     runDetail:    (id) => `/routes/runs/${id}/`,
     runStart:     (id) => `/routes/runs/${id}/start/`,
@@ -125,6 +143,7 @@ export const endpoints = {
     runMaterialize:  '/routes/runs/materialize/',
     runReconciliation: (id) => `/routes/runs/${id}/reconciliation/`,
     runVarianceReport:'/routes/runs/variance-report/',
+    agentPerformance: '/routes/runs/agent-performance/',
     changeLog:   '/routes/change-log/',
   },
 
@@ -203,6 +222,9 @@ export const endpoints = {
     vat:                 '/reporting/vat/',
     etimsHealth:         '/reporting/etims/health/',
     etimsFailures:       '/reporting/etims/failures/',
+    expenseSummary:      '/reporting/expenses/summary/',
+    expenseByCategory:   '/reporting/expenses/by-category/',
+    expenseTrend:        '/reporting/expenses/trend/',
     salesSummary:        '/reporting/sales/summary/',
     salesByDay:          '/reporting/sales/by-day/',
     salesByCustomerType: '/reporting/sales/by-customer-type/',
@@ -219,5 +241,6 @@ export const endpoints = {
     agingDetail:         '/reporting/customers/aging-detail/',
     topCustomers:        '/reporting/customers/top/',
     creditUtilization:   '/reporting/customers/credit-utilization/',
+    expenseByLocation:   '/reporting/expenses/by-location/',
   },
 };

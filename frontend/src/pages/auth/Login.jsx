@@ -81,6 +81,11 @@ export default function Login() {
           </Button>
         </form>
         <p className="mt-6 text-center text-sm text-white/70">
+          <Link to="/password-reset" className="font-medium text-sky-200 hover:text-white hover:underline">
+            Forgot your password?
+          </Link>
+        </p>
+        <p className="mt-3 text-center text-sm text-white/70">
           Customer?{' '}
           <Link to="/portal/login" replace className="font-medium text-sky-200 hover:text-white hover:underline">
             Order via portal

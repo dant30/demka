@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDetail, useList, useAction } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
+import { useAuth } from '@/hooks/useAuth';
 import { formatKes } from '@/utils/money';
 import Button from '@/components/ui/Button';
 
@@ -9,6 +10,7 @@ const TABS = ['Overview', 'Products', 'Purchase Orders'];
 
 export default function SupplierDetail() {
   const { id } = useParams();
+  const { isBoss } = useAuth();
   const [tab, setTab] = useState('Overview');
   const { data: supplier, isLoading } = useDetail('supplier', endpoints.suppliers.detail(id), id);
   const { data: stats } = useDetail('supplier-stats', endpoints.suppliers.stats(id), id);
@@ -23,7 +25,7 @@ export default function SupplierDetail() {
           <h1 className="text-2xl font-bold">{supplier.name}</h1>
           <p className="text-sm text-slate-500">{supplier.code} · {supplier.phone}</p>
         </div>
-        <Button variant="secondary">Edit</Button>
+        {isBoss && <Link to={`/suppliers/${id}/edit`} className="btn-secondary">Edit</Link>}
       </div>
 
       {stats && (

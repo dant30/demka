@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
@@ -6,13 +7,24 @@ import { ReportHeader } from './ReportLayout';
 import DataTable from '@/components/ui/DataTable';
 
 export default function CustomerReport() {
+  const [searchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
+  const agingParams = params.end ? { as_of: params.end } : {};
   const { data: aging } = useQuery({
-    queryKey: ['aging'],
-    queryFn: async () => (await api.get(endpoints.reporting.agingSummary)).data,
+    queryKey: ['aging', agingParams],
+    queryFn: async () => (await api.get(endpoints.reporting.agingSummary, { params: agingParams })).data,
+  });
+  const { data: agingDetail, isLoading: agingDetailLoading, isError: agingDetailError } = useQuery({
+    queryKey: ['aging-detail', agingParams],
+    queryFn: async () => (await api.get(endpoints.reporting.agingDetail, { params: agingParams })).data,
   });
   const { data: credit } = useQuery({
     queryKey: ['credit-util'],
     queryFn: async () => (await api.get(endpoints.reporting.creditUtilization)).data,
+  });
+  const { data: topCustomers, isLoading: topCustomersLoading, isError: topCustomersError } = useQuery({
+    queryKey: ['top-customers', params],
+    queryFn: async () => (await api.get(endpoints.reporting.topCustomers, { params })).data,
   });
 
   return (
@@ -50,6 +62,37 @@ export default function CustomerReport() {
           caption="Customer credit utilization"
         />
       )}
+
+      <DataTable
+        title="Top Customers"
+        columns={[
+          { key: 'name', label: 'Customer', render: (row) => <span><span className="font-medium">{row.name}</span><span className="block text-xs text-slate-500">{row.code} · {row.customer_type}</span></span> },
+          { key: 'sale_count', label: 'Sales', align: 'right' },
+          { key: 'revenue', label: 'Revenue', align: 'right', render: (row) => formatKes(row.revenue) },
+          { key: 'gross_profit', label: 'Gross Profit', align: 'right', render: (row) => formatKes(row.gross_profit) },
+        ]}
+        rows={topCustomers || []}
+        keyField="customer_id"
+        loading={topCustomersLoading}
+        empty={topCustomersError ? 'Could not load this report.' : 'No customer sales in this period.'}
+        caption="Top customers by revenue"
+      />
+
+      <DataTable
+        title="Receivables Detail"
+        columns={[
+          { key: 'sale_number', label: 'Sale', render: (row) => <span><span className="font-medium">{row.sale_number}</span><span className="block text-xs text-slate-500">{row.customer_name} · {row.customer_code}</span></span> },
+          { key: 'due_date', label: 'Due Date' },
+          { key: 'days_outstanding', label: 'Days', align: 'right' },
+          { key: 'bucket', label: 'Age' },
+          { key: 'balance_due', label: 'Balance', align: 'right', render: (row) => formatKes(row.balance_due) },
+        ]}
+        rows={agingDetail || []}
+        keyField="sale_number"
+        loading={agingDetailLoading}
+        empty={agingDetailError ? 'Could not load this report.' : 'No outstanding receivables.'}
+        caption="Receivables aging detail"
+      />
     </div>
   );
 }

@@ -10,6 +10,8 @@ const REPORTS = [
   { to: '/reports/customers', label: 'Customers', icon: '👥', desc: 'Aging, top customers, credit utilization' },
   { to: '/reports/suppliers', label: 'Suppliers', icon: '🚚', desc: 'Purchases, price trends' },
   { to: '/reports/etims', label: 'eTIMS Health', icon: '✅', desc: 'Submission success, failures' },
+  { to: '/reports/route-performance', label: 'Field Performance', icon: '🚐', desc: 'Agent runs, sales, and cash variance' },
+  { to: '/reports/expenses', label: 'Expenses', icon: '💸', desc: 'Spend by period, category, location, and trend' },
 ];
 
 export default function ReportsHome() {
