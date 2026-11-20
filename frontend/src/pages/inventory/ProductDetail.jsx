@@ -395,9 +395,9 @@ function StockAdjustModal({ open, onClose, product, defaultLocation, onSuccess }
 
         {error && <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/20 dark:text-red-400">{error}</div>}
 
-        <div className="flex flex-col-reverse gap-2 border-t border-slate-100 pt-4 sm:flex-row sm:justify-end dark:border-slate-800">
-          <Button type="button" variant="secondary" onClick={handleClose} disabled={adjust.isPending} className="w-full sm:w-auto">Cancel</Button>
-          <Button type="submit" loading={adjust.isPending} disabled={!validAdjustment || adjust.isPending} className="w-full sm:w-auto">Apply adjustment</Button>
+        <div className="sticky bottom-[-1rem] -mx-4 -mb-4 mt-1 flex w-[calc(100%+2rem)] flex-row gap-2 border-t border-slate-200 bg-white px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-8px_24px_rgba(15,23,42,0.06)] dark:border-slate-700 dark:bg-slate-900 sm:-mx-5 sm:-mb-5 sm:w-[calc(100%+2.5rem)] sm:px-5">
+          <Button type="button" variant="secondary" onClick={handleClose} disabled={adjust.isPending} className="w-full flex-1">Cancel</Button>
+          <Button type="submit" loading={adjust.isPending} disabled={!validAdjustment || adjust.isPending} className="w-full flex-1">Apply adjustment</Button>
         </div>
       </form>
     </Modal>
