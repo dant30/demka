@@ -127,78 +127,77 @@ export default function POS() {
       <div className="flex-1 flex flex-col min-h-0">
         <Filter
           title="Product filters"
-          defaultExpanded
           className="mb-3 md:mb-4"
+          headerContent={(
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <Input
+                type="search"
+                aria-label="Search products by name or part number"
+                placeholder="Search name or part number..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Input
+                aria-label="Scan barcode or enter SKU or part number"
+                placeholder="Scan barcode or enter SKU..."
+                onKeyDown={handleBarcodeScan}
+              />
+            </div>
+          )}
           activeCount={activeProductFilterCount}
           onClear={() => { setSearch(''); setCategoryId(''); }}
           showClear
         >
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)_minmax(12rem,0.6fr)]">
-              <Input
-                label="Barcode / Part Lookup"
-                placeholder="Scan barcode or enter SKU / part number"
-                onKeyDown={handleBarcodeScan}
-                autoFocus
-              />
-              <Input
-                label="Search Product"
-                placeholder="Name or part number"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <Select
-                label="Category"
-                value={categoryId}
-                onChange={(value) => setCategoryId(value)}
-                className="col-span-2 w-full lg:col-span-1"
-                searchable
-                options={[
-                  { value: '', label: 'All categories' },
-                  ...categoryOptions.map((category) => ({
-                    value: category.id,
-                    label: category.name,
-                  })),
-                ]}
-              />
-            </div>
-            <div className="grid grid-cols-1 gap-2 md:gap-3 lg:grid-cols-2">
-              <Select
-                searchable
-                label="Customer"
-                value={cart.customerId || ''}
-                onChange={(value) => cart.setCustomer(value ? Number(value) : null)}
-                options={[
-                  { value: '', label: 'Select customer...' },
-                  ...(walkInCustomer ? [{
-                    value: walkInCustomer.id,
-                    label: walkInCustomer.name,
-                    sublabel: walkInCustomer.code,
-                  }] : []),
-                  ...customerOptions
-                    .filter((customer) => customer.customer_type !== 'WALK_IN' && customer.id !== walkInCustomer?.id)
-                    .map((customer) => ({
-                      value: customer.id,
-                      label: customer.name,
-                      sublabel: customer.code,
-                    })),
-                ]}
-              />
-              <Select
-                label="Till / Location"
-                value={cart.locationId || ''}
-                onChange={(e) => cart.setLocation(Number(e.target.value))}
-              >
-                <option value="">Select location...</option>
-                {locationOptions
-                  .filter((l) => l.location_type === 'SHOP' || l.location_type === 'WAREHOUSE')
-                  .map((l) => (
-                    <option key={l.id} value={l.id}>{l.name}</option>
-                  ))}
-              </Select>
-            </div>
-          </div>
+          <Select
+            label="Category"
+            value={categoryId}
+            onChange={(value) => setCategoryId(value)}
+            searchable
+            options={[
+              { value: '', label: 'All categories' },
+              ...categoryOptions.map((category) => ({
+                value: category.id,
+                label: category.name,
+              })),
+            ]}
+          />
         </Filter>
+
+        <div className="mb-3 grid grid-cols-1 gap-2 md:gap-3 lg:grid-cols-2">
+          <Select
+            searchable
+            label="Customer"
+            value={cart.customerId || ''}
+            onChange={(value) => cart.setCustomer(value ? Number(value) : null)}
+            options={[
+              { value: '', label: 'Select customer...' },
+              ...(walkInCustomer ? [{
+                value: walkInCustomer.id,
+                label: walkInCustomer.name,
+                sublabel: walkInCustomer.code,
+              }] : []),
+              ...customerOptions
+                .filter((customer) => customer.customer_type !== 'WALK_IN' && customer.id !== walkInCustomer?.id)
+                .map((customer) => ({
+                  value: customer.id,
+                  label: customer.name,
+                  sublabel: customer.code,
+                })),
+            ]}
+          />
+          <Select
+            label="Till / Location"
+            value={cart.locationId || ''}
+            onChange={(e) => cart.setLocation(Number(e.target.value))}
+          >
+            <option value="">Select location...</option>
+            {locationOptions
+              .filter((l) => l.location_type === 'SHOP' || l.location_type === 'WAREHOUSE')
+              .map((l) => (
+                <option key={l.id} value={l.id}>{l.name}</option>
+              ))}
+          </Select>
+        </div>
 
         {error && (
           <div className="mb-3 rounded-lg bg-red-50 text-red-700 px-3 py-2 text-sm">

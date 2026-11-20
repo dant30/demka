@@ -161,7 +161,7 @@ export default function RouteOperations() {
     {
       value: 'history', label: 'Change history', content: (
         <div className="space-y-4">
-          <Filter title="History filters" defaultExpanded activeCount={historyFilterCount} onClear={clearHistoryFilters} showClear contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <Filter title="History filters" activeCount={historyFilterCount} onClear={clearHistoryFilters} showClear contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Select label="Route" value={routeFilter} onChange={(event) => { setRouteFilter(event.target.value); setLogPage(1); }}>
               <option value="">All routes</option>
               {routes.map((route) => <option key={route.id} value={route.id}>{route.code} · {route.name}</option>)}
@@ -191,7 +191,6 @@ export default function RouteOperations() {
         <div className="space-y-4">
           <Filter
             title="Variance period"
-            defaultExpanded
             activeCount={daysBack !== '7' ? 1 : 0}
             onClear={() => setDaysBack('7')}
             showClear

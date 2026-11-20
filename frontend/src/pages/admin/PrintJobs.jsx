@@ -124,7 +124,7 @@ export default function PrintJobs() {
     <div className="space-y-4">
       <PageHeader title="Print Jobs" description="Queue documents, inspect printer jobs, and retry failed output." />
 
-      <Filter title="Queue a document" defaultExpanded collapsible={false} contentClassName="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(12rem,1fr)_minmax(14rem,2fr)_auto]">
+      <Filter title="Queue a document" collapsible={false} contentClassName="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(12rem,1fr)_minmax(14rem,2fr)_auto]">
         <Select label="Document" value={queueType} onChange={(event) => { setQueueType(event.target.value); setReferenceId(''); queueMutation.reset(); }}>
           {DOCUMENT_TYPES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
         </Select>
