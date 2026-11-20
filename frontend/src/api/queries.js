@@ -83,12 +83,12 @@ export function useAction(key, urlFn, { onSuccess, invalidate = [] } = {}) {
 }
 
 // ---- Domain-specific hooks ---------------------------------
-export function useDashboard(opts = {}) {
+export function useDashboard({ params = {}, ...opts } = {}) {
   return useQuery({
-    queryKey: ['reporting-dashboard'],
-    queryFn: async () => (await api.get(endpoints.reporting.dashboard)).data,
-    staleTime: 30_000,
-    refetchInterval: 60_000,
+    queryKey: ['reporting-dashboard', params],
+    queryFn: async () => (await api.get(endpoints.reporting.dashboard, { params })).data,
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
     ...opts,
   });
 }

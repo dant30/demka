@@ -6,7 +6,7 @@ from django.utils import timezone
 from core.utils.dates import get_period_range
 
 
-PERIODS = {"daily", "weekly", "monthly", "quarterly", "yearly"}
+PERIODS = {"daily", "yesterday", "weekly", "monthly", "quarterly", "yearly"}
 
 
 def parse_range(request) -> tuple[date, date]:
@@ -28,7 +28,11 @@ def parse_range(request) -> tuple[date, date]:
     period = request.query_params.get("period", "monthly")
     if period not in PERIODS:
         raise ValueError(f"period must be one of: {', '.join(sorted(PERIODS))}.")
-    return get_period_range(period, timezone.localdate())
+    today = timezone.localdate()
+    if period == "yesterday":
+        yesterday = today - timedelta(days=1)
+        return yesterday, yesterday
+    return get_period_range(period, today)
 
 
 def previous_period(start: date, end: date) -> tuple[date, date]:

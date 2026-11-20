@@ -13,14 +13,19 @@ logger = logging.getLogger(__name__)
 
 class DashboardView(ReportingAPIView):
     def get(self, request):
-        cache_key = "reporting:dashboard:v1"
+        try:
+            start, end = self.resolve_range(request)
+        except ValueError as exc:
+            return self.bad_request(str(exc))
+
+        cache_key = f"reporting:dashboard:v2:{start.isoformat()}:{end.isoformat()}"
         try:
             payload = cache.get(cache_key)
         except Exception:
             logger.warning("Reporting dashboard cache unavailable; building live.", exc_info=True)
             payload = None
         if payload is None:
-            payload = DashboardService.build()
+            payload = DashboardService.build(start=start, end=end)
             try:
                 cache.set(cache_key, payload, timeout=300)
             except Exception:
