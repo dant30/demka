@@ -76,13 +76,22 @@ export default function SalesList() {
         </Link>}
       />
 
-      <Filter title="Sales filters" activeCount={Object.values(filters).filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-4">
-        <Input
-          placeholder="Search sale # or customer..."
-          value={filters.search}
-          onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-          className="md:col-span-2"
-        />
+      <Filter
+        title="Sales filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search sales by sale number or customer"
+            placeholder="Search sale or customer..."
+            value={filters.search}
+            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+          />
+        )}
+        activeCount={Object.values(filters).filter(Boolean).length}
+        onClear={clearFilters}
+        showClear
+        contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3"
+      >
         <Select
           value={filters.channel}
           onChange={(e) => setFilters({ ...filters, channel: e.target.value })}
