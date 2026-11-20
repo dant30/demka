@@ -173,10 +173,11 @@ def _parse_row(row: dict, row_number: int, taken_skus: set, taken_barcodes: set)
     cost = _as_decimal(row.get("cost_price"), "cost_price", errors)
     retail = _as_decimal(row.get("retail_price"), "retail_price", errors)
     wholesale = _as_decimal(row.get("wholesale_price"), "wholesale_price", errors)
+    is_active = _as_bool(row.get("is_active"), default=False)
 
-    if retail <= 0:
+    if is_active and retail <= 0:
         errors.append("retail_price must be greater than 0")
-    if wholesale <= 0:
+    if is_active and wholesale <= 0:
         errors.append("wholesale_price must be greater than 0")
     if cost > 0 and retail > 0 and retail < cost:
         warnings.append("retail_price is below cost_price")
@@ -215,6 +216,7 @@ def _parse_row(row: dict, row_number: int, taken_skus: set, taken_barcodes: set)
             "retail_price": retail,
             "wholesale_price": wholesale,
             "is_stocked": _as_bool(row.get("is_stocked"), default=False),
+            "is_active": is_active,
             "reorder_level": reorder_level,
             "reorder_qty": reorder_qty,
             "barcode": barcode or None,
@@ -363,7 +365,7 @@ class ProductImportService:
                     barcode=d["barcode"],
                     compatibility_notes=d["compatibility_notes"],
                     etims_item_cls_cd=d["etims_item_cls_cd"],
-                    is_active=True,
+                    is_active=d["is_active"],
                 )
             )
 

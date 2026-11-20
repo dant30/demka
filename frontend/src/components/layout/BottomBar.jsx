@@ -18,7 +18,7 @@ function primaryItemsFor(role) {
   }
   if (role === "SALES_HELPER") {
     return [
-      { to: "/pos",         label: "POS",       icon: "🛒", match: "/pos" },
+      { to: "/customers",   label: "Customers", icon: "👥", match: "/customers" },
       { to: "/sales",       label: "Sales",     icon: "🧾", match: "/sales" },
       { to: "/inventory",   label: "Stock",     icon: "📦", match: "/inventory" },
     ];
@@ -26,7 +26,7 @@ function primaryItemsFor(role) {
   // BOSS / ADMIN
   return [
     { to: "/",            label: "Home",      icon: "📊", match: "/", end: true },
-    { to: "/pos",         label: "POS",       icon: "🛒", match: "/pos" },
+    { to: "/inventory",   label: "Products",  icon: "📦", match: "/inventory" },
     { to: "/sales",       label: "Sales",     icon: "🧾", match: "/sales" },
   ];
 }

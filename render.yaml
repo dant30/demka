@@ -18,8 +18,6 @@ services:
       python manage.py seed_payment_methods &&
       python manage.py seed_expense_categories &&
       python manage.py seed_stock_locations &&
-      (if [ "$DJANGO_SEED_CATALOGUE" = "true" ]; then
-      python manage.py generate_catalogue_seed --built-in --seed; fi) &&
       python manage.py ensure_admin_user &&
       gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60
     healthCheckPath: /api/health/
@@ -215,5 +213,3 @@ envVarGroups:
         value: "true"
       - key: SMS_PROVIDER
         value: ots
-      - key: DJANGO_SEED_CATALOGUE
-        value: "true"

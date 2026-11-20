@@ -21,7 +21,7 @@ def _make_xlsx(rows: list[list]) -> SimpleUploadedFile:
         "sku", "name", "category", "product_type", "brand", "unit",
         "cost_price", "retail_price", "wholesale_price", "is_stocked",
         "reorder_level", "reorder_qty", "barcode", "compatibility_notes",
-        "etims_item_cls_cd", "part_number",
+        "etims_item_cls_cd", "part_number", "is_active",
     ]
     ws.append(headers)
     for row in rows:
@@ -64,6 +64,32 @@ class ProductImportServiceTests(TestCase):
         p = Product.objects.get(sku="AUTO-002")
         self.assertEqual(p.retail_price, Decimal("500.00"))
         self.assertTrue(p.is_stocked)
+
+    def test_zero_priced_import_defaults_to_inactive(self):
+        file = _make_xlsx([
+            ["AUTO-DRAFT", "Draft Product", "Engine", "AUTO_PART", "", "PIECE",
+             0, 0, 0, "TRUE", 0, 0, "", "", ""],
+        ])
+        result = ProductImportService.import_file(file, user=self.user, mode="commit")
+
+        self.assertEqual(result["created"], 1)
+        product = Product.objects.get(sku="AUTO-DRAFT")
+        self.assertFalse(product.is_active)
+        self.assertEqual(product.retail_price, Decimal("0.00"))
+        self.assertEqual(product.wholesale_price, Decimal("0.00"))
+
+    def test_active_import_requires_positive_prices(self):
+        file = _make_xlsx([
+            ["AUTO-ACTIVE", "Active Product", "Engine", "AUTO_PART", "", "PIECE",
+               0, 0, 0, "TRUE", 0, 0, "", "", "", "", True],
+        ])
+        result = ProductImportService.import_file(file, user=self.user, mode="preview")
+
+        self.assertEqual(result["invalid"], 1)
+        self.assertEqual(
+            result["errors"][0]["messages"],
+            ["retail_price must be greater than 0", "wholesale_price must be greater than 0"],
+        )
 
     def test_part_number_is_imported(self):
         file = _make_xlsx([
