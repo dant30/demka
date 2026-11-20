@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { endpoints } from '@/api/endpoints';
 import { useCreate, useList, useUpdate } from '@/api/queries';
 import Button from '@/components/ui/Button';
@@ -9,8 +10,14 @@ import Select from '@/components/ui/Select';
 import Switch from '@/components/ui/Switch';
 
 export function InventoryCategories() {
+  const { createRequest = 0 } = useOutletContext() || {};
   const { data, isLoading } = useList('categories', endpoints.inventory.categories, { page_size: 200 });
   const [editing, setEditing] = useState(null);
+
+  useEffect(() => {
+    if (createRequest > 0) setEditing(false);
+  }, [createRequest]);
+
   const categories = data?.results || data || [];
   const columns = [
     { key: 'name', label: 'Name' },
@@ -30,9 +37,6 @@ export function InventoryCategories() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button onClick={() => setEditing(false)}>+ New Category</Button>
-      </div>
       <DataTable columns={columns} rows={categories} loading={isLoading} empty="No categories found." caption="Categories" />
       {editing !== null && (
         <CategoryEditor
@@ -101,8 +105,14 @@ function CategoryEditor({ category, onClose }) {
 }
 
 export function InventoryLocations() {
+  const { createRequest = 0 } = useOutletContext() || {};
   const { data, isLoading } = useList('locations', endpoints.inventory.locations, { page_size: 200 });
   const [editing, setEditing] = useState(null);
+
+  useEffect(() => {
+    if (createRequest > 0) setEditing(false);
+  }, [createRequest]);
+
   const locations = data?.results || data || [];
   const columns = [
     { key: 'name', label: 'Name' },
@@ -127,9 +137,6 @@ export function InventoryLocations() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button onClick={() => setEditing(false)}>+ New Location</Button>
-      </div>
       <DataTable columns={columns} rows={locations} loading={isLoading} empty="No locations found." caption="Locations" />
       {editing !== null && (
         <LocationEditor

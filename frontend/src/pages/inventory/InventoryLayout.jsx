@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import Tabs from '@/components/ui/Tabs';
@@ -30,6 +31,7 @@ export default function InventoryLayout() {
   const { isBoss } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const [createRequest, setCreateRequest] = useState(0);
   const routeTab = location.pathname.split('/')[2] || 'products';
   const selectedTab = ['import', 'transfers', 'categories', 'locations'].includes(routeTab)
     ? routeTab
@@ -45,14 +47,23 @@ export default function InventoryLayout() {
   ];
   const page = pageDetails[selectedTab];
 
+  const action = {
+    products: <Link to="/inventory/products/new" className="btn-primary">+ Product</Link>,
+    transfers: <button type="button" className="btn-primary" onClick={() => setCreateRequest((request) => request + 1)}>+ New Transfer</button>,
+    categories: isBoss
+      ? <button type="button" className="btn-primary" onClick={() => setCreateRequest((request) => request + 1)}>+ New Category</button>
+      : undefined,
+    locations: isBoss
+      ? <button type="button" className="btn-primary" onClick={() => setCreateRequest((request) => request + 1)}>+ New Location</button>
+      : undefined,
+  }[selectedTab];
+
   return (
     <div className="space-y-4">
       <PageHeader
         title={page.title}
         description={page.description}
-        actions={selectedTab === 'products'
-          ? <Link to="/inventory/products/new" className="btn-primary">+ Product</Link>
-          : undefined}
+        actions={action}
       />
       <Tabs
         tabs={tabs}
@@ -60,7 +71,7 @@ export default function InventoryLayout() {
         onChange={(value) => navigate(value === 'products' ? '/inventory' : `/inventory/${value}`)}
         tabListClassName="bg-white"
       >
-        <Outlet />
+        <Outlet context={{ createRequest }} />
       </Tabs>
     </div>
   );

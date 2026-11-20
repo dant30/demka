@@ -81,16 +81,16 @@ function StockBadge({ quantity }) {
   );
 }
 
-function ProductCard({ product, onAdd }) {
+function ProductCard({ product, onAdd, onSelect }) {
   const quantity = Number(product.total_quantity) || 0;
-  const unavailable = quantity <= 0;
+  const unavailable = quantity <= 0 && Boolean(onAdd);
 
   return (
     <button
       type="button"
-      onClick={() => onAdd(product)}
+      onClick={() => onAdd ? onAdd(product) : onSelect?.(product)}
       disabled={unavailable}
-      aria-label={`Add ${product.name} to order, ${formatKes(product.retail_price)}`}
+      aria-label={onAdd ? `Add ${product.name} to order, ${formatKes(product.retail_price)}` : `View ${product.name}`}
       className="group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-400 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-brand-500 dark:focus-visible:ring-offset-slate-950"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-800">
@@ -138,42 +138,61 @@ function ProductCard({ product, onAdd }) {
             {product.name}
           </h3>
 
-          <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 text-[10px] text-slate-500 dark:text-slate-400">
-            {product.sku && (
-              <span className="truncate font-medium">{product.sku}</span>
-            )}
-
-            {product.part_number && (
-              <>
-                {product.sku && <span aria-hidden="true">·</span>}
-                <span className="truncate">{product.part_number}</span>
-              </>
-            )}
+          <div className="mt-2 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[10px] text-slate-500 dark:text-slate-400">
+            <div className="min-w-0">
+              <span className="block text-[9px] font-medium uppercase text-slate-400">SKU</span>
+              <span className="block truncate font-semibold text-slate-700 dark:text-slate-300">
+                {product.sku || '—'}
+              </span>
+            </div>
+            <div className="min-w-0">
+              <span className="block text-[9px] font-medium uppercase text-slate-400">Part No.</span>
+              <span className="block truncate font-semibold text-slate-700 dark:text-slate-300">
+                {product.part_number || '—'}
+              </span>
+            </div>
+            <div className="min-w-0 col-span-2">
+              <span className="block truncate">
+                {product.category_name || 'Uncategorized'}
+                {product.product_type_display && ` · ${product.product_type_display}`}
+              </span>
+            </div>
           </div>
         </div>
 
         <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-sm font-bold tracking-tight text-brand-700 dark:text-brand-400 sm:text-base">
-              {formatKes(product.retail_price)}
-            </span>
+          <div className="flex items-end gap-2">
+            <div className="min-w-0 flex-1">
+              <span className="block text-[9px] font-medium uppercase text-slate-400">Retail</span>
+              <span className="block truncate text-sm font-bold tracking-tight text-brand-700 dark:text-brand-400 sm:text-base">
+                {formatKes(product.retail_price)}
+              </span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <span className="block text-[9px] font-medium uppercase text-slate-400">Wholesale</span>
+              <span className="block truncate text-sm font-bold text-slate-700 dark:text-slate-200 sm:text-base">
+                {formatKes(product.wholesale_price)}
+              </span>
+            </div>
 
-            <span
-              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors ${unavailable ? 'bg-slate-100 text-slate-400 dark:bg-slate-800' : 'bg-brand-50 text-brand-700 group-hover:bg-brand-600 group-hover:text-white dark:bg-brand-500/10 dark:text-brand-400'}`}
-              aria-hidden="true"
-            >
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {onAdd && (
+              <span
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors ${unavailable ? 'bg-slate-100 text-slate-400 dark:bg-slate-800' : 'bg-brand-50 text-brand-700 group-hover:bg-brand-600 group-hover:text-white dark:bg-brand-500/10 dark:text-brand-400'}`}
+                aria-hidden="true"
               >
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-            </span>
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -181,7 +200,7 @@ function ProductCard({ product, onAdd }) {
   );
 }
 
-export default function ProductGrid({ onAdd, search, categoryId }) {
+export default function ProductGrid({ onAdd, onSelect, search, categoryId }) {
   const { data, isLoading, isError, refetch } = useList(
     'products',
     endpoints.inventory.products,
@@ -233,6 +252,7 @@ export default function ProductGrid({ onAdd, search, categoryId }) {
           key={product.id}
           product={product}
           onAdd={onAdd}
+          onSelect={onSelect}
         />
       ))}
     </div>

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useList, useAction } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
 import { formatDateTime } from '@/utils/dates';
@@ -11,10 +12,16 @@ import TextareaField from '@/components/ui/TextareaField';
 import Input from '@/components/ui/Input';
 
 export default function TransfersList() {
+  const { createRequest = 0 } = useOutletContext() || {};
   const [page, setPage] = useState(1);
   const { data, isLoading, refetch } = useList('transfers', endpoints.inventory.transfers, { page });
   const [createOpen, setCreateOpen] = useState(false);
   const [cancelTarget, setCancelTarget] = useState(null);
+
+  useEffect(() => {
+    if (createRequest > 0) setCreateOpen(true);
+  }, [createRequest]);
+
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
 
@@ -52,9 +59,6 @@ export default function TransfersList() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button onClick={() => setCreateOpen(true)}>+ New Transfer</Button>
-      </div>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <CreateTransferModal
         open={createOpen}
