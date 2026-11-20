@@ -21,6 +21,15 @@ export default function AdminAuditLogs() {
   const [before, setBefore] = useState('');
   const { data: userData } = useList('audit-log-users', endpoints.users.list, { page_size: 200 });
   const users = userData?.results || userData || [];
+  const activeFilterCount = [action, modelName, user, after, before].filter(Boolean).length;
+  const clearFilters = () => {
+    setAction('');
+    setModelName('');
+    setUser('');
+    setAfter('');
+    setBefore('');
+    setPage(1);
+  };
   const params = {
     page,
     page_size: PAGE_SIZE,
@@ -55,7 +64,7 @@ export default function AdminAuditLogs() {
   return (
     <div className="space-y-4">
       <PageHeader title="Audit Log" description="Review recorded staff actions and changes." />
-      <Filter title="Audit filters" defaultExpanded contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <Filter title="Audit filters" defaultExpanded activeCount={activeFilterCount} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
         <Input label="Action" value={action} onChange={(event) => { setAction(event.target.value); setPage(1); }} placeholder="e.g. UPDATE" />
         <Input label="Model" value={modelName} onChange={(event) => { setModelName(event.target.value); setPage(1); }} placeholder="e.g. Sale" />
         <Select label="Staff member" value={user} onChange={(event) => { setUser(event.target.value); setPage(1); }}>

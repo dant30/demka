@@ -26,6 +26,15 @@ export default function InventoryHome() {
   const categories = categoriesData?.results || categoriesData || [];
   const products = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const activeFilterCount = [search, type, lowStock, categoryId].filter(Boolean).length;
+
+  const clearFilters = () => {
+    setSearch('');
+    setType('');
+    setLowStock(false);
+    setCategoryId('');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'sku', label: 'SKU', render: (r) => (
@@ -62,7 +71,12 @@ export default function InventoryHome() {
         </div>}
       />
 
-      <Filter title="Product filters">
+      <Filter
+        title="Product filters"
+        activeCount={activeFilterCount}
+        onClear={clearFilters}
+        showClear
+      >
         <div className="grid grid-cols-1 gap-3 md:grid-cols-4 md:items-end">
           <Input
             placeholder="Search SKU, name, barcode..."

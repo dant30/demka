@@ -18,6 +18,10 @@ export default function PreordersQueue() {
   });
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setStatus('SUBMITTED');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'preorder_number', label: 'Order #', render: (r) => (
@@ -35,7 +39,7 @@ export default function PreordersQueue() {
   return (
     <div className="space-y-4">
       <PageHeader title="Preorders" description="Track customer orders from submission through delivery." />
-      <Filter title="Preorder filters">
+      <Filter title="Preorder filters" activeCount={status !== 'SUBMITTED' ? 1 : 0} onClear={clearFilters} showClear>
         <Select value={status} onChange={(e) => setStatus(e.target.value)} className="max-w-xs">
           <option value="">All statuses</option>
           <option value="SUBMITTED">Submitted</option>

@@ -20,6 +20,11 @@ export default function PurchaseOrdersList() {
   });
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setStatus('');
+    setSearch('');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'po_number', label: 'PO #', render: (r) => (
@@ -42,7 +47,7 @@ export default function PurchaseOrdersList() {
         description="Track supplier orders from draft through receipt."
         actions={<Link to="/purchasing/pos/new" className="btn-primary">+ New PO</Link>}
       />
-      <Filter title="Purchase order filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
+      <Filter title="Purchase order filters" activeCount={[status, search].filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Input placeholder="Search PO # or supplier..." value={search} onChange={(e) => setSearch(e.target.value)} className="md:col-span-2" />
         <Select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All statuses</option>

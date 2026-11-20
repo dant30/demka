@@ -35,7 +35,7 @@ export default function PortalCatalog() {
       </header>
 
       <main className="max-w-4xl mx-auto p-4 space-y-4">
-        <Filter title="Catalog filters">
+        <Filter title="Catalog filters" activeCount={search ? 1 : 0} onClear={() => setSearch('')} showClear>
           <Input
             placeholder="Search parts by name, SKU, or compatibility..."
             value={search}

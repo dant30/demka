@@ -11,7 +11,6 @@ import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import DatePicker from '@/components/ui/DatePicker';
 import PageHeader from '@/components/ui/PageHeader';
-import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import Filter from '@/components/ui/Filter';
 import { useAuth } from '@/hooks/useAuth';
@@ -41,6 +40,10 @@ export default function SalesList() {
 
   const sales = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setFilters({ search: '', channel: '', status: '', sale_type: '', is_credit_sale: '', start: '', end: '' });
+    setPage(1);
+  };
 
   const columns = [
     { key: 'sale_number', label: 'Sale #', render: (r) => (
@@ -73,7 +76,7 @@ export default function SalesList() {
         </Link>}
       />
 
-      <Filter title="Sales filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-4">
+      <Filter title="Sales filters" activeCount={Object.values(filters).filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-4">
         <Input
           placeholder="Search sale # or customer..."
           value={filters.search}
@@ -119,15 +122,6 @@ export default function SalesList() {
           <option value="true">Credit only</option>
           <option value="false">Cash only</option>
         </Select>
-        <div className="flex items-end">
-          <Button
-            variant="secondary"
-            onClick={() => setFilters({ search: '', channel: '', status: '', sale_type: '', is_credit_sale: '', start: '', end: '' })}
-            className="w-full"
-          >
-            Reset
-          </Button>
-        </div>
       </Filter>
 
       <DataTable

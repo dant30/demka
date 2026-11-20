@@ -43,6 +43,11 @@ export default function PaymentsList() {
   });
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setMethod('');
+    setStatus('');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'payment_number', label: 'Payment #', render: (r) => (
@@ -83,7 +88,7 @@ export default function PaymentsList() {
         description="Review incoming payments and their reconciliation status."
         actions={<Link to="/payments/mpesa" className="btn-secondary">M-Pesa Reconcile</Link>}
       />
-      <Filter title="Payment filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
+      <Filter title="Payment filters" activeCount={[method, status].filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Select value={method} onChange={(e) => setMethod(e.target.value)}>
           <option value="">All methods</option>
           <option value="CASH">Cash</option>

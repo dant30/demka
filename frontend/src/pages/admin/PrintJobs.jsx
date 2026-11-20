@@ -124,7 +124,7 @@ export default function PrintJobs() {
     <div className="space-y-4">
       <PageHeader title="Print Jobs" description="Queue documents, inspect printer jobs, and retry failed output." />
 
-      <Filter title="Queue a document" defaultExpanded contentClassName="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(12rem,1fr)_minmax(14rem,2fr)_auto]">
+      <Filter title="Queue a document" defaultExpanded collapsible={false} contentClassName="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(12rem,1fr)_minmax(14rem,2fr)_auto]">
         <Select label="Document" value={queueType} onChange={(event) => { setQueueType(event.target.value); setReferenceId(''); queueMutation.reset(); }}>
           {DOCUMENT_TYPES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
         </Select>
@@ -144,7 +144,13 @@ export default function PrintJobs() {
       {queueMutation.isError && <p role="alert" className="text-sm text-red-700">{extractError(queueMutation.error, 'Could not queue document.')}</p>}
       {queueMutation.isSuccess && <p role="status" className="text-sm text-emerald-700">Document queued successfully.</p>}
 
-      <Filter title="Job filters" contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <Filter
+        title="Job filters"
+        activeCount={[status, documentType].filter(Boolean).length}
+        onClear={() => { setStatus(''); setDocumentType(''); setPage(1); }}
+        showClear
+        contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2"
+      >
         <Select value={status} aria-label="Filter by status" onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
           <option value="">All statuses</option>
           <option value="QUEUED">Queued</option>

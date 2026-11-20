@@ -38,6 +38,13 @@ export default function RoutePerformanceReport() {
     else next.delete(key);
     setSearchParams(next);
   };
+  const activeFilterCount = [agentId, period !== 'monthly'].filter(Boolean).length;
+  const clearFilters = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('agent');
+    next.delete('period');
+    setSearchParams(next);
+  };
 
   return (
     <div className="space-y-4">
@@ -46,7 +53,7 @@ export default function RoutePerformanceReport() {
         description="Route-run activity, sales, and cash variance by agent."
       />
 
-      <Filter title="Report filters">
+      <Filter title="Report filters" activeCount={activeFilterCount} onClear={clearFilters} showClear>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Select
             aria-label="Field agent"

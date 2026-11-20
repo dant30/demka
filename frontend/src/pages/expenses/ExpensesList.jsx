@@ -47,6 +47,12 @@ export default function ExpensesList() {
 
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const activeFilterCount = [categoryFilter, period !== 'monthly'].filter(Boolean).length;
+  const clearFilters = () => {
+    setCategoryFilter('');
+    setPeriod('monthly');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'expense_number', label: 'Expense #' },
@@ -107,7 +113,7 @@ export default function ExpensesList() {
         caption="Expenses by location"
       />
 
-      <Filter title="Expense filters" contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <Filter title="Expense filters" activeCount={activeFilterCount} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
           <option value="">All categories</option>
           {(categories || []).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}

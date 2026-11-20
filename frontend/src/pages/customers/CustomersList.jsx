@@ -21,6 +21,11 @@ export default function CustomersList() {
   });
   const customers = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setSearch('');
+    setType('');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'code', label: 'Code', render: (r) => (
@@ -48,7 +53,7 @@ export default function CustomersList() {
         actions={<Link to="/customers/new" className="btn-primary">+ New Customer</Link>}
       />
 
-      <Filter title="Customer filters" contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
+      <Filter title="Customer filters" activeCount={[search, type].filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Input
           placeholder="Search name, phone, code..."
           value={search}

@@ -49,7 +49,12 @@ export default function MpesaReconcile() {
         title="M-Pesa Reconciliation"
         description="Match incoming M-Pesa transactions to recorded payments."
       />
-      <Filter title="Transaction filters">
+      <Filter
+        title="Transaction filters"
+        activeCount={showUnreconciled ? 1 : 0}
+        onClear={() => { setShowUnreconciled(false); setPage(1); }}
+        showClear
+      >
         <Switch label="Unmatched only" checked={showUnreconciled}
           onChange={(e) => setShowUnreconciled(e.target.checked)} />
       </Filter>

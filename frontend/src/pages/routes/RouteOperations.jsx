@@ -60,6 +60,14 @@ export default function RouteOperations() {
   };
   const logsQuery = useList('route-change-log', endpoints.routes.changeLog, logParams);
   const varianceQuery = useList('route-variance', endpoints.routes.runVarianceReport, { days_back: daysBack });
+  const historyFilterCount = [routeFilter, changeType, changedAfter, changedBefore].filter(Boolean).length;
+  const clearHistoryFilters = () => {
+    setRouteFilter('');
+    setChangeType('');
+    setChangedAfter('');
+    setChangedBefore('');
+    setLogPage(1);
+  };
 
   const saveSchedule = useMutation({
     mutationFn: async () => {
@@ -153,7 +161,7 @@ export default function RouteOperations() {
     {
       value: 'history', label: 'Change history', content: (
         <div className="space-y-4">
-          <Filter title="History filters" defaultExpanded contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <Filter title="History filters" defaultExpanded activeCount={historyFilterCount} onClear={clearHistoryFilters} showClear contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Select label="Route" value={routeFilter} onChange={(event) => { setRouteFilter(event.target.value); setLogPage(1); }}>
               <option value="">All routes</option>
               {routes.map((route) => <option key={route.id} value={route.id}>{route.code} · {route.name}</option>)}
@@ -181,7 +189,13 @@ export default function RouteOperations() {
     {
       value: 'variance', label: 'Cash variance', content: (
         <div className="space-y-4">
-          <Filter title="Variance period" defaultExpanded>
+          <Filter
+            title="Variance period"
+            defaultExpanded
+            activeCount={daysBack !== '7' ? 1 : 0}
+            onClear={() => setDaysBack('7')}
+            showClear
+          >
             <Select label="Look back" value={daysBack} onChange={(event) => setDaysBack(event.target.value)} className="w-full sm:max-w-xs">
               <option value="7">Last 7 days</option>
               <option value="14">Last 14 days</option>

@@ -55,9 +55,21 @@ function ReportCsvExport() {
 }
 
 export function ReportHeader({ title, description }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeFilterCount = [
+    searchParams.get('period') && searchParams.get('period') !== 'monthly',
+    searchParams.get('start'),
+    searchParams.get('end'),
+  ].filter(Boolean).length;
+  const clearFilters = () => {
+    const next = new URLSearchParams(searchParams);
+    ['period', 'start', 'end'].forEach((key) => next.delete(key));
+    setSearchParams(next);
+  };
+
   return <>
     <PageHeader title={title} description={description} actions={<ReportCsvExport />} />
-    <Filter title="Report filters">
+    <Filter title="Report filters" activeCount={activeFilterCount} onClear={clearFilters} showClear>
       <PeriodSelector />
     </Filter>
   </>;

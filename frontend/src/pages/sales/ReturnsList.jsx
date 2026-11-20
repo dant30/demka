@@ -18,6 +18,10 @@ export default function ReturnsList() {
   });
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setStatus('');
+    setPage(1);
+  };
 
   const columns = [
     { key: 'return_number', label: 'Return #', render: (r) => (
@@ -38,7 +42,7 @@ export default function ReturnsList() {
         title="Returns"
         description="Review return requests, approvals, and refunds."
       />
-      <Filter title="Return filters">
+      <Filter title="Return filters" activeCount={status ? 1 : 0} onClear={clearFilters} showClear>
         <Select aria-label="Filter returns by status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full sm:w-48">
           <option value="">All statuses</option>
           <option value="DRAFT">Draft</option>

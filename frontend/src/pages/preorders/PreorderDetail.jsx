@@ -8,6 +8,9 @@ import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
+import ProgressBar from '@/components/ui/ProgressBar';
+
+const PREORDER_STAGES = ['SUBMITTED', 'CONFIRMED', 'IN_PREPARATION', 'READY', 'DELIVERED'];
 
 export default function PreorderDetail() {
   const { id } = useParams();
@@ -22,6 +25,7 @@ export default function PreorderDetail() {
 
   if (isLoading) return <div>Loading...</div>;
   if (!order) return <div>Not found</div>;
+  const stageIndex = PREORDER_STAGES.indexOf(order.status);
 
   return (
     <div className="space-y-6 max-w-3xl">
@@ -53,6 +57,18 @@ export default function PreorderDetail() {
           )}
         </div>
       </div>
+
+      {stageIndex >= 0 && (
+        <ProgressBar
+          label="Order progress"
+          value={stageIndex + 1}
+          max={PREORDER_STAGES.length}
+          showValue
+          valueLabel={`Stage ${stageIndex + 1} of ${PREORDER_STAGES.length}`}
+          helperText={`Current stage: ${order.status_display}`}
+          variant={order.status === 'DELIVERED' ? 'success' : 'primary'}
+        />
+      )}
 
       <div className="card p-0">
         <table className="table">

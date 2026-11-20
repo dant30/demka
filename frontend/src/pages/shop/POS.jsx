@@ -120,11 +120,19 @@ export default function POS() {
   }, [routeLocation.state, cart.customerId, cart.locationId, navigate]);
 
   const cartTotal = cart.subtotal();
+  const activeProductFilterCount = [search, categoryId].filter(Boolean).length;
 
   return (
     <div className="flex min-h-0 flex-col gap-3 pb-20 md:h-[calc(100dvh-7rem)] md:pb-0 lg:flex-row lg:gap-2">
       <div className="flex-1 flex flex-col min-h-0">
-        <Filter className="mb-3 md:mb-4">
+        <Filter
+          title="Product filters"
+          defaultExpanded
+          className="mb-3 md:mb-4"
+          activeCount={activeProductFilterCount}
+          onClear={() => { setSearch(''); setCategoryId(''); }}
+          showClear
+        >
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-2 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)_minmax(12rem,0.6fr)]">
               <Input

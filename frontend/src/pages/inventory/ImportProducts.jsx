@@ -5,6 +5,7 @@ import { downloadProductTemplate, useProductImport } from '@/api/queries';
 import { extractError } from '@/api/client';
 import Button from '@/components/ui/Button';
 import PageHeader from '@/components/ui/PageHeader';
+import ProgressBar from '@/components/ui/ProgressBar';
 
 const ACCEPTED_EXTENSIONS = ['.xlsx', '.xlsm', '.csv'];
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -129,6 +130,14 @@ export default function ImportProducts() {
         description="Upload a spreadsheet or CSV, review the rows, then import."
         backTo="/inventory"
       />
+
+      {importMutation.isPending && (
+        <ProgressBar
+          label="Processing product file"
+          helperText="Validating the spreadsheet and preparing the import."
+          indeterminate
+        />
+      )}
 
       <section className="card">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

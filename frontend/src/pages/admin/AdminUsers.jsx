@@ -29,6 +29,10 @@ export default function AdminUsers() {
 
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
+  const clearFilters = () => {
+    setSearch('');
+    setPage(1);
+  };
 
   const accountAction = useMutation({
     mutationFn: async ({ user, action }) => {
@@ -123,8 +127,8 @@ export default function AdminUsers() {
         actions={<Button onClick={() => setCreateOpen(true)}>+ New User</Button>}
       />
 
-      <Filter title="User filters">
-        <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+      <Filter title="User filters" activeCount={search ? 1 : 0} onClear={clearFilters} showClear>
+        <Input placeholder="Search..." value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} />
       </Filter>
 
       <DataTable columns={columns} rows={rows} loading={isLoading} />
