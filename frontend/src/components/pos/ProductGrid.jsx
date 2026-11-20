@@ -164,35 +164,17 @@ function ProductCard({ product, onAdd, onSelect }) {
           <div className="flex items-end gap-2">
             <div className="min-w-0 flex-1">
               <span className="block text-[9px] font-medium uppercase text-slate-400">Retail</span>
-              <span className="block truncate text-sm font-bold tracking-tight text-brand-700 dark:text-brand-400 sm:text-base">
+              <span className="block break-words text-xs font-bold tracking-tight text-brand-700 dark:text-brand-400 sm:text-sm">
                 {formatKes(product.retail_price)}
               </span>
             </div>
             <div className="min-w-0 flex-1">
               <span className="block text-[9px] font-medium uppercase text-slate-400">Wholesale</span>
-              <span className="block truncate text-sm font-bold text-slate-700 dark:text-slate-200 sm:text-base">
+              <span className="block break-words text-xs font-bold text-slate-700 dark:text-slate-200 sm:text-sm">
                 {formatKes(product.wholesale_price)}
               </span>
             </div>
 
-            {onAdd && (
-              <span
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors ${unavailable ? 'bg-slate-100 text-slate-400 dark:bg-slate-800' : 'bg-brand-50 text-brand-700 group-hover:bg-brand-600 group-hover:text-white dark:bg-brand-500/10 dark:text-brand-400'}`}
-                aria-hidden="true"
-              >
-                <svg
-                  className="h-4 w-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
-              </span>
-            )}
           </div>
         </div>
       </div>

@@ -184,6 +184,7 @@ export default function AppRoutes() {
         <Route path="/reports/vat" element={<ProtectedRoute bossOnly><VatReport /></ProtectedRoute>} />
         <Route path="/reports/stock" element={<ProtectedRoute bossOnly><StockReport /></ProtectedRoute>} />
         <Route path="/reports/customers" element={<ProtectedRoute bossOnly><CustomerReport /></ProtectedRoute>} />
+        <Route path="/reports/customers/aging" element={<ProtectedRoute bossOnly><CustomerReport /></ProtectedRoute>} />
         <Route path="/reports/suppliers" element={<ProtectedRoute bossOnly><SupplierReport /></ProtectedRoute>} />
         <Route path="/reports/etims" element={<ProtectedRoute bossOnly><EtimsReport /></ProtectedRoute>} />
         <Route path="/reports/route-performance" element={<ProtectedRoute bossOnly><RoutePerformanceReport /></ProtectedRoute>} />
