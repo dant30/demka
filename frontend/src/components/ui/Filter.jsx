@@ -89,6 +89,7 @@ export default function Filter({
 				role="region"
 				aria-labelledby={titleId}
 				hidden={!expanded}
+				style={{ display: expanded ? undefined : 'none' }}
 				className={`border-t border-slate-200 p-3 sm:p-4 dark:border-slate-700 ${contentClassName}`.trim()}
 			>
 				{children}

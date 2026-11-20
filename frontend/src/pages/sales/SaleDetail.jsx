@@ -11,6 +11,7 @@ import CheckBox from '@/components/ui/CheckBox';
 import Modal from '@/components/ui/Modal';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
+import CircularProgress from '@/components/ui/CircularProgress';
 
 export default function SaleDetail() {
   const { id } = useParams();
@@ -38,6 +39,11 @@ export default function SaleDetail() {
   const canPay = ['CONFIRMED', 'PARTIAL'].includes(sale.status) && Number(sale.balance_due) > 0;
   const canCancel = isBoss && ['DRAFT', 'CONFIRMED'].includes(sale.status) && Number(sale.amount_paid) === 0;
   const canReturn = ['CONFIRMED', 'PAID', 'PARTIAL'].includes(sale.status);
+  const totalAmount = Number(sale.total) || 0;
+  const paidAmount = Number(sale.amount_paid) || 0;
+  const paymentPercentage = totalAmount > 0
+    ? Math.min(100, Math.max(0, Math.round((paidAmount / totalAmount) * 100)))
+    : 0;
 
   return (
     <div className="space-y-6 max-w-4xl">
@@ -108,19 +114,30 @@ export default function SaleDetail() {
         </table>
       </div>
 
-      <div className="card">
-        <div className="space-y-2 max-w-sm ml-auto">
-          <Row label="Subtotal" value={formatKes(sale.subtotal)} />
-          <Row label="VAT" value={formatKes(sale.tax_amount)} />
-          {Number(sale.discount_amount) > 0 && (
-            <Row label="Discount" value={`-${formatKes(sale.discount_amount)}`} />
-          )}
-          <Row label="Total" value={formatKes(sale.total)} bold />
-          <Row label="Paid" value={formatKes(sale.amount_paid)} />
-          {Number(sale.balance_due) > 0 && (
-            <Row label="Balance" value={formatKes(sale.balance_due)} danger />
-          )}
+      <div className="card flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="w-full max-w-sm sm:ml-auto">
+          <div className="space-y-2">
+            <Row label="Subtotal" value={formatKes(sale.subtotal)} />
+            <Row label="VAT" value={formatKes(sale.tax_amount)} />
+            {Number(sale.discount_amount) > 0 && (
+              <Row label="Discount" value={`-${formatKes(sale.discount_amount)}`} />
+            )}
+            <Row label="Total" value={formatKes(sale.total)} bold />
+            <Row label="Paid" value={formatKes(sale.amount_paid)} />
+            {Number(sale.balance_due) > 0 && (
+              <Row label="Balance" value={formatKes(sale.balance_due)} danger />
+            )}
+          </div>
         </div>
+        <CircularProgress
+          value={paidAmount}
+          max={totalAmount}
+          size="lg"
+          variant={Number(sale.balance_due) > 0 ? 'primary' : 'success'}
+          label="Payment progress"
+          valueLabel={`${paymentPercentage}%`}
+          description={`${formatKes(sale.amount_paid)} paid of ${formatKes(sale.total)}`}
+        />
       </div>
 
       {returns && returns.length > 0 && (

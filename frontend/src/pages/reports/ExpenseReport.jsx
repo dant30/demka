@@ -72,6 +72,7 @@ export default function ExpenseReport() {
             series={[{ dataKey: 'total', name: 'Expenses', color: '#d97706' }]}
             valueFormatter={formatKes}
             height={240}
+            loading={trend.isLoading}
           />
         )}
       </ChartPanel>

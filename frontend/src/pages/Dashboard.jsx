@@ -6,6 +6,7 @@ import MetricCard from '@/components/cards/MetricCard';
 import PanelCard from '@/components/cards/PanelCard';
 import ChartPanel from '@/components/charts/ChartPanel';
 import TrendChart from '@/components/charts/TrendChart';
+import CircularProgress from '@/components/ui/CircularProgress';
 import PageHeader from '@/components/ui/PageHeader';
 import { SkeletonCard } from '@/components/ui/Skeleton';
 import { useAuth } from '@/hooks/useAuth';
@@ -42,6 +43,10 @@ export default function Dashboard() {
   const mtd = data.mtd;
   const alerts = data.alerts;
   const trends = data.trends.last_7_days || [];
+  const mtdRevenue = Number(mtd.net_revenue) || 0;
+  const mtdGrossProfit = Number(mtd.gross_profit) || 0;
+  const grossMargin = mtdRevenue > 0 ? (mtdGrossProfit / mtdRevenue) * 100 : 0;
+  const grossMarginProgress = Math.min(100, Math.max(0, grossMargin));
 
   return (
     <div className="space-y-6">
@@ -62,12 +67,26 @@ export default function Dashboard() {
       {/* Month-to-date + Alerts */}
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <PanelCard title="Month to Date" className="lg:col-span-2">
-          <div className="grid grid-cols-2 gap-4">
-            <Stat label="Revenue" value={formatKes(mtd.net_revenue)} />
-            <Stat label="Gross Profit" value={formatKes(mtd.gross_profit)} />
-            <Stat label="Expenses" value={formatKes(mtd.expenses)} />
-            <Stat label="Net Profit" value={formatKes(mtd.net_profit)}
-                  positive={Number(mtd.net_profit) >= 0} />
+          <div className={`grid grid-cols-1 gap-5 ${mtdRevenue > 0 ? 'sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center' : ''}`}>
+            <div className="grid grid-cols-2 gap-4">
+              <Stat label="Revenue" value={formatKes(mtd.net_revenue)} />
+              <Stat label="Gross Profit" value={formatKes(mtd.gross_profit)} />
+              <Stat label="Expenses" value={formatKes(mtd.expenses)} />
+              <Stat label="Net Profit" value={formatKes(mtd.net_profit)}
+                    positive={Number(mtd.net_profit) >= 0} />
+            </div>
+            {mtdRevenue > 0 && (
+              <CircularProgress
+                value={grossMarginProgress}
+                max={100}
+                size="lg"
+                variant={grossMargin < 0 ? 'danger' : 'success'}
+                label="Gross margin"
+                valueLabel={`${grossMargin.toFixed(1)}%`}
+                description="MTD gross profit as a share of revenue"
+                className="justify-self-center"
+              />
+            )}
           </div>
         </PanelCard>
         <PanelCard title="Alerts">

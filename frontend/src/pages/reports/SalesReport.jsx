@@ -50,17 +50,19 @@ export default function SalesReport() {
       )}
       {summaryError && <p className="text-sm text-red-600" role="alert">Could not load sales totals.</p>}
 
-      {daily && (
-        <ChartPanel title="Daily Revenue" description="Sales revenue over the selected period">
+      <ChartPanel title="Daily Revenue" description="Sales revenue over the selected period">
+        {dailyError ? (
+          <p className="text-sm text-red-600" role="alert">Could not load daily revenue.</p>
+        ) : (
           <TrendChart
-            data={daily}
+            data={daily || []}
             xKey="date"
             series={[{ dataKey: 'revenue', name: 'Revenue', color: '#0f766e' }]}
             valueFormatter={formatKes}
+            loading={dailyLoading}
           />
-        </ChartPanel>
-      )}
-      {dailyError && <p className="text-sm text-red-600" role="alert">Could not load daily revenue.</p>}
+        )}
+      </ChartPanel>
 
       <DataTable
         title="Top Products"

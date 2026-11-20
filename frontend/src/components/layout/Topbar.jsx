@@ -55,7 +55,7 @@ export default function Topbar() {
       className="
         sticky top-0 z-30
         bg-white/95 backdrop-blur-sm
-        border-b border-slate-200
+        border-b border-slate-200 shadow-sm
         flex items-center justify-between
         px-4 md:px-6
       "

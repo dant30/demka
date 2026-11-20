@@ -26,7 +26,7 @@ export default function ExpensesList() {
     page, category: categoryFilter || undefined, page_size: 25,
   });
   const { data: categories } = useList('expense-categories', endpoints.expenses.categories);
-  const { data: trend } = useQuery({
+  const { data: trend, isLoading: trendLoading } = useQuery({
     queryKey: ['expenses-trend'],
     queryFn: async () => (await api.get(endpoints.expenses.monthlyTrend, {
       params: { months: 6 },
@@ -87,18 +87,17 @@ export default function ExpensesList() {
         </div>
       )}
 
-      {trend && (
-        <ChartPanel title="Monthly Trend" description="Expense totals by month">
-          <TrendChart
-            data={trend}
-            xKey="label"
-            type="bar"
-            series={[{ dataKey: 'total', name: 'Expenses', color: '#d97706' }]}
-            valueFormatter={formatKes}
-            height={240}
-          />
-        </ChartPanel>
-      )}
+      <ChartPanel title="Monthly Trend" description="Expense totals by month">
+        <TrendChart
+          data={trend || []}
+          xKey="label"
+          type="bar"
+          series={[{ dataKey: 'total', name: 'Expenses', color: '#d97706' }]}
+          valueFormatter={formatKes}
+          height={240}
+          loading={trendLoading}
+        />
+      </ChartPanel>
 
       <DataTable
         title="Spending by Location"

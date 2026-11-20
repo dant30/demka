@@ -42,6 +42,17 @@
   to   { background-position: 0 0; }
 }
 
+@keyframes circular-progress-spin {
+  0% {
+    stroke-dashoffset: 0;
+    transform: rotate(0deg);
+  }
+  100% {
+    stroke-dashoffset: -75%;
+    transform: rotate(360deg);
+  }
+}
+
 .animate-fade-in {
   animation: demka-fade-in 180ms ease-out;
 }
@@ -83,6 +94,11 @@
     progress-stripes 1s linear infinite;
 }
 
+.circular-progress-indeterminate {
+  transform-origin: center;
+  animation: circular-progress-spin 1.5s linear infinite;
+}
+
 /* Respect reduced-motion preference. */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
@@ -91,7 +107,8 @@
   .animate-slide-in-left,
   .animate-scale-in,
   .progress-indeterminate,
-  .progress-striped {
+  .progress-striped,
+  .circular-progress-indeterminate {
     animation: none;
   }
 }
