@@ -5,15 +5,12 @@ import { endpoints } from '@/api/endpoints';
 import DataTable from '@/components/ui/DataTable';
 import Input from '@/components/ui/Input';
 import PageHeader from '@/components/ui/PageHeader';
-import Filter from '@/components/ui/Filter';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function RoutesList() {
   const { isBoss } = useAuth();
   const [search, setSearch] = useState('');
   const { data, isLoading } = useList('routes', endpoints.routes.list, { search: search || undefined });
-  const clearFilters = () => setSearch('');
-
   const routes = data?.results || data || [];
 
   const columns = [
@@ -39,9 +36,15 @@ export default function RoutesList() {
           </div>
         )}
       />
-      <Filter title="Route filters" activeCount={search ? 1 : 0} onClear={clearFilters} showClear>
-        <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      </Filter>
+      <div className="w-full max-w-xl">
+        <Input
+          type="search"
+          aria-label="Search routes by code, name, or agent"
+          placeholder="Search routes..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <DataTable columns={columns} rows={routes} loading={isLoading} />
     </div>
   );

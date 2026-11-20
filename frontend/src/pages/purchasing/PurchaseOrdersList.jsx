@@ -47,8 +47,22 @@ export default function PurchaseOrdersList() {
         description="Track supplier orders from draft through receipt."
         actions={<Link to="/purchasing/pos/new" className="btn-primary">+ New PO</Link>}
       />
-      <Filter title="Purchase order filters" activeCount={[status, search].filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
-        <Input placeholder="Search PO # or supplier..." value={search} onChange={(e) => setSearch(e.target.value)} className="md:col-span-2" />
+      <Filter
+        title="Purchase order filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search purchase orders by number or supplier"
+            placeholder="Search POs or suppliers..."
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          />
+        )}
+        activeCount={status ? 1 : 0}
+        onClear={clearFilters}
+        showClear
+        contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3"
+      >
         <Select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All statuses</option>
           <option value="DRAFT">Draft</option>

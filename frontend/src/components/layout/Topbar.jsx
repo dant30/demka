@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/store/cart";
@@ -6,6 +6,7 @@ import { useTodayFieldRuns } from "@/hooks/useTodayFieldRuns";
 
 const PAGE_TITLES = {
   "/": "Dashboard",
+  "/profile": "My Profile",
   "/pos": "Shop POS",
   "/field": "Field Sales",
   "/sales": "Sales",
@@ -33,6 +34,7 @@ export default function Topbar() {
   const navigate = useNavigate();
   const cartCount = useCart((state) => state.itemCount());
   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
   const isFieldAgent = user?.role === 'FIELD_AGENT';
   const { activeRuns } = useTodayFieldRuns(user, { enabled: isFieldAgent });
   const activeRun = activeRuns[0];
@@ -42,6 +44,28 @@ export default function Topbar() {
   const cartDestination = isFieldAgent && activeRun
     ? `${saleDestination}?cart=1`
     : isFieldAgent ? '/field' : '/pos/cart';
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!menuRef.current?.contains(event.target)) setOpen(false);
+    };
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     await logout();
@@ -97,8 +121,9 @@ export default function Topbar() {
           {isFieldAgent ? (activeRun ? 'Field Sale' : 'Field Sales') : '+ New Sale'}
         </Link>
 
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
           <button
+            type="button"
             onClick={() => setOpen((o) => !o)}
             className="flex items-center gap-2 rounded-lg pl-1 pr-2 py-1 hover:bg-slate-100 transition-colors"
             aria-haspopup="menu"
@@ -118,42 +143,37 @@ export default function Topbar() {
           </button>
 
           {open && (
-            <>
-              <div
-                className="fixed inset-0 z-10"
-                onClick={() => setOpen(false)}
-              />
-              <div
-                role="menu"
-                className="absolute right-0 top-full mt-1 w-52 rounded-lg border border-slate-200 bg-white shadow-lg py-1 z-20 animate-scale-in"
-              >
-                <div className="px-4 py-2 border-b border-slate-100 sm:hidden">
-                  <div className="text-sm font-medium truncate">{user?.full_name || user?.username}</div>
-                  <div className="text-xs text-slate-500">{user?.phone}</div>
-                </div>
-                <Link
-                  to="/profile"
-                  onClick={() => setOpen(false)}
-                  className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
-                >
-                  Profile
-                </Link>
-                <Link
-                  to="/admin/printers"
-                  onClick={() => setOpen(false)}
-                  className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
-                >
-                  Printers
-                </Link>
-                <div className="h-px bg-slate-100 my-1" />
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                >
-                  Sign out
-                </button>
+            <div
+              role="menu"
+              className="absolute right-0 top-full z-40 mt-1 w-52 rounded-lg border border-slate-200 bg-white py-1 shadow-lg animate-scale-in"
+            >
+              <div className="px-4 py-2 border-b border-slate-100 sm:hidden">
+                <div className="text-sm font-medium truncate">{user?.full_name || user?.username}</div>
+                <div className="text-xs text-slate-500">{user?.phone}</div>
               </div>
-            </>
+              <Link
+                to="/profile"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Profile
+              </Link>
+              <Link
+                to="/admin/printers"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Printers
+              </Link>
+              <div className="h-px bg-slate-100 my-1" />
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+              >
+                Sign out
+              </button>
+            </div>
           )}
         </div>
       </div>

@@ -7,7 +7,6 @@ import Input from '@/components/ui/Input';
 import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
 import PageHeader from '@/components/ui/PageHeader';
-import Filter from '@/components/ui/Filter';
 
 export default function SuppliersList() {
   const [page, setPage] = useState(1);
@@ -15,10 +14,6 @@ export default function SuppliersList() {
   const { data, isLoading } = useList('suppliers', endpoints.suppliers.list, { page, search: search || undefined });
   const suppliers = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
-  const clearFilters = () => {
-    setSearch('');
-    setPage(1);
-  };
 
   const columns = [
     { key: 'code', label: 'Code', render: (r) => (
@@ -39,9 +34,15 @@ export default function SuppliersList() {
         description="Maintain supplier contacts and product relationships."
         actions={<Link to="/suppliers/new" className="btn-primary">+ New Supplier</Link>}
       />
-      <Filter title="Supplier filters" activeCount={search ? 1 : 0} onClear={clearFilters} showClear>
-        <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
-      </Filter>
+      <div className="w-full max-w-xl">
+        <Input
+          type="search"
+          aria-label="Search suppliers"
+          placeholder="Search suppliers..."
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+        />
+      </div>
       <DataTable columns={columns} rows={suppliers} loading={isLoading} />
       <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </div>

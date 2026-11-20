@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { downloadProductTemplate, useProductImport } from '@/api/queries';
 import { extractError } from '@/api/client';
 import Button from '@/components/ui/Button';
-import PageHeader from '@/components/ui/PageHeader';
 import ProgressBar from '@/components/ui/ProgressBar';
 
 const ACCEPTED_EXTENSIONS = ['.xlsx', '.xlsm', '.csv'];
@@ -125,12 +124,6 @@ export default function ImportProducts() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-5">
-      <PageHeader
-        title="Import Products"
-        description="Upload a spreadsheet or CSV, review the rows, then import."
-        backTo="/inventory"
-      />
-
       {importMutation.isPending && (
         <ProgressBar
           label="Processing product file"

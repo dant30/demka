@@ -7,7 +7,6 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import DataTable from '@/components/ui/DataTable';
 import Pagination from '@/components/ui/Pagination';
-import PageHeader from '@/components/ui/PageHeader';
 import Switch from '@/components/ui/Switch';
 import Filter from '@/components/ui/Filter';
 
@@ -26,7 +25,7 @@ export default function InventoryHome() {
   const categories = categoriesData?.results || categoriesData || [];
   const products = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
-  const activeFilterCount = [search, type, lowStock, categoryId].filter(Boolean).length;
+  const activeFilterCount = [type, lowStock, categoryId].filter(Boolean).length;
 
   const clearFilters = () => {
     setSearch('');
@@ -63,27 +62,22 @@ export default function InventoryHome() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
-        title="Inventory"
-        description="Browse products, stock levels, and reorder needs."
-        actions={<div className="flex flex-wrap gap-2">
-          <Link to="/inventory/products/new" className="btn-primary">+ Product</Link>
-        </div>}
-      />
-
       <Filter
         title="Product filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search products by SKU, name, or barcode"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          />
+        )}
         activeCount={activeFilterCount}
         onClear={clearFilters}
         showClear
       >
         <div className="grid grid-cols-1 gap-3 md:grid-cols-4 md:items-end">
-          <Input
-            placeholder="Search SKU, name, barcode..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="md:col-span-2"
-          />
           <Select
             label="Category"
             value={categoryId}

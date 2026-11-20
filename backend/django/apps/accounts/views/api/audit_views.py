@@ -1,5 +1,5 @@
 from django_filters import rest_framework as django_filters
-from rest_framework import mixins, viewsets
+from rest_framework import filters, mixins, viewsets
 
 from apps.accounts.models import AuditLog
 from apps.accounts.permissions import IsBossOnly
@@ -27,3 +27,8 @@ class AuditLogViewSet(mixins.ListModelMixin,
     permission_classes = [IsBossOnly]
     pagination_class = StandardPagination
     filterset_class = AuditLogFilterSet
+    filter_backends = [django_filters.DjangoFilterBackend, filters.SearchFilter]
+    search_fields = (
+        "action", "model_name", "object_id",
+        "user__username", "user__first_name", "user__last_name", "user__phone",
+    )

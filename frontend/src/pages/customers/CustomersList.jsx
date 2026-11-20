@@ -53,13 +53,21 @@ export default function CustomersList() {
         actions={<Link to="/customers/new" className="btn-primary">+ New Customer</Link>}
       />
 
-      <Filter title="Customer filters" activeCount={[search, type].filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
-        <Input
-          placeholder="Search name, phone, code..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="md:col-span-2"
-        />
+      <Filter
+        title="Customer filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search customers by name, phone, or code"
+            placeholder="Search customers..."
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          />
+        )}
+        activeCount={type ? 1 : 0}
+        onClear={clearFilters}
+        showClear
+      >
         <Select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="">All types</option>
           <option value="RETAIL">Retail</option>

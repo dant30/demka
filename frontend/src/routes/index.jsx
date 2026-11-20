@@ -6,6 +6,7 @@ import PortalProtectedRoute from './PortalProtectedRoute';
 
 import Login from '@/pages/auth/Login';
 import PasswordReset from '@/pages/auth/PasswordReset';
+import Profile from '@/pages/auth/Profile';
 import HomeRoute from '@/pages/HomeRoute';
 import POS from '@/pages/shop/POS';
 import POSCart from '@/pages/shop/POSCart';
@@ -109,6 +110,7 @@ export default function AppRoutes() {
       {/* App */}
       <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
         <Route path="/" element={<HomeRoute />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/pos" element={<ProtectedRoute shopOnly><POS /></ProtectedRoute>} />
         <Route path="/pos/cart" element={<ProtectedRoute shopOnly><POSCart /></ProtectedRoute>} />
 
@@ -136,7 +138,6 @@ export default function AppRoutes() {
         <Route path="/inventory/products/new" element={<ProductForm />} />
         <Route path="/inventory/products/:id" element={<ProductDetail />} />
         <Route path="/inventory/products/:id/edit" element={<ProductForm />} />
-        <Route path="/inventory/transfers" element={<TransfersList />} />
 
         {/* Customers */}
         <Route path="/customers" element={<CustomersList />} />

@@ -14,6 +14,7 @@ const PAGE_SIZE = 25;
 
 export default function AdminAuditLogs() {
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
   const [action, setAction] = useState('');
   const [modelName, setModelName] = useState('');
   const [user, setUser] = useState('');
@@ -23,6 +24,7 @@ export default function AdminAuditLogs() {
   const users = userData?.results || userData || [];
   const activeFilterCount = [action, modelName, user, after, before].filter(Boolean).length;
   const clearFilters = () => {
+    setSearch('');
     setAction('');
     setModelName('');
     setUser('');
@@ -33,6 +35,7 @@ export default function AdminAuditLogs() {
   const params = {
     page,
     page_size: PAGE_SIZE,
+    search: search || undefined,
     action: action || undefined,
     model_name: modelName || undefined,
     user: user || undefined,
@@ -64,7 +67,22 @@ export default function AdminAuditLogs() {
   return (
     <div className="space-y-4">
       <PageHeader title="Audit Log" description="Review recorded staff actions and changes." />
-      <Filter title="Audit filters" activeCount={activeFilterCount} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <Filter
+        title="Audit filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search audit actions, records, or staff"
+            placeholder="Search audit logs..."
+            value={search}
+            onChange={(event) => { setSearch(event.target.value); setPage(1); }}
+          />
+        )}
+        activeCount={activeFilterCount}
+        onClear={clearFilters}
+        showClear
+        contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3"
+      >
         <Input label="Action" value={action} onChange={(event) => { setAction(event.target.value); setPage(1); }} placeholder="e.g. UPDATE" />
         <Input label="Model" value={modelName} onChange={(event) => { setModelName(event.target.value); setPage(1); }} placeholder="e.g. Sale" />
         <Select label="Staff member" value={user} onChange={(event) => { setUser(event.target.value); setPage(1); }}>

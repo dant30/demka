@@ -3,7 +3,6 @@ import { useList, useAction } from '@/api/queries';
 import { endpoints } from '@/api/endpoints';
 import { formatDateTime } from '@/utils/dates';
 import DataTable from '@/components/ui/DataTable';
-import PageHeader from '@/components/ui/PageHeader';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
 import ConfirmDialong from '@/components/ui/ConfirmDialong';
@@ -53,11 +52,9 @@ export default function TransfersList() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
-        title="Stock Transfers"
-        description="Move stock between locations and track receiving status."
-        actions={<Button onClick={() => setCreateOpen(true)}>+ New Transfer</Button>}
-      />
+      <div className="flex justify-end">
+        <Button onClick={() => setCreateOpen(true)}>+ New Transfer</Button>
+      </div>
       <DataTable columns={columns} rows={rows} loading={isLoading} />
       <CreateTransferModal
         open={createOpen}

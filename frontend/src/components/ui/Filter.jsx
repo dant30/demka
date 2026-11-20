@@ -36,7 +36,7 @@ export default function Filter({
 					{headerContent ? (
 						<>
 							<h2 id={titleId} className="sr-only">{title}</h2>
-							<div className="min-w-0 flex-1">{headerContent}</div>
+							<div className="min-w-0 flex-1 lg:max-w-2xl">{headerContent}</div>
 						</>
 					) : (
 						<h2 id={titleId} className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">
@@ -58,9 +58,13 @@ export default function Filter({
 						<button
 							type="button"
 							onClick={onClear}
-							className="min-h-9 rounded-md px-2 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+							aria-label="Clear all filters"
+							title="Clear all filters"
+							className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
 						>
-							Clear all
+							<svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+								<path d="m5 5 10 10M15 5 5 15" />
+							</svg>
 						</button>
 					)}
 

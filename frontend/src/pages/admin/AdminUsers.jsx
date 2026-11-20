@@ -10,7 +10,6 @@ import DataTable from '@/components/ui/DataTable';
 import PageHeader from '@/components/ui/PageHeader';
 import Pagination from '@/components/ui/Pagination';
 import ConfirmDialong from '@/components/ui/ConfirmDialong';
-import Filter from '@/components/ui/Filter';
 
 export default function AdminUsers() {
   const qc = useQueryClient();
@@ -29,10 +28,6 @@ export default function AdminUsers() {
 
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
-  const clearFilters = () => {
-    setSearch('');
-    setPage(1);
-  };
 
   const accountAction = useMutation({
     mutationFn: async ({ user, action }) => {
@@ -127,9 +122,15 @@ export default function AdminUsers() {
         actions={<Button onClick={() => setCreateOpen(true)}>+ New User</Button>}
       />
 
-      <Filter title="User filters" activeCount={search ? 1 : 0} onClear={clearFilters} showClear>
-        <Input placeholder="Search..." value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} />
-      </Filter>
+      <div className="w-full max-w-xl">
+        <Input
+          type="search"
+          aria-label="Search users by username, name, or phone"
+          placeholder="Search users..."
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+        />
+      </div>
 
       <DataTable columns={columns} rows={rows} loading={isLoading} />
 

@@ -120,7 +120,7 @@ export default function POS() {
   }, [routeLocation.state, cart.customerId, cart.locationId, navigate]);
 
   const cartTotal = cart.subtotal();
-  const activeProductFilterCount = [search, categoryId].filter(Boolean).length;
+  const activeProductFilterCount = categoryId ? 1 : 0;
 
   return (
     <div className="flex min-h-0 flex-col gap-3 pb-20 md:h-[calc(100dvh-7rem)] md:pb-0 lg:flex-row lg:gap-2">
@@ -129,38 +129,38 @@ export default function POS() {
           title="Product filters"
           className="mb-3 md:mb-4"
           headerContent={(
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <Input
-                type="search"
-                aria-label="Search products by name or part number"
-                placeholder="Search name or part number..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <Input
-                aria-label="Scan barcode or enter SKU or part number"
-                placeholder="Scan barcode or enter SKU..."
-                onKeyDown={handleBarcodeScan}
-              />
-            </div>
+            <Input
+              type="search"
+              aria-label="Search products by name or part number"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           )}
           activeCount={activeProductFilterCount}
           onClear={() => { setSearch(''); setCategoryId(''); }}
           showClear
         >
-          <Select
-            label="Category"
-            value={categoryId}
-            onChange={(value) => setCategoryId(value)}
-            searchable
-            options={[
-              { value: '', label: 'All categories' },
-              ...categoryOptions.map((category) => ({
-                value: category.id,
-                label: category.name,
-              })),
-            ]}
-          />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <Input
+              label="Barcode / SKU / Part Lookup"
+              placeholder="Scan barcode or enter SKU / part number"
+              onKeyDown={handleBarcodeScan}
+            />
+            <Select
+              label="Category"
+              value={categoryId}
+              onChange={(value) => setCategoryId(value)}
+              searchable
+              options={[
+                { value: '', label: 'All categories' },
+                ...categoryOptions.map((category) => ({
+                  value: category.id,
+                  label: category.name,
+                })),
+              ]}
+            />
+          </div>
         </Filter>
 
         <div className="mb-3 grid grid-cols-1 gap-2 md:gap-3 lg:grid-cols-2">

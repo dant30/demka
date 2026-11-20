@@ -20,13 +20,14 @@ export default function PaymentsList() {
   const { isBoss } = useAuth();
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
   const [method, setMethod] = useState('');
   const [status, setStatus] = useState('');
   const [paymentToReverse, setPaymentToReverse] = useState(null);
   const [reason, setReason] = useState('');
   const [reverseError, setReverseError] = useState('');
   const { data, isLoading } = useList('payments', endpoints.payments.list, {
-    page, method: method || undefined, status: status || undefined,
+    page, search: search || undefined, method: method || undefined, status: status || undefined,
   });
   const reversePayment = useMutation({
     mutationFn: async () => (await api.post(
@@ -44,6 +45,7 @@ export default function PaymentsList() {
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / 25) : 0;
   const clearFilters = () => {
+    setSearch('');
     setMethod('');
     setStatus('');
     setPage(1);
@@ -88,7 +90,22 @@ export default function PaymentsList() {
         description="Review incoming payments and their reconciliation status."
         actions={<Link to="/payments/mpesa" className="btn-secondary">M-Pesa Reconcile</Link>}
       />
-      <Filter title="Payment filters" activeCount={[method, status].filter(Boolean).length} onClear={clearFilters} showClear contentClassName="grid grid-cols-1 gap-3 md:grid-cols-3">
+      <Filter
+        title="Payment filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search payments by number, customer, or reference"
+            placeholder="Search payments..."
+            value={search}
+            onChange={(event) => { setSearch(event.target.value); setPage(1); }}
+          />
+        )}
+        activeCount={[method, status].filter(Boolean).length}
+        onClear={clearFilters}
+        showClear
+        contentClassName="grid grid-cols-1 gap-3 md:grid-cols-2"
+      >
         <Select value={method} onChange={(e) => setMethod(e.target.value)}>
           <option value="">All methods</option>
           <option value="CASH">Cash</option>

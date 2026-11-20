@@ -11,6 +11,7 @@ import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import Modal from '@/components/ui/Modal';
 import ConfirmDialong from '@/components/ui/ConfirmDialong';
+import Filter from '@/components/ui/Filter';
 
 const PAGE_SIZE = 25;
 
@@ -34,6 +35,11 @@ export default function SpecialOrdersList() {
 
   const rows = data?.results || [];
   const totalPages = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
+  const clearFilters = () => {
+    setSearch('');
+    setStatus('');
+    setPage(1);
+  };
 
   const runConfirmedAction = async () => {
     const action = confirmAction?.type === 'arrived' ? markArrived : markDelivered;
@@ -90,13 +96,21 @@ export default function SpecialOrdersList() {
   return (
     <div className="space-y-4">
       <PageHeader title="Special Orders" description="Track products ordered for customers through delivery." />
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <Input
-          label="Search"
-          placeholder="Sale number, SKU, or product..."
-          value={search}
-          onChange={(event) => { setSearch(event.target.value); setPage(1); }}
-        />
+      <Filter
+        title="Special order filters"
+        headerContent={(
+          <Input
+            type="search"
+            aria-label="Search special orders by sale number, SKU, or product"
+            placeholder="Search special orders..."
+            value={search}
+            onChange={(event) => { setSearch(event.target.value); setPage(1); }}
+          />
+        )}
+        activeCount={status ? 1 : 0}
+        onClear={clearFilters}
+        showClear
+      >
         <Select label="Status" value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
           <option value="">All statuses</option>
           <option value="ORDERED">Ordered</option>
@@ -104,7 +118,7 @@ export default function SpecialOrdersList() {
           <option value="DELIVERED">Delivered</option>
           <option value="CANCELLED">Cancelled</option>
         </Select>
-      </div>
+      </Filter>
       <DataTable
         columns={columns}
         rows={rows}

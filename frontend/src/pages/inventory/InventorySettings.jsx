@@ -5,7 +5,6 @@ import Button from '@/components/ui/Button';
 import DataTable from '@/components/ui/DataTable';
 import Input from '@/components/ui/Input';
 import Modal from '@/components/ui/Modal';
-import PageHeader from '@/components/ui/PageHeader';
 import Select from '@/components/ui/Select';
 import Switch from '@/components/ui/Switch';
 
@@ -31,11 +30,9 @@ export function InventoryCategories() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
-        title="Product Categories"
-        description="Organize products and control which product types each category applies to."
-        actions={<Button onClick={() => setEditing(false)}>+ New Category</Button>}
-      />
+      <div className="flex justify-end">
+        <Button onClick={() => setEditing(false)}>+ New Category</Button>
+      </div>
       <DataTable columns={columns} rows={categories} loading={isLoading} empty="No categories found." caption="Categories" />
       {editing !== null && (
         <CategoryEditor
@@ -130,11 +127,9 @@ export function InventoryLocations() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
-        title="Stock Locations"
-        description="Manage shops, warehouses, and field locations used for stock control."
-        actions={<Button onClick={() => setEditing(false)}>+ New Location</Button>}
-      />
+      <div className="flex justify-end">
+        <Button onClick={() => setEditing(false)}>+ New Location</Button>
+      </div>
       <DataTable columns={columns} rows={locations} loading={isLoading} empty="No locations found." caption="Locations" />
       {editing !== null && (
         <LocationEditor
