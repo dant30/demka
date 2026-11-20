@@ -15,6 +15,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    actions = ("archive_products",)
     list_display = (
         "sku", "part_number", "name", "category", "product_type",
         "retail_price", "wholesale_price", "is_stocked", "is_active",
@@ -23,6 +24,14 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ("sku", "part_number", "name", "barcode", "brand")
     readonly_fields = ("created_at", "updated_at")
     autocomplete_fields = ("category",)
+
+    @admin.action(description="Archive selected products and keep their history")
+    def archive_products(self, request, queryset):
+        count = queryset.update(is_active=False)
+        self.message_user(
+            request,
+            f"{count} product(s) archived. Stock and transaction history was retained.",
+        )
 
 
 @admin.register(StockLocation)
